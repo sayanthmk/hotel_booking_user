@@ -7,6 +7,7 @@ class CustomTextFormField extends StatelessWidget {
   final Icon? prefixIcon;
   final Icon? suffixIcon;
   final bool obscureText;
+  final String? prefixText;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final FormFieldValidator<String>? validator;
@@ -22,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     required this.labelText,
     this.hintText,
+    this.prefixText,
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
@@ -45,16 +47,21 @@ class CustomTextFormField extends StatelessWidget {
       textInputAction: textInputAction,
       validator: validator,
       onChanged: onChanged,
+
+      // autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        prefixText: prefixText,
         labelText: labelText,
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         contentPadding: contentPadding ??
-            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+            const EdgeInsets.symmetric(vertical: 15.0, horizontal: 18.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: borderColor ?? Colors.grey),
+          borderSide: BorderSide(
+            color: borderColor ?? Colors.grey,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -62,7 +69,9 @@ class CustomTextFormField extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: enabledBorderColor ?? Colors.grey),
+          borderSide: BorderSide(
+            color: enabledBorderColor ?? Colors.grey,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),

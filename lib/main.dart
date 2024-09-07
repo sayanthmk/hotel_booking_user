@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/features/auth/presentation/pages/routepage.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart'
     as di;
+import 'package:hotel_booking/features/splash_screen/splash_screen.dart';
 import 'package:hotel_booking/firebase_options.dart';
 
 void main() async {
@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'PTSans',
           primarySwatch: Colors.blue,
         ),
-        home: const AuthSelectionPage(),
+        // home: const AuthSelectionPage(),
+        home: const LoginStatusPage(),
       ),
     );
   }

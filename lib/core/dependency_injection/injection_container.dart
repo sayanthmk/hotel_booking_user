@@ -7,37 +7,52 @@ import 'package:hotel_booking/features/auth/domain/repos/google_section.dart';
 import 'package:hotel_booking/features/auth/domain/usecases/google_usecase.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 
+//------------------------------------------------------------------------//
+
 final sl = GetIt.instance;
 final FirebaseAuth firebaseAuthInstance = FirebaseAuth.instance;
 
 Future<void> init() async {
-// FirebaseAuth===========================================
+  // FirebaseAuth===========================================
   final firebaseAuth = FirebaseAuth.instance;
   sl.registerLazySingleton(() => firebaseAuth);
-// GoogleSignIn===========================================
+
+  // GoogleSignIn===========================================
   final googleSignIn = GoogleSignIn();
   sl.registerLazySingleton(() => googleSignIn);
+
+  // Firebase DataSource================================================================================
   sl.registerLazySingleton<FirebaseDataSource>(
     () => FirebaseDataSource(
         firebaseAuth: sl<FirebaseAuth>(), googleSignIn: sl<GoogleSignIn>()),
   );
-// Repositories===========================================================================================
+
+  // Repositories===========================================================================================
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
         firebaseDataSource: sl<FirebaseDataSource>(),
       ));
-//Usecases======================================================================
-  sl.registerLazySingleton(() => SignInWithGoogle(repositrory: sl()));
+
+  // Usecases========================================================================
+  sl.registerLazySingleton(() => SignInWithGoogle(repository: sl()));
   sl.registerLazySingleton(() => SignInWithEmailAndPassword(repository: sl()));
   sl.registerLazySingleton(() => SignUpWithEmailAndPassword(repository: sl()));
   sl.registerLazySingleton(() => SignOut(repository: sl()));
   sl.registerLazySingleton(() => GetCurrentUser(repository: sl()));
 
-//BLoC==================================
+  // Phone Number Authentication Use Cases===========================================
+  sl.registerLazySingleton(() => SignInWithPhoneNumber(repository: sl()));
+  sl.registerLazySingleton(() => VerifyOTP(repository: sl()));
+
+  // BLoC==================================
   sl.registerFactory(() => AuthBloc(
         signInWithGoogle: sl(),
         signInWithEmailAndPassword: sl(),
         signUpWithEmailAndPassword: sl(),
         signOut: sl(),
         getCurrentUser: sl(),
+        signInWithPhoneNumber: sl(),
+        verifyOTP: sl(),
       ));
 }
+//--------------------------------------------------------------------------------------//
+

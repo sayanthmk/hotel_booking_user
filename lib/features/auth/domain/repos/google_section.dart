@@ -7,4 +7,12 @@ abstract class AuthRepository {
   Future<void> signUpWithEmailAndPassword(String email, String password);
   Future<void> signOut();
   User? getCurrentUser();
+
+  Future<void> signInWithPhoneNumber(
+    String phoneNumber,
+    Function(String) codeSent, {
+    Function(FirebaseAuthException)? verificationFailed,
+  });
+
+  Future<User?> verifyOTP(String verificationId, String smsCode);
 }

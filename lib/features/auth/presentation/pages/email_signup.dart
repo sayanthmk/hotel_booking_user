@@ -1,215 +1,218 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/features/auth/presentation/pages/tabview_page.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
-import 'package:hotel_booking/features/auth/presentation/widgets/cusombutton.dart';
+import 'package:hotel_booking/features/auth/presentation/widgets/bottom_text_row.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/divider.dart';
+import 'package:hotel_booking/features/auth/presentation/widgets/gradiant_button.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/textfrom_field.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home.dart';
-import 'package:hotel_booking/utils/texts/text.dart';
 
 class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmpasswordController =
       TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Sign Up'),
-      // ),
+      backgroundColor: HotelBookingColors.white,
       body: BlocListener<AuthBloc, Authstate>(
         listener: (context, state) {
           if (state is AuthAuthenticated) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomePage(),
+                builder: (context) => const TabBarViewPage(),
               ),
             );
           } else if (state is AuthError) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+            showCustomSnackBar(
+                context, 'Unauthorised authentication', Colors.red);
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const CustomText(
-                text: 'Create Account',
-                fontSize: 25.0,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                textAlign: TextAlign.center,
-                maxLines: 2,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Create account",
+                      style: TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 31, 19, 249)),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Create an account so you can explore the hotels',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    CustomTextFormField(
+                      controller: emailController,
+                      labelText: 'Email',
+                      hintText: 'Enter your email',
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email is required';
+                        } else if (!RegExp(
+                                r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-z]{2,7}$')
+                            .hasMatch(value)) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
+                      borderColor: Colors.grey,
+                      focusedBorderColor: Colors.blue,
+                      enabledBorderColor: Colors.grey,
+                      errorBorderColor: Colors.red,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFormField(
+                      controller: passwordController,
+                      labelText: 'Password',
+                      hintText: 'Enter your Password',
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        } else if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
+                      borderColor: Colors.grey,
+                      focusedBorderColor: Colors.blue,
+                      enabledBorderColor: Colors.grey,
+                      errorBorderColor: Colors.red,
+                      obscureText: true,
+                      suffixIcon: const Icon(Icons.remove_red_eye),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFormField(
+                      controller: confirmpasswordController,
+                      labelText: 'Confirm Password',
+                      hintText: 'Enter your Password',
+                      keyboardType: TextInputType.visiblePassword,
+                      textInputAction: TextInputAction.done,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Confirmation password is required';
+                        } else if (value != passwordController.text) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                      borderColor: Colors.grey,
+                      focusedBorderColor: Colors.blue,
+                      enabledBorderColor: Colors.grey,
+                      errorBorderColor: Colors.red,
+                      obscureText: true,
+                      suffixIcon: const Icon(Icons.remove_red_eye),
+                    ),
+                    const SizedBox(height: 50),
+                    CustomButton(
+                        text: "Sign Up",
+                        onTap: () {
+                          if (_formKey.currentState!.validate()) {
+                            final email = emailController.text.trim();
+                            final password = passwordController.text.trim();
+                            context.read<AuthBloc>().add(
+                                  SignUpEmailPasswordEvent(
+                                    email: email,
+                                    password: password,
+                                  ),
+                                );
+                          }
+                        },
+                        color: Colors.blue,
+                        textColor: Colors.white,
+                        borderRadius: 10.0,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15.0, horizontal: 30.0),
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        height: 50,
+                        width: 300,
+                        gradient: HotelBookingColors.primarybuttongradient),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const DividerWithText(
+                      text: 'or',
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      textColor: Colors.grey,
+                      dividerColor: Colors.grey,
+                      thickness: 2,
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CustomButton(
+                      text: "",
+                      onTap: () {
+                        context.read<AuthBloc>().add(SignInGoogleEvent());
+                      },
+                      color: Colors.white,
+                      textColor: Colors.grey,
+                      borderRadius: 10.0,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 30.0),
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      height: 60,
+                      width: 350,
+                      icon: FontAwesomeIcons.google,
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    SignInRow(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TabBarViewPage(),
+                          ),
+                        );
+                      },
+                      signInText: 'Sign In',
+                      promptText: 'Already have an account? ',
+                      signInTextColor: Colors.blue,
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                'Create an account so you can explore the hotels',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              CustomTextFormField(
-                controller: emailController,
-                labelText: 'Email',
-                hintText: 'Enter your email',
-                prefixIcon: const Icon(Icons.email),
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.done,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email is required';
-                  }
-                  return null;
-                },
-                borderColor: Colors.grey,
-                focusedBorderColor: Colors.blue,
-                enabledBorderColor: Colors.grey,
-                errorBorderColor: Colors.red,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFormField(
-                controller: passwordController,
-                labelText: 'Password',
-                hintText: 'Enter your Password',
-                prefixIcon: const Icon(Icons.lock),
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password is required';
-                  }
-                  return null;
-                },
-                borderColor: Colors.grey,
-                focusedBorderColor: Colors.blue,
-                enabledBorderColor: Colors.grey,
-                errorBorderColor: Colors.red,
-                obscureText: true,
-                suffixIcon: const Icon(Icons.remove_red_eye),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFormField(
-                controller: confirmpasswordController,
-                labelText: 'Confirm Password',
-                hintText: 'Enter your Password',
-                prefixIcon: const Icon(Icons.lock),
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password is required';
-                  }
-                  return null;
-                },
-                borderColor: Colors.grey,
-                focusedBorderColor: Colors.blue,
-                enabledBorderColor: Colors.grey,
-                errorBorderColor: Colors.red,
-                obscureText: true,
-                suffixIcon: const Icon(Icons.remove_red_eye),
-              ),
-              const SizedBox(height: 50),
-              CustomButton(
-                text: "Login",
-                onTap: () {
-                  final email = emailController.text.trim();
-                  final password = passwordController.text.trim();
-                  context.read<AuthBloc>().add(
-                        SignUpEmailPasswordEvent(
-                          email: email,
-                          password: password,
-                        ),
-                      );
-                },
-                color: Colors.blue,
-                textColor: Colors.white,
-                borderRadius: 10.0,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 15.0, horizontal: 30.0),
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                height: 50,
-                width: 300,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const DividerWithText(
-                text: 'or',
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                textColor: Colors.blue,
-                dividerColor: Colors.blue,
-                thickness: 2,
-                indent: 10,
-                endIndent: 10,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              CustomButton(
-                  text: "",
-                  onTap: () {},
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  borderRadius: 10.0,
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 15.0, horizontal: 30.0),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  height: 60,
-                  width: 300,
-                  icon: FontAwesomeIcons.google),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-// ElevatedButton(
-//   onPressed: () {
-//     final email = emailController.text.trim();
-//     final password = passwordController.text.trim();
-//     context.read<AuthBloc>().add(
-//           SignUpEmailPasswordEvent(
-//             email: email,
-//             password: password,
-//           ),
-//         );
-//   },
-//   child: const Text('Sign Up'),
-// ),
-
-// TextField(
-//   controller: passwordController,
-//   decoration: const InputDecoration(labelText: 'Password'),
-//   obscureText: true,
-// ),
-    // final email = emailController.text.trim();
-                    // final password = passwordController.text.trim();
-                    // context.read<AuthBloc>().add(
-                    //       SignUpEmailPasswordEvent(
-                    //         email: email,
-                    //         password: password,
-                    //       ),
-                    //     );
-                            // const Text(
-              //   'Create Account',
-              //   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-              // ),

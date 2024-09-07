@@ -1,5 +1,6 @@
 part of 'google_auth_bloc.dart';
 
+//--------------------------------------------------------------------------------------------------
 abstract class Authstate extends Equatable {
   const Authstate();
 
@@ -29,4 +30,22 @@ class AuthError extends Authstate {
 
   @override
   List<Object> get props => [message];
+}
+
+class AuthCodeSent extends Authstate {
+  final String verificationId;
+
+  const AuthCodeSent(this.verificationId);
+
+  @override
+  List<Object> get props => [verificationId];
+}
+
+class AuthPhoneNumberVerification extends Authstate {
+  final String phoneNumber;
+
+  const AuthPhoneNumberVerification(this.phoneNumber);
+
+  @override
+  List<Object> get props => [phoneNumber];
 }

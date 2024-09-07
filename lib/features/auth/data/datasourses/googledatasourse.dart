@@ -1,8 +1,8 @@
-//------------------------------------------------------------fixed------------------------------------------//
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+//------------------------------------------------------------------------------------------//
 
 class FirebaseDataSource {
   final FirebaseAuth firebaseAuth;
@@ -10,8 +10,7 @@ class FirebaseDataSource {
 
   FirebaseDataSource({required this.firebaseAuth, required this.googleSignIn});
 
-//------------------SignIn --Google ------------------------------------//
-
+  //------------------SignIn --Google ------------------------------------//
   Future<User?> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     if (googleUser == null) {
@@ -24,8 +23,7 @@ class FirebaseDataSource {
     return (await firebaseAuth.signInWithCredential(credential)).user;
   }
 
-//------------------SignIn --Email & Password ------------------------------------//
-
+  //------------------SignIn --Email & Password ------------------------------------//
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
     final UserCredential userCredential = await firebaseAuth
@@ -33,8 +31,7 @@ class FirebaseDataSource {
     return userCredential.user;
   }
 
-//------------------SignUp --Email & Password ------------------------------------//
-
+  //------------------SignUp --Email & Password ------------------------------------//
   Future<User?> signUpWithEmailAndPassword(
       String email, String password) async {
     try {
@@ -52,16 +49,45 @@ class FirebaseDataSource {
     }
   }
 
-//------------------SignOut ------------------------------------//
-
+  //------------------SignOut ------------------------------------//
   Future<void> signOut() async {
     await firebaseAuth.signOut();
     await googleSignIn.signOut();
   }
 
-//------------------SignUp --Get the User ------------------------------------//
-
+  //------------------Get the User ------------------------------------//
   User? getCurrentUser() {
     return firebaseAuth.currentUser;
+  }
+
+  //------------------SignIn --Phone Number ------------------------------------//
+  Future<void> signInWithPhoneNumber(
+      String phoneNumber, Function(String) codeSent,
+      {Function(FirebaseAuthException)? verificationFailed}) async {
+    await firebaseAuth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await firebaseAuth.signInWithCredential(credential);
+      },
+      verificationFailed: verificationFailed ??
+          (FirebaseAuthException e) {
+            if (kDebugMode) {
+              print('Verification failed: $e');
+            }
+          },
+      codeSent: (String verificationId, int? resendToken) {
+        codeSent(verificationId);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  //------------------Verify OTP ------------------------------------//
+  Future<User?> verifyOTP(String verificationId, String smsCode) async {
+    final credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: smsCode);
+    final UserCredential userCredential =
+        await firebaseAuth.signInWithCredential(credential);
+    return userCredential.user;
   }
 }
