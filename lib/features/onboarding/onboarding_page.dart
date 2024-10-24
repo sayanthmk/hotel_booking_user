@@ -74,7 +74,6 @@ class OnbordingState extends State<Onbording> {
             flex: 1,
             child: Column(
               children: [
-          
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
@@ -83,7 +82,6 @@ class OnbordingState extends State<Onbording> {
                   ),
                 ),
                 const SizedBox(height: 20),
-             
                 Container(
                   height: 50,
                   margin: const EdgeInsets.symmetric(horizontal: 40),
@@ -92,8 +90,6 @@ class OnbordingState extends State<Onbording> {
                     text: currentIndex == contents.length - 1 ? 'Done' : 'Next',
                     onTap: () {
                       if (currentIndex == contents.length - 1) {
-                    
-
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const AuthSelectionPage(),
                         ));
@@ -114,17 +110,16 @@ class OnbordingState extends State<Onbording> {
                     width: 300,
                     gradient: const LinearGradient(
                       colors: [
-                        Color(0xFF5435FF), 
-                        Color(0xFF36C8F6), 
-                        Color(0xFFA0FBCD), 
+                        Color(0xFF5435FF),
+                        Color(0xFF36C8F6),
+                        Color(0xFFA0FBCD),
                       ],
-                      stops: [0.0, 0.5, 1.0], 
+                      stops: [0.0, 0.5, 1.0],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                   ),
                 ),
-              
                 if (currentIndex < 2)
                   TextButton(
                     onPressed: () {

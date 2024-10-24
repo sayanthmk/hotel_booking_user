@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,6 +7,11 @@ import 'package:hotel_booking/features/auth/data/repos/google_repo.dart';
 import 'package:hotel_booking/features/auth/domain/repos/google_section.dart';
 import 'package:hotel_booking/features/auth/domain/usecases/google_usecase.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
+import 'package:hotel_booking/features/home/data/datasourse/hotel_remote_datasourse.dart';
+import 'package:hotel_booking/features/home/data/repositary/hotel_data_repositary.dart';
+import 'package:hotel_booking/features/home/domain/repos/hotel_domain_repositary.dart';
+import 'package:hotel_booking/features/home/domain/usecase/get_hotels_usecase.dart';
+import 'package:hotel_booking/features/home/presentation/providers/bloc/hotel_bloc.dart';
 
 //------------------------------------------------------------------------//
 
@@ -53,6 +59,27 @@ Future<void> init() async {
         signInWithPhoneNumber: sl(),
         verifyOTP: sl(),
       ));
+//hotel
+  sl.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
+
+  // Register Remote Data Source
+  sl.registerFactory<HotelRemoteDataSource>(
+    () => HotelRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()),
+  );
+
+  // Register Repository
+  sl.registerFactory<HotelRepository>(
+    () => HotelRepositoryImpl(remoteDataSource: sl<HotelRemoteDataSource>()),
+  );
+
+  // Register Use Case
+  sl.registerFactory<FetchHotelsUseCase>(
+    () => FetchHotelsUseCase(sl<HotelRepository>()),
+  );
+
+  // Register Bloc
+  sl.registerFactory<HotelBloc>(
+    () => HotelBloc(sl<FetchHotelsUseCase>()),
+  );
 }
 //--------------------------------------------------------------------------------------//
-

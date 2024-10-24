@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/features/home/presentation/pages/booking_home.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/utils/snackbar.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 

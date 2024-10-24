@@ -17,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color? focusedBorderColor;
   final Color? enabledBorderColor;
   final Color? errorBorderColor;
+  final AutovalidateMode autovalidateMode;
 
   const CustomTextFormField({
     super.key,
@@ -36,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusedBorderColor,
     this.enabledBorderColor,
     this.errorBorderColor,
+    this.autovalidateMode = AutovalidateMode.disabled,
   });
 
   @override
@@ -47,8 +49,7 @@ class CustomTextFormField extends StatelessWidget {
       textInputAction: textInputAction,
       validator: validator,
       onChanged: onChanged,
-
-      // autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: autovalidateMode,
       decoration: InputDecoration(
         prefixText: prefixText,
         labelText: labelText,

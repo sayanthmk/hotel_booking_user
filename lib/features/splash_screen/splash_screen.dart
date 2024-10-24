@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/home/presentation/pages/booking_home.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/features/onboarding/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

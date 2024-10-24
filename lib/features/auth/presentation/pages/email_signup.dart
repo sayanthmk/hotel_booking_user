@@ -70,6 +70,7 @@ class SignUpPage extends StatelessWidget {
                       hintText: 'Enter your email',
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.done,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Email is required';
@@ -94,6 +95,7 @@ class SignUpPage extends StatelessWidget {
                       hintText: 'Enter your Password',
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Password is required';
@@ -118,6 +120,7 @@ class SignUpPage extends StatelessWidget {
                       hintText: 'Enter your Password',
                       keyboardType: TextInputType.visiblePassword,
                       textInputAction: TextInputAction.done,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Confirmation password is required';
@@ -157,7 +160,8 @@ class SignUpPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         height: 50,
                         width: 300,
-                        gradient: HotelBookingColors.primarybuttongradient),
+                        gradient: HotelBookingColors.primarybuttongradient,
+                        ),
                     const SizedBox(
                       height: 20,
                     ),
