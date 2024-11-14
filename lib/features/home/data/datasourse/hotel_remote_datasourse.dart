@@ -4,6 +4,7 @@ import 'package:hotel_booking/features/home/data/model/hotel_model.dart';
 
 abstract class HotelRemoteDataSource {
   Future<List<HotelModel>> fetchHotels();
+  Future<HotelModel?> fetchHotelById(String hotelId); // New method
 }
 
 class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
@@ -13,41 +14,34 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
 
   @override
   Future<List<HotelModel>> fetchHotels() async {
-    log('data/datasourse called');
-
+    log('HotelRemoteDataSource: Fetching all hotels');
     try {
-      QuerySnapshot querySnapshot = await firestore.collection('hotels').get();
-
-      // Log each hotel document's ID and data
-      for (var doc in querySnapshot.docs) {
-        final hotelData = doc.data() as Map<String, dynamic>;
-
-        // Print hotel ID
-        log('Fetched Hotel ID: ${doc.id}');
-
-        // Print each detail of the hotel
-        // log('Hotel Details:');
-        hotelData.forEach((key, value) {
-          log('$key: $value');
-        });
-
-        // Alternatively, if hotel details are nested
-        // if (hotelData.containsKey('hotel details')) {
-        //   final details = hotelData['hotel details'] as Map<String, dynamic>;
-        //   log('Hotel Details:');
-        //   details.forEach((key, value) {
-        //     log('$key: $value');
-        //   });
-        // }
-      }
-
+      QuerySnapshot querySnapshot =
+          await firestore.collection('approved_hotels').get();
       return querySnapshot.docs
           .map((doc) => HotelModel.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
       log('Error fetching hotels: $e');
-      print('$e');
-      rethrow; // Re-throw the exception for further handling if needed
+      rethrow;
+    }
+  }
+
+  @override
+  Future<HotelModel?> fetchHotelById(String hotelId) async {
+    log('HotelRemoteDataSource: Fetching hotel by ID $hotelId');
+    try {
+      DocumentSnapshot doc =
+          await firestore.collection('approved_hotels').doc(hotelId).get();
+      if (doc.exists) {
+        return HotelModel.fromJson(doc.data() as Map<String, dynamic>);
+      } else {
+        log('Hotel with ID $hotelId does not exist');
+        return null;
+      }
+    } catch (e) {
+      log('Error fetching hotel by ID $hotelId: $e');
+      rethrow;
     }
   }
 }

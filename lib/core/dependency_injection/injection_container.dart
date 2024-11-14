@@ -10,8 +10,19 @@ import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bl
 import 'package:hotel_booking/features/home/data/datasourse/hotel_remote_datasourse.dart';
 import 'package:hotel_booking/features/home/data/repositary/hotel_data_repositary.dart';
 import 'package:hotel_booking/features/home/domain/repos/hotel_domain_repositary.dart';
-import 'package:hotel_booking/features/home/domain/usecase/get_hotels_usecase.dart';
-import 'package:hotel_booking/features/home/presentation/providers/bloc/hotel_bloc.dart';
+import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
+import 'package:hotel_booking/features/home/presentation/pages/selected_hotel/sample_det.dart';
+import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
+import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
+import 'package:hotel_booking/features/rooms/data/datasourse/room_remote_datasourse.dart';
+import 'package:hotel_booking/features/rooms/data/repositary/rooms_data_repositary.dart';
+import 'package:hotel_booking/features/rooms/domain/repos/rooms_domain_repositary.dart';
+import 'package:hotel_booking/features/rooms/domain/usecase/rooms_usecase.dart';
+import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
+// import 'package:hotel_booking/features/rooms_list/data/datasourse/room_datasourse.dart';
+// import 'package:hotel_booking/features/rooms_list/data/repositary/room_repositary.dart';
+// import 'package:hotel_booking/features/rooms_list/domain/repos/room_repo.dart';
+// import 'package:hotel_booking/features/rooms_list/presentation/providers/bloc/room_bloc.dart';
 
 //------------------------------------------------------------------------//
 
@@ -78,8 +89,59 @@ Future<void> init() async {
   );
 
   // Register Bloc
-  sl.registerFactory<HotelBloc>(
-    () => HotelBloc(sl<FetchHotelsUseCase>()),
+  // sl.registerFactory<HotelBloc>(
+  //   () => HotelBloc(sl<FetchHotelsUseCase>()),
+  // );
+  // // sl.registerFactory<HotelBloc>(
+  // //   () => HotelBloc(sl< FetchHotelsUseCase>()),
+  // // );
+  //   // Data source
+  // sl.registerLazySingleton<HotelRemoteDataSource>(
+  //     () => HotelRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()));
+
+  // // Repository
+  // sl.registerLazySingleton<HotelRepository>(
+  //     () => HotelRepositoryImpl(remoteDataSource: sl<HotelRemoteDataSource>()));
+//rooms
+  // sl.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
+
+  // Register Remote Data Source
+  // sl.registerFactory<RoomRemoteDataSource>(
+  //   () => RoomRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()),
+  // );
+
+  // // Register Repository
+  // sl.registerFactory<RoomRepository>(
+  //   () => RoomsRepositoryImpl(remoteDataSource: sl<RoomRemoteDataSource>()),
+  // );
+
+  // // Register Use Case
+  // sl.registerFactory<FetchRoomsUseCase>(
+  //   () => FetchRoomsUseCase(sl<RoomRepository>()),
+  // );
+  sl.registerFactory(
+    () => HotelRoomsBloc(getHotelRoomsUseCase: sl()),
   );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetHotelRoomsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<RoomRepository>(
+    () => RoomRepositoryImpl(sl()),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<RoomRemoteDataSource>(
+    () => FirebaseRoomRemoteDataSource(sl()),
+  );
+
+  //////////////////////////////////////////////////////////////////
+
+  // Bloc
+  sl.registerFactory<HotelBloc>(
+      () => HotelBloc(hotelRepository: sl<HotelRepository>()));
+  //rooms
+  sl.registerFactory(() => SelectedHotelBloc());
 }
 //--------------------------------------------------------------------------------------//

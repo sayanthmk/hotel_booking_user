@@ -1,4 +1,5 @@
 class HotelEntity {
+  final String hotelId;
   final String hotelType;
   final String propertySetup;
   final String hotelName;
@@ -24,6 +25,7 @@ class HotelEntity {
   final List<String> images;
 
   HotelEntity({
+    required this.hotelId,
     required this.hotelType,
     required this.propertySetup,
     required this.hotelName,
@@ -49,79 +51,3 @@ class HotelEntity {
     required this.images,
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class HotelEntity {
-//   final String hotelType;
-//   final String propertySetup;
-//   final String hotelName;
-//   final int bookingSince;
-//   final String contactNumber;
-//   final String emailAddress;
-//   final String city;
-//   final String state;
-//   final String country;
-//   final int pincode;
-//   final bool freeCancel;
-//   final bool policy2;
-//   final bool policy3;
-//   final bool policy4;
-//   final String panNumber;
-//   final String propertyNumber;
-//   final String gstNumber;
-//   final bool leased;
-//   final bool registration;
-//   final bool documentImage;
-//   final List<String> images;
-
-//   HotelEntity({
-//     required this.hotelType,
-//     required this.propertySetup,
-//     required this.hotelName,
-//     required this.bookingSince,
-//     required this.contactNumber,
-//     required this.emailAddress,
-//     required this.city,
-//     required this.state,
-//     required this.country,
-//     required this.pincode,
-//     required this.freeCancel,
-//     required this.policy2,
-//     required this.policy3,
-//     required this.policy4,
-//     required this.panNumber,
-//     required this.propertyNumber,
-//     required this.gstNumber,
-//     required this.leased,
-//     required this.registration,
-//     required this.documentImage,
-//     required this.images,
-//   });
-// }
