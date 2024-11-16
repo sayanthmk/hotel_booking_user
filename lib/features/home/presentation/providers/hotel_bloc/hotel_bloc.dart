@@ -19,7 +19,7 @@ class HotelBloc extends Bloc<HotelEvent, HotelState> {
       final hotels = await hotelRepository.fetchHotels();
       emit(HotelLoadedState(hotels));
     } catch (e) {
-      emit(HotelErrorState('Failed to load hotels.'));
+      emit(const HotelErrorState('Failed to load hotels.'));
     }
   }
 
@@ -31,10 +31,10 @@ class HotelBloc extends Bloc<HotelEvent, HotelState> {
       if (hotel != null) {
         emit(HotelDetailLoadedState(hotel));
       } else {
-        emit(HotelErrorState('Hotel not found.'));
+        emit(const HotelErrorState('Hotel not found.'));
       }
     } catch (e) {
-      emit(HotelErrorState('Failed to load hotel details.'));
+      emit(const HotelErrorState('Failed to load hotel details.'));
     }
   }
 }

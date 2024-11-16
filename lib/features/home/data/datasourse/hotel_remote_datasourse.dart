@@ -16,8 +16,10 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
   Future<List<HotelModel>> fetchHotels() async {
     log('HotelRemoteDataSource: Fetching all hotels');
     try {
-      QuerySnapshot querySnapshot =
-          await firestore.collection('approved_hotels').get();
+      QuerySnapshot querySnapshot = await firestore
+          .collection('approved_hotels')
+          .where('status', isEqualTo: 'approved')
+          .get();
       return querySnapshot.docs
           .map((doc) => HotelModel.fromJson(doc.data() as Map<String, dynamic>))
           .toList();

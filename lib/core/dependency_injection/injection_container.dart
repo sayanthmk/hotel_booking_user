@@ -11,14 +11,16 @@ import 'package:hotel_booking/features/home/data/datasourse/hotel_remote_datasou
 import 'package:hotel_booking/features/home/data/repositary/hotel_data_repositary.dart';
 import 'package:hotel_booking/features/home/domain/repos/hotel_domain_repositary.dart';
 import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
-import 'package:hotel_booking/features/home/presentation/pages/selected_hotel/sample_det.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/data/datasourse/room_remote_datasourse.dart';
 import 'package:hotel_booking/features/rooms/data/repositary/rooms_data_repositary.dart';
 import 'package:hotel_booking/features/rooms/domain/repos/rooms_domain_repositary.dart';
 import 'package:hotel_booking/features/rooms/domain/usecase/rooms_usecase.dart';
+import 'package:hotel_booking/features/rooms/presentation/pages/rooms_list/room_list_view.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
+import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
+import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 // import 'package:hotel_booking/features/rooms_list/data/datasourse/room_datasourse.dart';
 // import 'package:hotel_booking/features/rooms_list/data/repositary/room_repositary.dart';
 // import 'package:hotel_booking/features/rooms_list/domain/repos/room_repo.dart';
@@ -143,5 +145,7 @@ Future<void> init() async {
       () => HotelBloc(hotelRepository: sl<HotelRepository>()));
   //rooms
   sl.registerFactory(() => SelectedHotelBloc());
+  sl.registerFactory(() => SelectedRoomBloc());
+  sl.registerFactory(() => RoomCardBloc());
 }
 //--------------------------------------------------------------------------------------//

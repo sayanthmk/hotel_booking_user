@@ -13,7 +13,6 @@ class Amenities extends StatelessWidget {
         if (state is SelectedHotelLoaded) {
           final hotel = state.hotel;
 
-          // Define a list of amenities based on boolean properties
           final List<Map<String, dynamic>> availableAmenities = [
             if (hotel.freeCancel)
               {'name': 'Free Cancellation', 'icon': Icons.cancel},
@@ -52,7 +51,7 @@ class Amenities extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: 160,
+                  height: 130,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: availableAmenities.length,
@@ -91,8 +90,7 @@ class Amenities extends StatelessWidget {
             ),
           );
         } else {
-          return const SizedBox
-              .shrink(); // Return an empty widget if the state is not loaded
+          return const SizedBox.shrink();
         }
       },
     );

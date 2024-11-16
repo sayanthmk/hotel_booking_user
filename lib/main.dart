@@ -9,11 +9,10 @@ import 'package:hotel_booking/core/dependency_injection/injection_container.dart
     as di;
 import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/detail_page.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/hotels_list_view.dart';
-import 'package:hotel_booking/features/home/presentation/pages/selected_hotel/sample_det.dart';
-import 'package:hotel_booking/features/home/presentation/pages/sample_page.dart';
+import 'package:hotel_booking/features/rooms/presentation/pages/rooms_list/room_list_view.dart';
+import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
+import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
+import 'package:hotel_booking/features/splash_screen/splash_screen.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/stripe/data/datasourse/consts.dart';
@@ -69,6 +68,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<SelectedHotelBloc>(
           create: (context) => sl<SelectedHotelBloc>(),
         ),
+        BlocProvider<SelectedRoomBloc>(
+          create: (context) => SelectedRoomBloc(),
+        ),
+        BlocProvider<RoomCardBloc>(
+          create: (context) => RoomCardBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -77,7 +82,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'PTSans',
           primarySwatch: Colors.blue,
         ),
-        home: const AuthSelectionPage(),
+        home: const LoginStatusPage(),
         // home: RoomBookingHome(),
       ),
     );

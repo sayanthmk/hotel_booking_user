@@ -16,15 +16,13 @@ class HotelImageBox extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Stack(
               children: [
-                // Main hotel image as background
                 Container(
                   height: 500,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: NetworkImage(
-                          hotel.images[0]), // 0th index image from database
+                      image: NetworkImage(hotel.images[0]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -41,8 +39,6 @@ class HotelImageBox extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Positioned container for "Interior/Exterior" labels
                 Positioned(
                   top: 10,
                   left: 10,
@@ -73,8 +69,6 @@ class HotelImageBox extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Positioned buttons: Favorite, Share, Close
                 Positioned(
                   top: 10,
                   right: 10,
@@ -102,8 +96,6 @@ class HotelImageBox extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Bottom-left text (Hotel name and rating)
                 Positioned(
                   bottom: 20,
                   left: 10,
@@ -144,8 +136,6 @@ class HotelImageBox extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Bottom-right container showing additional images
                 Positioned(
                   bottom: 10,
                   right: 10,
@@ -156,7 +146,6 @@ class HotelImageBox extends StatelessWidget {
                           int idx = entry.key;
                           String imageUrl = entry.value;
 
-                          // Skip the 0th image as it's already the main background
                           if (idx == 0) return const SizedBox.shrink();
 
                           return Container(
@@ -177,7 +166,7 @@ class HotelImageBox extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        '₹${hotel.panNumber}',
+                        '₹${hotel.bookingSince}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
