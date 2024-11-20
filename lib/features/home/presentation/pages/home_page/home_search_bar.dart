@@ -13,10 +13,11 @@ class HomeSearchBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomSearchBar(
+          width: 340,
           hintText: 'Search',
           borderColor: HotelBookingColors.basictextcolor,
           hintTextColor: HotelBookingColors.basictextcolor,
-          textColor: Colors.green,
+          textColor: HotelBookingColors.basictextcolor,
           backgroundColor: Colors.white,
         ),
       ],

@@ -4,7 +4,7 @@ import 'package:hotel_booking/features/home/data/model/hotel_model.dart';
 
 abstract class HotelRemoteDataSource {
   Future<List<HotelModel>> fetchHotels();
-  Future<HotelModel?> fetchHotelById(String hotelId); // New method
+  Future<HotelModel?> fetchHotelById(String hotelId);
 }
 
 class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {

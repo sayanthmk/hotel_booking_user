@@ -29,7 +29,6 @@ class RoomDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image Carousel
                   SizedBox(
                     height: 250,
                     child: PageView.builder(
@@ -67,14 +66,11 @@ class RoomDetailPage extends StatelessWidget {
                       },
                     ),
                   ),
-
-                  // Room Info Section
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Room Type and Price
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -112,7 +108,6 @@ class RoomDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 24),
 
-                        // Basic Information Section
                         const SectionTitle(title: 'Basic Information'),
                         const SizedBox(height: 12),
                         GridView.count(

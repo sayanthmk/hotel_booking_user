@@ -14,61 +14,134 @@ class RoomCard extends StatelessWidget {
         } else if (state is RoomCardLoaded) {
           final room = state.room;
           return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            elevation: 4,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: SizedBox(
+              width: 220,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      height: 50,
-                      width: 50,
-                      child: room.images.isNotEmpty
-                          ? Image.network(
-                              room.images[0],
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.error_outline,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              },
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            )
-                          : const Center(
-                              child: Icon(
-                                Icons.image_not_supported,
-                                color: Colors.grey,
+                  Stack(
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 220,
+                        decoration: BoxDecoration(
+                          color: Colors.blueGrey.shade100,
+                        ),
+                        child: room.images.isNotEmpty
+                            ? Image.network(
+                                room.images[0],
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Center(
+                                    child: Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red.shade300,
+                                      size: 32,
+                                    ),
+                                  );
+                                },
+                                loadingBuilder:
+                                    (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              )
+                            : Center(
+                                child: Icon(
+                                  Icons.image_not_supported,
+                                  color: Colors.grey.shade400,
+                                  size: 32,
+                                ),
                               ),
+                      ),
+                      Positioned(
+                        top: 16,
+                        left: 16,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            room.roomType,
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
                             ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.square_foot,
+                                size: 20, color: Colors.grey.shade600),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Area: ${room.roomArea}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: Colors.grey.shade700,
+                                  ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.attach_money,
+                                    color: Theme.of(context).primaryColor),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Base Price:',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '\$${room.basePrice}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                  ),
-                  Text(
-                    room.roomType,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Area: ${room.roomArea}',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  Text(
-                    'Base Price: \$${room.basePrice}',
-                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),

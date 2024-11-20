@@ -6,6 +6,7 @@ class CustomSearchBar extends StatelessWidget {
   final Color hintTextColor;
   final Color textColor;
   final Color backgroundColor;
+  final double? width;
 
   const CustomSearchBar({
     super.key,
@@ -14,13 +15,14 @@ class CustomSearchBar extends StatelessWidget {
     required this.hintTextColor,
     required this.textColor,
     required this.backgroundColor,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      width: 350,
+      width: width,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(25),

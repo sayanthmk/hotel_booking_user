@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/domain/entity/hotel_entity.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/detail_page.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
@@ -22,19 +23,15 @@ class HotelsListView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is HotelLoadedState) {
             return SizedBox(
-              height: 250,
+              height: 280,
               child: Material(
+                color: HotelBookingColors.pagebackgroundcolor,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: state.hotels.length,
                     itemBuilder: (context, index) {
                       HotelEntity hotel = state.hotels[index];
                       return InkWell(
-                        // onTap: () {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => HotelDetailPage(hotel: hotel),
-                        //   ));
-                        // },
                         onTap: () {
                           context
                               .read<SelectedHotelBloc>()
@@ -51,13 +48,13 @@ class HotelsListView extends StatelessWidget {
                           child: Container(
                             width: 200,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: HotelBookingColors.pagebackgroundcolor,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 2,
-                                  blurRadius: 6,
+                                  spreadRadius: 1,
+                                  blurRadius: 4,
                                   offset: const Offset(2, 2),
                                 ),
                               ],
@@ -141,19 +138,19 @@ class HotelsListView extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Row(
+                                      Row(
                                         children: [
                                           Text(
-                                            '₹2000',
-                                            style: TextStyle(
+                                            '\u20B9${hotel.propertySetup}',
+                                            style: const TextStyle(
                                               color: Color(0xFF1E91B6),
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          SizedBox(width: 5),
+                                          const SizedBox(width: 5),
                                           Text(
-                                            '3000',
-                                            style: TextStyle(
+                                            '\u20B9${(int.parse(hotel.propertySetup) + 500).toString()}',
+                                            style: const TextStyle(
                                               decoration:
                                                   TextDecoration.lineThrough,
                                               color: Colors.black,
@@ -161,27 +158,31 @@ class HotelsListView extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const Icon(
-                                        Icons.star,
-                                        size: 15,
-                                        color: Colors.yellow,
-                                      ),
                                       Container(
                                         height: 20,
-                                        width: 30,
+                                        width: 40,
                                         decoration: BoxDecoration(
                                           color: Colors.indigo,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
-                                        child: const Center(
-                                          child: Text(
-                                            '3.5',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 13,
+                                        child: const Row(
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              size: 15,
+                                              color: Colors.yellow,
                                             ),
-                                          ),
+                                            Center(
+                                              child: Text(
+                                                '3.5',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],

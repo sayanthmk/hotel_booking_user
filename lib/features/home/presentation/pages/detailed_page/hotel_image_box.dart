@@ -166,7 +166,7 @@ class HotelImageBox extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        '₹${hotel.bookingSince}',
+                        '₹${hotel.propertySetup}'.toString(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

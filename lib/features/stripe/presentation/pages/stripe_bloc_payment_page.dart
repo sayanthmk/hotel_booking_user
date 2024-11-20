@@ -212,12 +212,6 @@ class PaymentFormView extends StatelessWidget {
                 ),
               ),
               Icon(Icons.payment, color: Colors.white, size: 30),
-              // Image.asset(
-              //   'assets/stripe_logo.png',
-              //   height: 30,
-              //   // If you don't have the Stripe logo asset, you can use an icon instead:
-              //   // Icon(Icons.payment, color: Colors.white, size: 30),
-              // ),
             ],
           ),
           SizedBox(height: 16),

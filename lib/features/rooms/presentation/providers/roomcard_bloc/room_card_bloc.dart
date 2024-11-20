@@ -11,7 +11,7 @@ class RoomCardBloc extends Bloc<RoomCardEvent, RoomCardState> {
       emit(RoomCardLoading());
       try {
         // Simulating potential delay for future network calls or data transformations.
-        await Future.delayed(const Duration(milliseconds: 200));
+        // await Future.delayed(const Duration(milliseconds: 200));
         emit(RoomCardLoaded(event.room));
       } catch (e) {
         emit(RoomCardError('Failed to load room details.'));

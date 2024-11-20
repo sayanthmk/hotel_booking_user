@@ -17,14 +17,9 @@ import 'package:hotel_booking/features/rooms/data/datasourse/room_remote_datasou
 import 'package:hotel_booking/features/rooms/data/repositary/rooms_data_repositary.dart';
 import 'package:hotel_booking/features/rooms/domain/repos/rooms_domain_repositary.dart';
 import 'package:hotel_booking/features/rooms/domain/usecase/rooms_usecase.dart';
-import 'package:hotel_booking/features/rooms/presentation/pages/rooms_list/room_list_view.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
-// import 'package:hotel_booking/features/rooms_list/data/datasourse/room_datasourse.dart';
-// import 'package:hotel_booking/features/rooms_list/data/repositary/room_repositary.dart';
-// import 'package:hotel_booking/features/rooms_list/domain/repos/room_repo.dart';
-// import 'package:hotel_booking/features/rooms_list/presentation/providers/bloc/room_bloc.dart';
 
 //------------------------------------------------------------------------//
 
@@ -90,6 +85,37 @@ Future<void> init() async {
     () => FetchHotelsUseCase(sl<HotelRepository>()),
   );
 
+  sl.registerFactory(
+    () => HotelRoomsBloc(getHotelRoomsUseCase: sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetHotelRoomsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<RoomRepository>(
+    () => RoomRepositoryImpl(sl()),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<RoomRemoteDataSource>(
+    () => FirebaseRoomRemoteDataSource(sl()),
+  );
+  // Bloc
+  sl.registerFactory<HotelBloc>(
+      () => HotelBloc(hotelRepository: sl<HotelRepository>()));
+
+  //////////////////////////////////////////////////////////////////
+
+  // rooms==================================
+  sl.registerFactory(() => SelectedHotelBloc());
+  sl.registerFactory(() => SelectedRoomBloc());
+  sl.registerFactory(() => RoomCardBloc());
+}
+
+
+
+//--------------------------------------------------------------------------------------//
   // Register Bloc
   // sl.registerFactory<HotelBloc>(
   //   () => HotelBloc(sl<FetchHotelsUseCase>()),
@@ -121,31 +147,3 @@ Future<void> init() async {
   // sl.registerFactory<FetchRoomsUseCase>(
   //   () => FetchRoomsUseCase(sl<RoomRepository>()),
   // );
-  sl.registerFactory(
-    () => HotelRoomsBloc(getHotelRoomsUseCase: sl()),
-  );
-
-  // Use cases
-  sl.registerLazySingleton(() => GetHotelRoomsUseCase(sl()));
-
-  // Repository
-  sl.registerLazySingleton<RoomRepository>(
-    () => RoomRepositoryImpl(sl()),
-  );
-
-  // Data sources
-  sl.registerLazySingleton<RoomRemoteDataSource>(
-    () => FirebaseRoomRemoteDataSource(sl()),
-  );
-
-  //////////////////////////////////////////////////////////////////
-
-  // Bloc
-  sl.registerFactory<HotelBloc>(
-      () => HotelBloc(hotelRepository: sl<HotelRepository>()));
-  //rooms
-  sl.registerFactory(() => SelectedHotelBloc());
-  sl.registerFactory(() => SelectedRoomBloc());
-  sl.registerFactory(() => RoomCardBloc());
-}
-//--------------------------------------------------------------------------------------//
