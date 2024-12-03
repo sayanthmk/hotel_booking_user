@@ -6,6 +6,7 @@ import 'package:hotel_booking/core/dependency_injection/injection_container.dart
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart'
     as di;
+import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/splash_screen/splash_screen.dart';
@@ -42,14 +43,20 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<HotelBloc>(),
         ),
         BlocProvider<SelectedHotelBloc>(
-          create: (context) => sl<SelectedHotelBloc>(),
+          create: (context) => di.sl<SelectedHotelBloc>(),
         ),
         BlocProvider<SelectedRoomBloc>(
-          create: (context) => SelectedRoomBloc(),
+          create: (context) => sl<SelectedRoomBloc>(),
         ),
         BlocProvider<RoomCardBloc>(
-          create: (context) => RoomCardBloc(),
+          create: (context) => sl<RoomCardBloc>(),
         ),
+        // BlocProvider(
+        //   create: (context) => di.sl<BookingBloc>(),
+        // )
+        BlocProvider(
+          create: (context) => di.sl<UserBloc>(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -59,6 +66,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const LoginStatusPage(),
+        // home: HotelBookingPage(),
       ),
     );
   }

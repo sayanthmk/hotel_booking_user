@@ -121,14 +121,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  easy_date_timeline:
+    dependency: "direct main"
+    description:
+      name: easy_date_timeline
+      sha256: c6103e6487e9bf04f991ea762eff14672c2c111e80a5a4b0e308540a202a62c2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4"
   equatable:
     dependency: "direct main"
     description:
       name: equatable
-      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.7"
   fake_async:
     dependency: transitive
     description:
@@ -246,6 +254,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_onboarding_slider:
     dependency: "direct main"
     description:
@@ -360,6 +373,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   intl_phone_field:
     dependency: "direct main"
     description:
@@ -645,6 +666,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.2.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "795530addc930b3b06f4f2fe99a039de276860af505fcf54c4516fbcb838a3cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "27.2.4"
+  syncfusion_flutter_datepicker:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datepicker
+      sha256: eafdcb6084a3c50d482cf846a59dac86bee3cc3511f62f3b69fea14133ab57be
+      url: "https://pub.dev"
+    source: hosted
+    version: "27.2.4"
   term_glyph:
     dependency: transitive
     description:

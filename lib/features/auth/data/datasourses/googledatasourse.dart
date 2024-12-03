@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,8 +8,12 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FirebaseDataSource {
   final FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
+  final FirebaseFirestore firestore;
 
-  FirebaseDataSource({required this.firebaseAuth, required this.googleSignIn});
+  FirebaseDataSource(
+      {required this.firestore,
+      required this.firebaseAuth,
+      required this.googleSignIn});
 
   //------------------SignIn --Google ------------------------------------//
   Future<User?> signInWithGoogle() async {
@@ -40,6 +45,15 @@ class FirebaseDataSource {
         email: email,
         password: password,
       );
+      User? user = userCredential.user;
+      if (user != null) {
+        // Add user to Firestore collection
+        await firestore.collection("users").doc(user.uid).set({
+          "uid": user.uid,
+          "email": user.email,
+          "createdAt": FieldValue.serverTimestamp(),
+        });
+      }
       return userCredential.user;
     } catch (e) {
       if (kDebugMode) {

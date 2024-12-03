@@ -7,6 +7,10 @@ import 'package:hotel_booking/features/auth/data/repos/google_repo.dart';
 import 'package:hotel_booking/features/auth/domain/repos/google_section.dart';
 import 'package:hotel_booking/features/auth/domain/usecases/google_usecase.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
+import 'package:hotel_booking/features/booking/data/datasourse/booking_datasourse.dart';
+import 'package:hotel_booking/features/booking/data/repositary/booking_repositary.dart';
+import 'package:hotel_booking/features/booking/domain/repos/booking_repos.dart';
+import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
 import 'package:hotel_booking/features/home/data/datasourse/hotel_remote_datasourse.dart';
 import 'package:hotel_booking/features/home/data/repositary/hotel_data_repositary.dart';
 import 'package:hotel_booking/features/home/domain/repos/hotel_domain_repositary.dart';
@@ -38,7 +42,9 @@ Future<void> init() async {
   // Firebase DataSource================================================================================
   sl.registerLazySingleton<FirebaseDataSource>(
     () => FirebaseDataSource(
-        firebaseAuth: sl<FirebaseAuth>(), googleSignIn: sl<GoogleSignIn>()),
+        firebaseAuth: sl<FirebaseAuth>(),
+        googleSignIn: sl<GoogleSignIn>(),
+        firestore: sl<FirebaseFirestore>()),
   );
 
   // Repositories===========================================================================================
@@ -111,6 +117,23 @@ Future<void> init() async {
   sl.registerFactory(() => SelectedHotelBloc());
   sl.registerFactory(() => SelectedRoomBloc());
   sl.registerFactory(() => RoomCardBloc());
+
+////////////////////////////////////////////////////////////////////////
+
+  // Remote Data Source
+  sl.registerLazySingleton<UserRemoteDataSource>(
+    () => UserRemoteDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<UserRepository>(
+    () => UserRepositoryImpl(sl<UserRemoteDataSource>()),
+  );
+
+  // Bloc
+  sl.registerFactory<UserBloc>(
+    () => UserBloc(sl<UserRepository>()),
+  );
 }
 
 
