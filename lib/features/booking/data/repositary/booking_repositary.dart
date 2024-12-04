@@ -2,19 +2,6 @@ import 'package:hotel_booking/features/booking/data/datasourse/booking_datasours
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/domain/repos/booking_repos.dart';
 
-// abstract class UserRepository {
-//   Future<void> saveUserBooking(UserDataModel userData);
-//   Future<List<UserDataModel>> getUserBookings();
-
-//   // New methods for hotel bookings
-//   Future<void> saveHotelBooking({
-//     required String hotelId,
-//     required UserDataModel bookingData,
-//   });
-
-//   Future<List<UserDataModel>> getHotelBookings(String hotelId);
-// }
-
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
 

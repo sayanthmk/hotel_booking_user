@@ -35,19 +35,25 @@ class HotelDetailPage extends StatelessWidget {
                           sl<HotelRoomsBloc>()..add(LoadHotelRoomsEvent(hotel)),
                       child: const HotelRoomsListView(),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     //  map
 
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => HotelBookingPage(),
-                          ));
-                        },
-                        child: Text('press'),
-                      ),
-                    ),
+                    // Center(
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.of(context).push(MaterialPageRoute(
+                    //         builder: (context) => HotelBookingPage(),
+                    //       ));
+                    //     },
+                    //     child: Text('press'),
+                    //   ),
+                    // ),
                     const HotelMap(),
+                    const SizedBox(
+                      height: 100,
+                    )
                   ],
                 ),
               ),
@@ -57,15 +63,14 @@ class HotelDetailPage extends StatelessWidget {
           }
         },
       ),
-      // floatingActionButton: CustomWideButton(
-      //   label: 'Book Now',
-      //   icon: Icons.book_online,
-      //   onPressed: () {},
-      // ),
       floatingActionButton: CustomWideButton(
         label: 'Book Now',
         icon: Icons.book_online,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => HotelBookingPage(),
+          ));
+        },
       ),
     );
   }

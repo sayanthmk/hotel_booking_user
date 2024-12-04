@@ -10,7 +10,6 @@ class SaveUserDataEvent extends UserEvent {
 
 class GetUserDataEvent extends UserEvent {}
 
-// New event for hotel booking
 class SaveHotelBookingEvent extends UserEvent {
   final String hotelId;
   final UserDataModel bookingData;

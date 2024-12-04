@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserDataModel {
-  final String? id; // Optional ID for document reference
+  final String? id;
   final String name;
   final int age;
   final String place;
@@ -18,7 +18,6 @@ class UserDataModel {
       required this.noc,
       required this.noa});
 
-  // Convert to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -30,7 +29,6 @@ class UserDataModel {
     };
   }
 
-  // Create from Firestore document
   factory UserDataModel.fromMap(Map<String, dynamic> map, {String? id}) {
     return UserDataModel(
       id: id,

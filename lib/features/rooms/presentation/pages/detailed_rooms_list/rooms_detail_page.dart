@@ -107,7 +107,6 @@ class RoomDetailPage extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 24),
-
                         const SectionTitle(title: 'Basic Information'),
                         const SizedBox(height: 12),
                         GridView.count(
@@ -136,9 +135,7 @@ class RoomDetailPage extends StatelessWidget {
                                 value: '${room.extraChildrenAllowed}'),
                           ],
                         ),
-
                         const SizedBox(height: 24),
-                        // Meals Section
                         const SectionTitle(title: 'Included Meals'),
                         const SizedBox(height: 12),
                         Row(
@@ -153,9 +150,7 @@ class RoomDetailPage extends StatelessWidget {
                                 title: 'Dinner', included: room.freeDinner),
                           ],
                         ),
-
                         const SizedBox(height: 24),
-                        // Amenities Section
                         const SectionTitle(title: 'Room Amenities'),
                         const SizedBox(height: 12),
                         Wrap(
@@ -179,9 +174,7 @@ class RoomDetailPage extends StatelessWidget {
                                   icon: Icons.wifi, title: 'Wi-Fi'),
                           ],
                         ),
-
                         const SizedBox(height: 24),
-                        // Services Section
                         const SectionTitle(title: 'Hotel Services'),
                         const SizedBox(height: 12),
                         Wrap(
@@ -204,16 +197,12 @@ class RoomDetailPage extends StatelessWidget {
                                   icon: Icons.local_parking, title: 'Parking'),
                           ],
                         ),
-
                         const SizedBox(height: 32),
-                        // Book Now Button
                         SizedBox(
                           width: double.infinity,
                           height: 54,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // Add booking functionality here
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),

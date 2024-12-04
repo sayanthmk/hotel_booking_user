@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/features/onboarding/onboarding_page.dart';
+import 'package:hotel_booking/utils/navbar/b_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginStatusPage extends StatelessWidget {
@@ -18,7 +18,8 @@ class LoginStatusPage extends StatelessWidget {
             ),
           );
         } else if (snapshot.data == true) {
-          return const RoomBookingHome();
+          // return const RoomBookingHome();
+          return const BtBar();
         } else {
           return const Onbording();
         }

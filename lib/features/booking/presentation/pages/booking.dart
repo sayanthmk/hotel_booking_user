@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
-// import 'package:intl/intl.dart';
 
 class UserBookingsPage extends StatelessWidget {
   const UserBookingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Trigger fetching user bookings when the page is built
     context.read<UserBloc>().add(GetUserDataEvent());
 
     return Scaffold(
@@ -20,30 +18,24 @@ class UserBookingsPage extends StatelessWidget {
       ),
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
-          // Loading State
           if (state is UserLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          // Error State
           if (state is UserErrorState) {
-            return _buildErrorView(context, state.errorMessage);
+            return buildErrorView(context, state.errorMessage);
           }
 
-          // Loaded State with Bookings
           if (state is UserDataLoadedState) {
-            // No Bookings
             if (state.userData.isEmpty) {
-              return _buildEmptyBookingsView();
+              return buildEmptyBookingsView();
             }
 
-            // Bookings List
-            return _buildBookingsList(state.userData);
+            return buildBookingsList(state.userData);
           }
 
-          // Fallback State
           return const Center(
             child: Text('Something went wrong'),
           );
@@ -52,7 +44,7 @@ class UserBookingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildErrorView(BuildContext context, String errorMessage) {
+  Widget buildErrorView(BuildContext context, String errorMessage) {
     log(errorMessage);
     return Center(
       child: Column(
@@ -85,7 +77,7 @@ class UserBookingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyBookingsView() {
+  Widget buildEmptyBookingsView() {
     return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -108,17 +100,17 @@ class UserBookingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBookingsList(List<UserDataModel> bookings) {
+  Widget buildBookingsList(List<UserDataModel> bookings) {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: bookings.length,
       itemBuilder: (context, index) {
-        return _buildBookingCard(bookings[index]);
+        return buildBookingCard(bookings[index]);
       },
     );
   }
 
-  Widget _buildBookingCard(UserDataModel booking) {
+  Widget buildBookingCard(UserDataModel booking) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -130,7 +122,6 @@ class UserBookingsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Booking Details Row
             Text(
               'Booked on: ${booking.date}',
               style: const TextStyle(
@@ -158,8 +149,6 @@ class UserBookingsPage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-
-            // Location and Date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -169,8 +158,6 @@ class UserBookingsPage extends StatelessWidget {
                 ),
               ],
             ),
-
-            // Optional: Booking ID if needed
             if (booking.id != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -187,8 +174,4 @@ class UserBookingsPage extends StatelessWidget {
       ),
     );
   }
-
-  // String _formatDate(DateTime date) {
-  //   return DateFormat('MMM dd, yyyy - hh:mm a').format(date);
-  // }
 }
