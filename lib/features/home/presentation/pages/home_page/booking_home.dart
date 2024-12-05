@@ -31,7 +31,7 @@ class RoomBookingHome extends StatelessWidget {
                   actionText: 'View All',
                   ontap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HotelsGridView(),
+                      builder: (context) => const HotelsGridView(),
                     ));
                   },
                 ),

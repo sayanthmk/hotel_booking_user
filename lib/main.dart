@@ -14,6 +14,7 @@ import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/ho
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/stripe/data/datasourse/consts.dart';
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
+import 'package:hotel_booking/features/wishlist/presentation/provider/bloc/favorites_bloc.dart';
 import 'package:hotel_booking/firebase_options.dart';
 
 void main() async {
@@ -46,16 +47,22 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<SelectedHotelBloc>(),
         ),
         BlocProvider<SelectedRoomBloc>(
-          create: (context) => sl<SelectedRoomBloc>(),
+          create: (context) => di.sl<SelectedRoomBloc>(),
         ),
         BlocProvider<RoomCardBloc>(
-          create: (context) => sl<RoomCardBloc>(),
+          create: (context) => di.sl<RoomCardBloc>(),
         ),
         // BlocProvider(
         //   create: (context) => di.sl<BookingBloc>(),
         // )
         BlocProvider(
           create: (context) => di.sl<UserBloc>(),
+        ),
+        // BlocProvider(
+        //   create: (context) => di.sl<FavoritesBloc>(),
+        // ),
+        BlocProvider(
+          create: (context) => di.sl<FavoritesBloc>(),
         )
       ],
       child: MaterialApp(

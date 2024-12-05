@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/bookings.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/features/profile/profile.dart';
+import 'package:hotel_booking/features/wishlist/presentation/page/wish_list.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BtBar extends StatefulWidget {
@@ -15,7 +16,7 @@ class BtBarState extends State<BtBar> {
   final List<Widget> pages = [
     const RoomBookingHome(),
     const UserBookingsPage(),
-    const RoomBookingHome(),
+    const FavoritesPage(),
     const MyProfile()
   ];
 

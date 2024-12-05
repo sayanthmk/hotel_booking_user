@@ -24,6 +24,11 @@ import 'package:hotel_booking/features/rooms/domain/usecase/rooms_usecase.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
+import 'package:hotel_booking/features/wishlist/data/datasourse/wish_datasourse.dart';
+import 'package:hotel_booking/features/wishlist/data/repositary/wish_repositary.dart';
+import 'package:hotel_booking/features/wishlist/domain/repos/wish_repos.dart';
+import 'package:hotel_booking/features/wishlist/domain/usecase/wish_usecase.dart';
+import 'package:hotel_booking/features/wishlist/presentation/provider/bloc/favorites_bloc.dart';
 
 //------------------------------------------------------------------------//
 
@@ -134,6 +139,26 @@ Future<void> init() async {
   sl.registerFactory<UserBloc>(
     () => UserBloc(sl<UserRepository>()),
   );
+  /////////////////////////////////
+  // Data sources
+  sl.registerLazySingleton<FavoritesRemoteDataSource>(
+      () => FavoritesRemoteDataSourceImpl(firestore: sl(), auth: sl()));
+
+  // Repositories
+  sl.registerLazySingleton<FavoritesRepository>(
+      () => FavoritesRepositoryImpl(sl()));
+
+  // Use cases
+  sl.registerLazySingleton(() => AddHotelToFavorites(sl()));
+  sl.registerLazySingleton(() => GetFavoriteHotels(sl()));
+  sl.registerLazySingleton(() => RemoveHotelFromFavorites(sl()));
+
+  // Bloc
+  sl.registerFactory(() => FavoritesBloc(
+        addHotelToFavorites: sl(),
+        getFavoriteHotels: sl(),
+        removeHotelFromFavorites: sl(),
+      ));
 }
 
 
@@ -169,4 +194,10 @@ Future<void> init() async {
   // // Register Use Case
   // sl.registerFactory<FetchRoomsUseCase>(
   //   () => FetchRoomsUseCase(sl<RoomRepository>()),
+  // );
+   // sl.registerLazySingleton<FavoritesRepository>(
+  //   () => FavoritesRepositoryImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  // );
+  // sl.registerFactory(
+  //   () => FavoritesBloc(AddHotelToFavorites(sl<FavoritesRepository>())),
   // );
