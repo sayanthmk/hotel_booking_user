@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/bookings.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
+import 'package:hotel_booking/features/profile/profile.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class BtBar extends StatefulWidget {
@@ -12,9 +14,9 @@ class BtBar extends StatefulWidget {
 class BtBarState extends State<BtBar> {
   final List<Widget> pages = [
     const RoomBookingHome(),
+    const UserBookingsPage(),
     const RoomBookingHome(),
-    const RoomBookingHome(),
-    const RoomBookingHome()
+    const MyProfile()
   ];
 
   var _currentIndex = 0;
@@ -36,15 +38,15 @@ class BtBarState extends State<BtBar> {
 
           /// Likes
           SalomonBottomBarItem(
-            icon: const Icon(Icons.favorite_border),
-            title: const Text("Likes"),
+            icon: const Icon(Icons.book_online),
+            title: const Text("Bookings"),
             selectedColor: Colors.pink,
           ),
 
           /// Search
           SalomonBottomBarItem(
             icon: const Icon(Icons.search),
-            title: const Text("Search"),
+            title: const Text("Reviews"),
             selectedColor: Colors.orange,
           ),
 

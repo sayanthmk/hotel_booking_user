@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserDataModel {
   final String? id;
+  final String? cuid;
   final String name;
   final int age;
   final String place;
@@ -11,6 +12,7 @@ class UserDataModel {
 
   UserDataModel(
       {this.id,
+      this.cuid,
       required this.name,
       required this.age,
       required this.place,
@@ -20,6 +22,7 @@ class UserDataModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'cuid': cuid,
       'name': name,
       'age': age,
       'place': place,
@@ -32,6 +35,7 @@ class UserDataModel {
   factory UserDataModel.fromMap(Map<String, dynamic> map, {String? id}) {
     return UserDataModel(
       id: id,
+      cuid: map['bookingDetails']['cuid'],
       name: map['bookingDetails']['name'] ?? '',
       age: map['bookingDetails']['age'] ?? 0,
       place: map['bookingDetails']['place'] ?? '',

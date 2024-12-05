@@ -82,7 +82,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       }
 
       final bookingRef = _firestore
-          .collection('hotels')
+          .collection('approved_hotels')
           .doc(hotelId)
           .collection('bookings')
           .doc();
@@ -110,7 +110,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<List<UserDataModel>> getHotelBookings(String hotelId) async {
     try {
       final querySnapshot = await _firestore
-          .collection('hotels')
+          .collection('approved_hotels')
           .doc(hotelId)
           .collection('bookings')
           .get();

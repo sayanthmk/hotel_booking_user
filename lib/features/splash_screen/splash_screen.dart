@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/onboarding/onboarding_page.dart';
-import 'package:hotel_booking/utils/navbar/b_navbar.dart';
+import 'package:hotel_booking/utils/bottom_navbar/bottom_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginStatusPage extends StatelessWidget {
@@ -9,7 +9,7 @@ class LoginStatusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _getLoginStatus(),
+      future: getLoginStatus(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -27,7 +27,7 @@ class LoginStatusPage extends StatelessWidget {
     );
   }
 
-  Future<bool> _getLoginStatus() async {
+  Future<bool> getLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isLoggedIn') ?? false;
   }

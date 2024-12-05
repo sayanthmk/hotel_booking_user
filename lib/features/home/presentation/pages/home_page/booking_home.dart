@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/home_search_bar.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_gridview.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_list_view.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/location_notification_bar.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/sort_hotels_by_location.dart';
@@ -28,7 +29,11 @@ class RoomBookingHome extends StatelessWidget {
                 SectionHeader(
                   title: 'Hotel Near You',
                   actionText: 'View All',
-                  ontap: () {},
+                  ontap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => HotelsGridView(),
+                    ));
+                  },
                 ),
                 const SizedBox(
                   height: 10,

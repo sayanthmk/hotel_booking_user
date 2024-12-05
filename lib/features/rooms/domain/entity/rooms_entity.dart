@@ -1,4 +1,5 @@
 class RoomEntity {
+  final String roomId;
   final String roomArea;
   final String roomType;
   final int propertySize;
@@ -21,6 +22,7 @@ class RoomEntity {
   final List<String> images;
 
   RoomEntity({
+    required this.roomId,
     required this.roomArea,
     required this.roomType,
     required this.propertySize,

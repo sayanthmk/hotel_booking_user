@@ -4,6 +4,7 @@ import 'package:hotel_booking/features/rooms/domain/entity/rooms_entity.dart';
 
 class RoomModel extends RoomEntity {
   RoomModel({
+    required super.roomId,
     required super.roomArea,
     required super.roomType,
     required super.propertySize,
@@ -29,6 +30,7 @@ class RoomModel extends RoomEntity {
   factory RoomModel.fromJson(Map<String, dynamic> json) {
     log('model');
     return RoomModel(
+      roomId: json['roomId'] ?? '',
       roomArea: json['room_area'] ?? '',
       roomType: json['room_type'] ?? '',
       propertySize: json['Property Size'] ?? 0,
@@ -54,6 +56,7 @@ class RoomModel extends RoomEntity {
 
   Map<String, dynamic> toJson() {
     return {
+      'roomId': roomId,
       'room_area': roomArea,
       'room_type': roomType,
       'Property Size': propertySize,
