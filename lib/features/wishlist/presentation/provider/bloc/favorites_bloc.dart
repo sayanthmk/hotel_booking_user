@@ -36,8 +36,10 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       LoadFavoritesEvent event, Emitter<FavoritesState> emit) async {
     try {
       emit(FavoritesLoading());
-      final favorites = await getFavoriteHotels();
-      emit(FavoritesLoaded(favorites));
+      final favorites = getFavoriteHotels();
+      await for (var favorite in favorites) {
+        emit(FavoritesLoaded(favorite));
+      }
     } catch (e) {
       emit(FavoritesError(e.toString()));
     }

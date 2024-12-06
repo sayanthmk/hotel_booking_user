@@ -14,6 +14,7 @@ import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_
 import 'package:hotel_booking/features/home/data/datasourse/hotel_remote_datasourse.dart';
 import 'package:hotel_booking/features/home/data/repositary/hotel_data_repositary.dart';
 import 'package:hotel_booking/features/home/domain/repos/hotel_domain_repositary.dart';
+import 'package:hotel_booking/features/home/domain/usecase/fetch_hotel_byid.dart';
 import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
@@ -95,7 +96,9 @@ Future<void> init() async {
   sl.registerFactory<FetchHotelsUseCase>(
     () => FetchHotelsUseCase(sl<HotelRepository>()),
   );
-
+  sl.registerFactory<FetchHotelsByIdUseCase>(
+    () => FetchHotelsByIdUseCase(sl<HotelRepository>()),
+  );
   sl.registerFactory(
     () => HotelRoomsBloc(getHotelRoomsUseCase: sl()),
   );

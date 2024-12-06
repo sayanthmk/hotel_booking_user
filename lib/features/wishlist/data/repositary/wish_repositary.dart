@@ -14,7 +14,7 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<List<String>> getFavoriteHotels() {
+  Stream<List<String>> getFavoriteHotels() {
     return remoteDataSource.getFavoriteHotels();
   }
 

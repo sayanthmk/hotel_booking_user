@@ -17,7 +17,7 @@ class GetFavoriteHotels {
 
   GetFavoriteHotels(this.repository);
 
-  Future<List<String>> call() {
+  Stream<List<String>> call() {
     return repository.getFavoriteHotels();
   }
 }

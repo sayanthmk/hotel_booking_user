@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FavoritesRemoteDataSource {
   Future<void> addHotelToFavorites(String hotelId);
-  Future<List<String>> getFavoriteHotels();
+  Stream<List<String>> getFavoriteHotels();
   Future<void> removeHotelFromFavorites(String hotelId);
 }
 
@@ -42,7 +42,7 @@ class FavoritesRemoteDataSourceImpl implements FavoritesRemoteDataSource {
   }
 
   @override
-  Future<List<String>> getFavoriteHotels() async {
+  Stream<List<String>> getFavoriteHotels() async* {
     try {
       User? currentUser = auth.currentUser;
       if (currentUser == null) {
@@ -55,7 +55,7 @@ class FavoritesRemoteDataSourceImpl implements FavoritesRemoteDataSource {
           .collection('favourites')
           .get();
 
-      return querySnapshot.docs.map((doc) => doc['hotelId'] as String).toList();
+      yield querySnapshot.docs.map((doc) => doc['hotelId'] as String).toList();
     } catch (e) {
       throw Exception('Fetch favorites failed: $e');
     }

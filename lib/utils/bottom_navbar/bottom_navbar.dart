@@ -17,7 +17,7 @@ class BtBarState extends State<BtBar> {
     const RoomBookingHome(),
     const UserBookingsPage(),
     const FavoritesPage(),
-    const MyProfile()
+    const MyProfile(),
   ];
 
   var _currentIndex = 0;
@@ -46,8 +46,8 @@ class BtBarState extends State<BtBar> {
 
           /// Search
           SalomonBottomBarItem(
-            icon: const Icon(Icons.search),
-            title: const Text("Reviews"),
+            icon: const Icon(Icons.favorite),
+            title: const Text("Favorites"),
             selectedColor: Colors.orange,
           ),
 

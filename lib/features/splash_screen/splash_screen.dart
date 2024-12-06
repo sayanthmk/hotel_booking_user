@@ -1,6 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/onboarding/onboarding_page.dart';
 import 'package:hotel_booking/utils/bottom_navbar/bottom_navbar.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginStatusPage extends StatelessWidget {
@@ -12,9 +14,24 @@ class LoginStatusPage extends StatelessWidget {
       future: getLoginStatus(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
+          return Scaffold(
             body: Center(
-              child: CircularProgressIndicator(),
+              // child: CircularProgressIndicator(),
+              child: AnimatedSplashScreen(
+                splash: Column(
+                  children: [
+                    Center(
+                      child: LottieBuilder.asset(
+                          'assets/lottie/loading_animation.json'),
+                    )
+                  ],
+                ),
+                duration: 5000,
+                nextScreen:
+                    snapshot.data == true ? const BtBar() : const Onbording(),
+                splashIconSize: 400,
+                backgroundColor: Colors.white,
+              ),
             ),
           );
         } else if (snapshot.data == true) {
