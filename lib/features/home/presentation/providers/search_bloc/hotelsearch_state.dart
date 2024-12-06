@@ -1,10 +1,30 @@
-part of 'hotelsearch_bloc.dart';
+// hotelsearch_state.dart
+import 'package:equatable/equatable.dart';
+import 'package:hotel_booking/features/home/domain/entity/hotel_entity.dart';
 
-sealed class HotelsearchState extends Equatable {
-  const HotelsearchState();
-  
+abstract class HotelSearchState extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-final class HotelsearchInitial extends HotelsearchState {}
+class HotelSearchInitialState extends HotelSearchState {}
+
+class HotelSearchLoadingState extends HotelSearchState {}
+
+class HotelSearchLoadedState extends HotelSearchState {
+  final List<HotelEntity> filteredHotels;
+
+  HotelSearchLoadedState({required this.filteredHotels});
+
+  @override
+  List<Object?> get props => [filteredHotels];
+}
+
+class HotelSearchErrorState extends HotelSearchState {
+  final String message;
+
+  HotelSearchErrorState({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
