@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserDataModel {
   final String? id;
-  final String? cuid;
   final String name;
   final int age;
   final String place;
@@ -10,10 +9,11 @@ class UserDataModel {
   final DateTime enddate;
   final int noc;
   final int noa;
+  final String cuid;
 
   UserDataModel(
       {this.id,
-      this.cuid,
+      required this.cuid,
       required this.name,
       required this.age,
       required this.place,
@@ -41,7 +41,7 @@ class UserDataModel {
 
     return UserDataModel(
       id: id,
-      cuid: value['cuid'],
+      cuid: value['cuid'] ?? '',
       name: value['name'] ?? '',
       age: value['age'] ?? 0,
       place: value['place'] ?? '',

@@ -32,4 +32,22 @@ class UserRepositoryImpl implements UserRepository {
   Future<List<UserDataModel>> getHotelBookings(String hotelId) async {
     return await remoteDataSource.getHotelBookings(hotelId);
   }
+
+  // New method to delete a user booking
+  @override
+  Future<void> deleteUserBooking(String bookingId) async {
+    return await remoteDataSource.deleteUserBooking(bookingId);
+  }
+
+  // New method to delete a hotel booking
+  @override
+  Future<void> deleteHotelBooking({
+    required String hotelId,
+    required String bookingId,
+  }) async {
+    return await remoteDataSource.deleteHotelBooking(
+      hotelId: hotelId,
+      bookingId: bookingId,
+    );
+  }
 }

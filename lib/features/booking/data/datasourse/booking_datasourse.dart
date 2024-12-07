@@ -13,6 +13,12 @@ abstract class UserRemoteDataSource {
   });
 
   Future<List<UserDataModel>> getHotelBookings(String hotelId);
+  // New method for deleting a booking
+  Future<void> deleteUserBooking(String bookingId);
+  Future<void> deleteHotelBooking({
+    required String hotelId,
+    required String bookingId,
+  });
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -34,7 +40,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .doc(currentUser.uid)
           .collection('bookings')
           .doc();
-      log('users/bookings');
+      // log('users/bookings');
       await bookingRef.set(userData.toMap());
     } catch (e) {
       throw Exception('Failed to save user booking: $e');
@@ -80,15 +86,24 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
+      final bookingMap = bookingData.toMap();
+      // bookingMap['userId'] = currentUser.uid;
 
       final bookingRef = _firestore
           .collection('approved_hotels')
           .doc(hotelId)
           .collection('bookings')
           .doc();
-      log('users/bookings/save');
-      final bookingMap = bookingData.toMap();
-      bookingMap['userId'] = currentUser.uid;
+      // log('users/bookings/save');
+      _firestore
+          .collection('approved_hotels')
+          .doc(hotelId)
+          .collection('bookings')
+          .doc(bookingRef.id)
+          .set({
+        'hotelId': hotelId,
+        'bookingDetails': bookingMap,
+      });
 
       await bookingRef.set(bookingMap);
 
@@ -120,6 +135,46 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .toList();
     } catch (e) {
       throw Exception('Failed to retrieve hotel bookings: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteUserBooking(String bookingId) async {
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser == null) {
+        throw Exception('No authenticated user found');
+      }
+
+      final bookingRef = _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('bookings')
+          .doc(bookingId);
+
+      await bookingRef.delete();
+      log('Deleted user booking with ID: $bookingId');
+    } catch (e) {
+      throw Exception('Failed to delete user booking: $e');
+    }
+  }
+
+  @override
+  Future<void> deleteHotelBooking({
+    required String hotelId,
+    required String bookingId,
+  }) async {
+    try {
+      final bookingRef = _firestore
+          .collection('approved_hotels')
+          .doc(hotelId)
+          .collection('bookings')
+          .doc(bookingId);
+
+      await bookingRef.delete();
+      log('Deleted hotel booking with ID: $bookingId in hotel: $hotelId');
+    } catch (e) {
+      throw Exception('Failed to delete hotel booking: $e');
     }
   }
 }

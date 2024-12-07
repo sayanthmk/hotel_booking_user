@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hotel_booking/features/home/data/model/hotel_model.dart';
 
@@ -14,7 +13,7 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
 
   @override
   Future<List<HotelModel>> fetchHotels() async {
-    log('HotelRemoteDataSource: Fetching all hotels');
+    // log('HotelRemoteDataSource: Fetching all hotels');
     try {
       QuerySnapshot querySnapshot = await firestore
           .collection('approved_hotels')
@@ -24,25 +23,25 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
           .map((doc) => HotelModel.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      log('Error fetching hotels: $e');
+      // log('Error fetching hotels: $e');
       rethrow;
     }
   }
 
   @override
   Future<HotelModel?> fetchHotelById(String hotelId) async {
-    log('HotelRemoteDataSource: Fetching hotel by ID $hotelId');
+    // log('HotelRemoteDataSource: Fetching hotel by ID $hotelId');
     try {
       DocumentSnapshot doc =
           await firestore.collection('approved_hotels').doc(hotelId).get();
       if (doc.exists) {
         return HotelModel.fromJson(doc.data() as Map<String, dynamic>);
       } else {
-        log('Hotel with ID $hotelId does not exist');
+        // log('Hotel with ID $hotelId does not exist');
         return null;
       }
     } catch (e) {
-      log('Error fetching hotel by ID $hotelId: $e');
+      // log('Error fetching hotel by ID $hotelId: $e');
       rethrow;
     }
   }

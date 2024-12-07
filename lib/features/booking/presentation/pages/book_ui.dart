@@ -51,7 +51,7 @@ class HotelBookingPage extends StatelessWidget {
                 return BlocConsumer<UserBloc, UserState>(
                   listener: (context, state) {
                     if (state is UserErrorState) {
-                      showErrorSnackBar(context, state.errorMessage);
+                      showErrorSnackBar(context, state.message);
                     }
 
                     if (state is UserDataSavedState) {
@@ -288,7 +288,7 @@ class HotelBookingPage extends StatelessWidget {
                                           enddate: enddate,
                                           noc: int.parse(childcontroller.text),
                                           noa: int.parse(adultcontroller.text),
-                                          cuid: selectedRoomId,
+                                          cuid: selectedRoomId!,
                                         );
 
                                         context.read<UserBloc>().add(
@@ -296,6 +296,9 @@ class HotelBookingPage extends StatelessWidget {
                                                 hotelId: hotelId,
                                                 bookingData: bookingData,
                                               ),
+                                            );
+                                        context.read<UserBloc>().add(
+                                              SaveUserDataEvent(bookingData),
                                             );
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(

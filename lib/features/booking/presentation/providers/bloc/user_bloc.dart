@@ -13,6 +13,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetUserDataEvent>(_onGetUserData);
     on<SaveHotelBookingEvent>(_onSaveHotelBooking);
     on<GetHotelBookingsEvent>(_onGetHotelBookings);
+    on<DeleteUserBookingEvent>(_onDeleteUserBooking);
+    on<DeleteHotelBookingEvent>(_onDeleteHotelBooking);
   }
 
   void _onSaveUserData(SaveUserDataEvent event, Emitter<UserState> emit) async {
@@ -57,6 +59,33 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserDataLoadedState(hotelBookings));
     } catch (e) {
       emit(UserErrorState('Failed to load hotel bookings: $e'));
+    }
+  }
+
+  void _onDeleteUserBooking(
+      DeleteUserBookingEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(UserLoadingState());
+      await repository.deleteUserBooking(event.bookingId);
+      emit(UserBookingDeletedState());
+      add(GetUserDataEvent());
+    } catch (e) {
+      emit(UserErrorState('Failed to delete user booking: $e'));
+    }
+  }
+
+  void _onDeleteHotelBooking(
+      DeleteHotelBookingEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(UserLoadingState());
+      await repository.deleteHotelBooking(
+        hotelId: event.hotelId,
+        bookingId: event.bookingId,
+      );
+      emit(UserBookingDeletedState());
+      // add(GetHotelBookingsEvent());
+    } catch (e) {
+      emit(UserErrorState('Failed to delete hotel booking: $e'));
     }
   }
 }

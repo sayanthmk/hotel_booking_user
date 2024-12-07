@@ -25,7 +25,7 @@ class UserBookingsPage extends StatelessWidget {
           }
 
           if (state is UserErrorState) {
-            return buildErrorView(context, state.errorMessage);
+            return buildErrorView(context, state.message);
           }
 
           if (state is UserDataLoadedState) {
@@ -33,7 +33,110 @@ class UserBookingsPage extends StatelessWidget {
               return buildEmptyBookingsView();
             }
 
-            return buildBookingsList(state.userData);
+            // return buildBookingsList(state.userData);
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: state.userData.length,
+              itemBuilder: (context, index) {
+                final booking = state.userData[index];
+                return InkWell(
+                  onTap: () {},
+                  child: Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Booked start: ${booking.startdate}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            'Booked end: ${booking.enddate}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                booking.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Age: ${booking.age}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Place: ${booking.place}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          if (booking.id != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                'Booking ID: ${booking.id}',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ),
+                          TextButton(
+                            onPressed: () {
+                              if (booking.id != null) {
+                                context
+                                    .read<UserBloc>()
+                                    .add(DeleteUserBookingEvent(booking.id!));
+                                context.read<UserBloc>().add(
+                                      DeleteHotelBookingEvent(
+                                        hotelId: booking
+                                            .cuid, // Replace with actual hotel ID
+                                        bookingId: booking.id!,
+                                      ),
+                                    );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          "Booking ID is null, cannot delete.")),
+                                );
+                              }
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+                // return buildBookingCard(bookings[index]);
+              },
+            );
           }
 
           return const Center(
@@ -100,76 +203,184 @@ class UserBookingsPage extends StatelessWidget {
     );
   }
 
-  Widget buildBookingsList(List<UserDataModel> bookings) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: bookings.length,
-      itemBuilder: (context, index) {
-        return buildBookingCard(bookings[index]);
-      },
-    );
-  }
+  // Widget buildBookingsList(List<UserDataModel> bookings) {
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(16),
+  //     itemCount: bookings.length,
+  //     itemBuilder: (context, index) {
+  //       final booking = bookings[index];
+  //       return InkWell(
+  //         onTap: () {},
+  //         child: Card(
+  //           elevation: 4,
+  //           margin: const EdgeInsets.symmetric(vertical: 8),
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(12),
+  //           ),
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(16.0),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   'Booked start: ${booking.startdate}',
+  //                   style: const TextStyle(
+  //                     fontSize: 14,
+  //                     color: Colors.grey,
+  //                   ),
+  //                 ),
+  //                 Text(
+  //                   'Booked end: ${booking.enddate}',
+  //                   style: const TextStyle(
+  //                     fontSize: 14,
+  //                     color: Colors.grey,
+  //                   ),
+  //                 ),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       booking.name,
+  //                       style: const TextStyle(
+  //                         fontSize: 18,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       'Age: ${booking.age}',
+  //                       style: const TextStyle(
+  //                         fontSize: 16,
+  //                         color: Colors.grey,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(height: 8),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       'Place: ${booking.place}',
+  //                       style: const TextStyle(fontSize: 16),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 if (booking.id != null)
+  //                   Padding(
+  //                     padding: const EdgeInsets.only(top: 8.0),
+  //                     child: Text(
+  //                       'Booking ID: ${booking.id}',
+  //                       style: const TextStyle(
+  //                         fontSize: 12,
+  //                         color: Colors.black54,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 TextButton(
+  //                   onPressed: () {
+  //                     if (booking.id != null) {
+  //                       context
+  //                           .read<UserBloc>()
+  //                           .add(DeleteUserBookingEvent(booking.id!));
+  //                     } else {
+  //                       ScaffoldMessenger.of(context).showSnackBar(
+  //                         SnackBar(
+  //                             content:
+  //                                 Text("Booking ID is null, cannot delete.")),
+  //                       );
+  //                     }
+  //                   },
+  //                   child: const Text('Delete'),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //       // return buildBookingCard(bookings[index]);
+  //     },
+  //   );
+  // }
 
-  Widget buildBookingCard(UserDataModel booking) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Booked on: ${booking.startdate}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  booking.name,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  'Age: ${booking.age}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Place: ${booking.place}',
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-            if (booking.id != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  'Booking ID: ${booking.id}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black54,
-                  ),
+  Widget buildBookingCard(
+    UserDataModel booking,
+  ) {
+    return InkWell(
+      onTap: () {},
+      child: Card(
+        elevation: 4,
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Booked start: ${booking.startdate}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
                 ),
               ),
-          ],
+              Text(
+                'Booked end: ${booking.enddate}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    booking.name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Age: ${booking.age}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Place: ${booking.place}',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+              if (booking.id != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    'Booking ID: ${booking.id}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+              // TextButton(
+              //     onPressed: () {
+              //       context
+              //           .read<UserBloc>()
+              //           .add(DeleteUserBookingEvent(booking.id!));
+              //     },
+              //     child: Text('delete'))
+            ],
+          ),
         ),
       ),
     );

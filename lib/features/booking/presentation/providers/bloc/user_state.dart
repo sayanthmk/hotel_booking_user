@@ -15,7 +15,10 @@ class UserDataLoadedState extends UserState {
 }
 
 class UserErrorState extends UserState {
-  final String errorMessage;
+  final String message;
 
-  UserErrorState(this.errorMessage);
+  UserErrorState(this.message);
 }
+
+// New State for Deletion
+class UserBookingDeletedState extends UserState {}

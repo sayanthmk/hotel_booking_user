@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart'
     as di;
