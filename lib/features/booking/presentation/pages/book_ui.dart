@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/features/auth/presentation/widgets/gradiant_button.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/textfrom_field.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_success_screen.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/bookings.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_state.dart';
-import 'package:hotel_booking/features/stripe/presentation/pages/stripe_bloc_payment_page.dart';
 
 class HotelBookingPage extends StatelessWidget {
   HotelBookingPage({super.key});
@@ -17,7 +17,8 @@ class HotelBookingPage extends StatelessWidget {
   final TextEditingController placeController = TextEditingController();
   final TextEditingController childcontroller = TextEditingController();
   final TextEditingController adultcontroller = TextEditingController();
-
+  late final DateTime startdate;
+  late final DateTime enddate;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -223,23 +224,23 @@ class HotelBookingPage extends StatelessWidget {
                             const SizedBox(
                               height: 20,
                             ),
-                            CustomButton(
-                              text: "Payment",
-                              onTap: () async {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const PaymentScreen(),
-                                ));
-                              },
-                              color: Colors.blue[300]!,
-                              textColor: Colors.white,
-                              borderRadius: 12.0,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              height: 55,
-                              width: 100,
-                            ),
+                            // CustomButton(
+                            //   text: "Payment",
+                            //   onTap: () async {
+                            //     Navigator.of(context).push(MaterialPageRoute(
+                            //       builder: (context) => const PaymentScreen(),
+                            //     ));
+                            //   },
+                            //   color: Colors.blue[300]!,
+                            //   textColor: Colors.white,
+                            //   borderRadius: 12.0,
+                            //   padding:
+                            //       const EdgeInsets.symmetric(vertical: 16.0),
+                            //   fontSize: 16.0,
+                            //   fontWeight: FontWeight.bold,
+                            //   height: 55,
+                            //   width: 100,
+                            // ),
                             // ElevatedButton(
                             //     onPressed: () {
                             //       Navigator.of(context).push(MaterialPageRoute(
@@ -247,6 +248,20 @@ class HotelBookingPage extends StatelessWidget {
                             //       ));
                             //     },
                             //     child: const Text('payment'))
+                            // DateRangePickerDemo(),
+                            DateRangePickerWidget(
+                              onDateRangeSelected:
+                                  (DateTimeRange? selectedRange) {
+                                if (selectedRange != null) {
+                                  startdate = selectedRange.start;
+                                  enddate = selectedRange.end;
+                                  print(
+                                      "Selected Start Date: ${selectedRange.start}");
+                                  print(
+                                      "Selected End Date: ${selectedRange.end}");
+                                }
+                              },
+                            ),
 
                             // SfDateRangePicker(
                             //   view: DateRangePickerView.month,
@@ -269,9 +284,10 @@ class HotelBookingPage extends StatelessWidget {
                                           name: nameController.text,
                                           age: int.parse(ageController.text),
                                           place: placeController.text,
-                                          date: DateTime.now(),
-                                          noc: 1,
-                                          noa: 1,
+                                          startdate: startdate,
+                                          enddate: enddate,
+                                          noc: int.parse(childcontroller.text),
+                                          noa: int.parse(adultcontroller.text),
                                           cuid: selectedRoomId,
                                         );
 
@@ -281,6 +297,11 @@ class HotelBookingPage extends StatelessWidget {
                                                 bookingData: bookingData,
                                               ),
                                             );
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              BookingSuccessPage(),
+                                        ));
                                       }
                                     }
                                   : null,

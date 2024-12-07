@@ -6,7 +6,8 @@ class UserDataModel {
   final String name;
   final int age;
   final String place;
-  final DateTime date;
+  final DateTime startdate;
+  final DateTime enddate;
   final int noc;
   final int noa;
 
@@ -16,7 +17,8 @@ class UserDataModel {
       required this.name,
       required this.age,
       required this.place,
-      required this.date,
+      required this.startdate,
+      required this.enddate,
       required this.noc,
       required this.noa});
 
@@ -26,7 +28,9 @@ class UserDataModel {
       'name': name,
       'age': age,
       'place': place,
-      'date': Timestamp.fromDate(date),
+      // 'date': Timestamp.fromDate(startdate),
+      'startdate': Timestamp.fromDate(startdate),
+      'enddate': Timestamp.fromDate(enddate),
       'noc': noc,
       'noa': noa
     };
@@ -41,8 +45,11 @@ class UserDataModel {
       name: value['name'] ?? '',
       age: value['age'] ?? 0,
       place: value['place'] ?? '',
-      date: (value['date'] != null && value['date'] is Timestamp)
-          ? (value['date'] as Timestamp).toDate()
+      startdate: (value['startdate'] != null && value['startdate'] is Timestamp)
+          ? (value['startdate'] as Timestamp).toDate()
+          : DateTime.now(),
+      enddate: (value['enddate'] != null && value['enddate'] is Timestamp)
+          ? (value['enddate'] as Timestamp).toDate()
           : DateTime.now(),
       noc: value['noc'] ?? 0,
       noa: value['noa'] ?? 0,

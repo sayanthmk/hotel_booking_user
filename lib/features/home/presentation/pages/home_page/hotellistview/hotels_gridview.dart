@@ -1,10 +1,10 @@
-// hotel_search_event.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/detail_page.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/widgets/filter.dart';
+import 'package:hotel_booking/features/home/presentation/providers/filter_bloc/filter_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
@@ -234,6 +234,10 @@ class HotelSearchResults extends StatelessWidget {
     );
   }
 }
+
+
+
+
 // abstract class HotelSearchEvent extends Equatable {
 //   const HotelSearchEvent();
 
