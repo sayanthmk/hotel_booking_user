@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_page/book_ui.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/amenteties.dart';
-import 'package:hotel_booking/features/home/presentation/pages/detailed_page/floating_action_button.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/hotel_image_box.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/hotel_map.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
@@ -40,6 +38,20 @@ class HotelDetailPage extends StatelessWidget {
                     ),
                     //  map
 
+                    const HotelMap(),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Center(child: Text('Error loading hotel details.'));
+          }
+        },
+      ),
+    );
+  }
+}
+
                     // Center(
                     //   child: ElevatedButton(
                     //     onPressed: () {
@@ -50,20 +62,7 @@ class HotelDetailPage extends StatelessWidget {
                     //     child: Text('press'),
                     //   ),
                     // ),
-                    const HotelMap(),
-                    // const SizedBox(
-                    //   height: 100,
-                    // )
-                  ],
-                ),
-              ),
-            );
-          } else {
-            return const Center(child: Text('Error loading hotel details.'));
-          }
-        },
-      ),
-      // floatingActionButton: CustomWideButton(
+                        // floatingActionButton: CustomWideButton(
       //   label: 'Book Now',
       //   icon: Icons.book_online,
       //   onPressed: () {
@@ -72,6 +71,3 @@ class HotelDetailPage extends StatelessWidget {
       //     ));
       //   },
       // ),
-    );
-  }
-}

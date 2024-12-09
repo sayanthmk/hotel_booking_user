@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/textfrom_field.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/calender_section.dart';
@@ -23,7 +24,15 @@ class HotelBookingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          'Book Hotel',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: HotelBookingColors.basictextcolor,
+        elevation: 0,
+      ),
       body: BlocBuilder<SelectedHotelBloc, SelectedHotelState>(
         builder: (context, hotelState) {
           if (hotelState is SelectedHotelLoaded) {
@@ -55,6 +64,16 @@ class HotelBookingPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'Name',
+                                style: TextStyle(
+                                  color: HotelBookingColors.basictextcolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                             CustomTextFormField(
                               controller: nameController,
                               labelText: 'Name',
@@ -74,8 +93,15 @@ class HotelBookingPage extends StatelessWidget {
                               enabledBorderColor: Colors.grey,
                               errorBorderColor: Colors.red,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'Age',
+                                style: TextStyle(
+                                  color: HotelBookingColors.basictextcolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             CustomTextFormField(
                               controller: ageController,
@@ -96,8 +122,15 @@ class HotelBookingPage extends StatelessWidget {
                               enabledBorderColor: Colors.grey,
                               errorBorderColor: Colors.red,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'Place',
+                                style: TextStyle(
+                                  color: HotelBookingColors.basictextcolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             CustomTextFormField(
                               controller: placeController,
@@ -118,8 +151,15 @@ class HotelBookingPage extends StatelessWidget {
                               enabledBorderColor: Colors.grey,
                               errorBorderColor: Colors.red,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'No of childs',
+                                style: TextStyle(
+                                  color: HotelBookingColors.basictextcolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             CustomTextFormField(
                               controller: childcontroller,
@@ -140,8 +180,15 @@ class HotelBookingPage extends StatelessWidget {
                               enabledBorderColor: Colors.grey,
                               errorBorderColor: Colors.red,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'No of adults',
+                                style: TextStyle(
+                                  color: HotelBookingColors.basictextcolor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             CustomTextFormField(
                               controller: adultcontroller,
@@ -171,10 +218,6 @@ class HotelBookingPage extends StatelessWidget {
                                 if (selectedRange != null) {
                                   startdate = selectedRange.start;
                                   enddate = selectedRange.end;
-                                  // print(
-                                  //     "Selected Start Date: ${selectedRange.start}");
-                                  // print(
-                                  //     "Selected End Date: ${selectedRange.end}");
                                 }
                               },
                             ),
@@ -268,94 +311,3 @@ class HotelBookingPage extends StatelessWidget {
     );
   }
 }
-     // CustomButton(
-                            //   text: "Bookings",
-                            //   onTap: () async {
-                            //     Navigator.of(context).push(MaterialPageRoute(
-                            //       builder: (context) => const UserBookingsPage(),
-                            //     ));
-                            //   },
-                            //   color: Colors.blue[300]!,
-                            //   textColor: Colors.white,
-                            //   borderRadius: 12.0,
-                            //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            //   fontSize: 16.0,
-                            //   fontWeight: FontWeight.bold,
-                            //   height: 55,
-                            //   width: 100,
-                            // ),
-                            // const SizedBox(
-                            //   height: 20,
-                            // ),
-                            // ElevatedButton(
-                            //   onPressed: () {
-                            //     Navigator.of(context).push(MaterialPageRoute(
-                            //       builder: (context) => const UserBookingsPage(),
-                            //     ));
-                            //   },
-                            //   child: const Text('bookings'),
-                            // ),
-                            // Text(
-                            //   'User ID: $currentUserId',
-                            //   style: const TextStyle(
-                            //       fontSize: 18, fontWeight: FontWeight.bold),
-                            // ),
-                            // Text(
-                            //   'Room ID: $selectedRoomId',
-                            //   style: const TextStyle(
-                            //       fontSize: 18, fontWeight: FontWeight.bold),
-                            // ),
-                            // Text(
-                            //   'Booking for Hotel ID: $hotelId',
-                            //   style: const TextStyle(
-                            //       fontSize: 18, fontWeight: FontWeight.bold),
-                            // ),
-                            // const SizedBox(height: 16),
-                            // Name Input
-                                       // CustomButton(
-                            //   text: "Payment",
-                            //   onTap: () async {
-                            //     Navigator.of(context).push(MaterialPageRoute(
-                            //       builder: (context) => const PaymentScreen(),
-                            //     ));
-                            //   },
-                            //   color: Colors.blue[300]!,
-                            //   textColor: Colors.white,
-                            //   borderRadius: 12.0,
-                            //   padding:
-                            //       const EdgeInsets.symmetric(vertical: 16.0),
-                            //   fontSize: 16.0,
-                            //   fontWeight: FontWeight.bold,
-                            //   height: 55,
-                            //   width: 100,
-                            // ),
-                            // ElevatedButton(
-                            //     onPressed: () {
-                            //       Navigator.of(context).push(MaterialPageRoute(
-                            //         builder: (context) => const PaymentScreen(),
-                            //       ));
-                            //     },
-                            //     child: const Text('payment'))
-                            // DateRangePickerDemo(),
-                              // SfDateRangePicker(
-                            //   view: DateRangePickerView.month,
-                            //   monthViewSettings:
-                            //       const DateRangePickerMonthViewSettings(
-                            //     firstDayOfWeek: 1,
-                            //   ),
-                            //   selectionMode: DateRangePickerSelectionMode.range,
-                            //   initialSelectedRange: PickerDateRange(
-                            //     DateTime(2024, 11, 1),
-                            //     DateTime(2024, 11, 7),
-                            //   ),
-                            // ),
-                                 // MultiBlocProvider(
-        //   providers: [
-        //     BlocProvider.value(value: di.sl<SelectedHotelBloc>()),
-        //     BlocProvider.value(value: di.sl<UserBloc>()),
-        //   ],
-        //   child: Scaffold(
-        //     appBar: AppBar(
-        //       title: const Text('Hotel Booking'),
-        //     ),
-        //     body:

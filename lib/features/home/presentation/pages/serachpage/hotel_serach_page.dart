@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotels_gridview.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/searchbar.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
@@ -18,7 +19,13 @@ class HotelsGridView extends StatelessWidget {
       create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Hotels'),
+          title: const Text(
+            'Hotels List',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: HotelBookingColors.basictextcolor,
+          elevation: 0,
         ),
         body: Column(
           children: [
@@ -29,7 +36,6 @@ class HotelsGridView extends StatelessWidget {
                   if (hotelState is HotelLoadingState) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (hotelState is HotelLoadedState) {
-                    // Use all hotels without applying filters
                     context.read<HotelSearchBloc>().add(SearchHotelsEvent(
                         query: '', allHotels: hotelState.hotels));
 

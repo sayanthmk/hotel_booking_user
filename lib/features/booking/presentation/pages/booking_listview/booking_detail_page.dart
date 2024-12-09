@@ -30,19 +30,6 @@ class BookingDetailPageSection extends StatelessWidget {
           ),
         ),
       ),
-      // appBar: AppBar(
-      //   title: const Text('Booking Details'),
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: false,
-      //   actions: [
-      //     IconButton(
-      //         onPressed: () {
-      //           context.read<UserBloc>().add(GetUserDataEvent());
-      //           Navigator.pop(context);
-      //         },
-      //         icon: const Icon(Icons.abc_sharp))
-      //   ],
-      // ),
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserLoadingState) {
@@ -205,24 +192,3 @@ class BookingDetailPageSection extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-//  ElevatedButton(
-//                       onPressed: () {
-//                         if (booking.id != null) {
-//                           context.read<UserBloc>().add(DeleteUserBookingEvent(
-//                               booking.id!, booking.hotelId!));
-//                           Navigator.pop(context);
-//                         } else {
-//                           ScaffoldMessenger.of(context).showSnackBar(
-//                             const SnackBar(
-//                                 content:
-//                                     Text("Booking ID is null, cannot delete.")),
-//                           );
-//                         }
-//                       },
-//                       child: const Text('Cancel Booking'),
-//                     ),

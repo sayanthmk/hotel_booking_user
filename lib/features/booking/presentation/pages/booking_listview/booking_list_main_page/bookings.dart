@@ -40,7 +40,6 @@ class UserBookingsPage extends StatelessWidget {
 
           if (state is UserDataLoadedState) {
             if (state.userData.isEmpty) {
-              // return buildEmptyBookingsView();
               return const Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -219,63 +218,7 @@ class UserBookingsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
-
-// Helper method to create consistent booking detail rows
-
-                    // child: Card(
-                    //   elevation: 4,
-                    //   margin: const EdgeInsets.symmetric(vertical: 8),
-                    //   shape: RoundedRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(12),
-                    //   ),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(16.0),
-                    //     child: Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.start,
-                    //       children: [
-                    //         Text(
-                    //           'Booked started: ${booking.startdate}',
-                    //         ),
-                    //         Text(
-                    //           'Booked end: ${booking.enddate}',
-                    //         ),
-                    //         Text(
-                    //           'Place: ${booking.place}',
-                    //         ),
-                    //         Text(
-                    //           'name: ${booking.name}',
-                    //         ),
-                    //         Text(
-                    //           'age: ${booking.age}',
-                    //         ),
-                    //         Text(
-                    //           'no of childerns: ${booking.noc}',
-                    //         ),
-                    //         Text(
-                    //           'no of adults: ${booking.noa}',
-                    //         ),
-                    //         TextButton(
-                    //           onPressed: () {
-                    //             if (booking.id != null) {
-                    //               context.read<UserBloc>().add(
-                    //                   DeleteUserBookingEvent(
-                    //                       booking.id!, booking.hotelId!));
-                    //             } else {
-                    //               ScaffoldMessenger.of(context).showSnackBar(
-                    //                 const SnackBar(
-                    //                     content: Text(
-                    //                         "Booking ID is null, cannot delete.")),
-                    //               );
-                    //             }
-                    //           },
-                    //           child: const Text('Cancel Booking'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    );
+                    ));
               },
             );
           }
@@ -328,21 +271,3 @@ Widget buildBookingDetailRow({
     ),
   );
 }
-
-
-
-      // Text(
-                          //   'Room Id: ${booking.roomId}',
-                          // ),
-                          // Text(
-                          //   'Hotel Id: ${booking.hotelId}',
-                          // ),
-                          // Text(
-                          //   'Booking Id: ${booking.bookId}',
-                          // ),
-                                 // context.read<UserBloc>().add(
-                                //       DeleteHotelBookingEvent(
-                                //         hotelId: booking.id!,
-                                //         bookingId: booking.bookId!,
-                                //       ),
-                                //     );
