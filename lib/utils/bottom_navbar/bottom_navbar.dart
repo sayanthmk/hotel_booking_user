@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_list/bookings.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/bookings.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/features/profile/profile.dart';
 import 'package:hotel_booking/features/wishlist/presentation/page/wish_list.dart';
@@ -34,28 +35,28 @@ class BtBarState extends State<BtBar> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
             title: const Text("Home"),
-            selectedColor: Colors.purple,
+            selectedColor: HotelBookingColors.basictextcolor,
           ),
 
           /// Likes
           SalomonBottomBarItem(
             icon: const Icon(Icons.book_online),
             title: const Text("Bookings"),
-            selectedColor: Colors.pink,
+            selectedColor: HotelBookingColors.basictextcolor,
           ),
 
           /// Search
           SalomonBottomBarItem(
             icon: const Icon(Icons.favorite),
             title: const Text("Favorites"),
-            selectedColor: Colors.orange,
+            selectedColor: HotelBookingColors.basictextcolor,
           ),
 
           /// Profile
           SalomonBottomBarItem(
             icon: const Icon(Icons.person),
             title: const Text("Profile"),
-            selectedColor: Colors.teal,
+            selectedColor: HotelBookingColors.basictextcolor,
           ),
         ],
       ),

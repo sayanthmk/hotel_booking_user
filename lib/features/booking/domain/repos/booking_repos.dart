@@ -10,7 +10,7 @@ abstract class UserRepository {
   });
 
   Future<List<UserDataModel>> getHotelBookings(String hotelId);
-  Future<void> deleteUserBooking(String bookingId);
+  Future<void> deleteUserBooking(String bookingId, String hotelId);
 
   Future<void> deleteHotelBooking({
     required String hotelId,

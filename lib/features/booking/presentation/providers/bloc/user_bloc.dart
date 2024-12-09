@@ -67,7 +67,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       DeleteUserBookingEvent event, Emitter<UserState> emit) async {
     try {
       emit(UserLoadingState());
-      await repository.deleteUserBooking(event.bookingId);
+      await repository.deleteUserBooking(event.bookingId, event.hotelId);
       emit(UserBookingDeletedState());
       add(GetUserDataEvent());
     } catch (e) {

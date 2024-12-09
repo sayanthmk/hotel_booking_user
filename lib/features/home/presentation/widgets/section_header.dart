@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
 
 class SectionHeader extends StatelessWidget {
   final String title;
@@ -15,7 +16,10 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(
+        left: 15.0,
+        top: 10,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -28,7 +32,7 @@ class SectionHeader extends StatelessWidget {
             child: Text(
               actionText,
               style: const TextStyle(
-                color: Colors.blue,
+                color: HotelBookingColors.basictextcolor,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

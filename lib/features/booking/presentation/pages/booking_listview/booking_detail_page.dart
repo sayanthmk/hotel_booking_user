@@ -79,9 +79,8 @@ class BookingDetailPageSection extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       if (booking.id != null) {
-                        context
-                            .read<UserBloc>()
-                            .add(DeleteUserBookingEvent(booking.id!));
+                        context.read<UserBloc>().add(DeleteUserBookingEvent(
+                            booking.id!, booking.hotelId!));
                         Navigator.pop(context); // Navigate back after deletion
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(

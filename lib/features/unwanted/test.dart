@@ -165,3 +165,300 @@
 //         }));
 //   }
 // }
+  // Widget buildBookingsList(List<UserDataModel> bookings) {
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(16),
+  //     itemCount: bookings.length,
+  //     itemBuilder: (context, index) {
+  //       final booking = bookings[index];
+  //       return InkWell(
+  //         onTap: () {},
+  //         child: Card(
+  //           elevation: 4,
+  //           margin: const EdgeInsets.symmetric(vertical: 8),
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(12),
+  //           ),
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(16.0),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Text(
+  //                   'Booked start: ${booking.startdate}',
+  //                   style: const TextStyle(
+  //                     fontSize: 14,
+  //                     color: Colors.grey,
+  //                   ),
+  //                 ),
+  //                 Text(
+  //                   'Booked end: ${booking.enddate}',
+  //                   style: const TextStyle(
+  //                     fontSize: 14,
+  //                     color: Colors.grey,
+  //                   ),
+  //                 ),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       booking.name,
+  //                       style: const TextStyle(
+  //                         fontSize: 18,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                     ),
+  //                     Text(
+  //                       'Age: ${booking.age}',
+  //                       style: const TextStyle(
+  //                         fontSize: 16,
+  //                         color: Colors.grey,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 const SizedBox(height: 8),
+  //                 Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Text(
+  //                       'Place: ${booking.place}',
+  //                       style: const TextStyle(fontSize: 16),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 if (booking.id != null)
+  //                   Padding(
+  //                     padding: const EdgeInsets.only(top: 8.0),
+  //                     child: Text(
+  //                       'Booking ID: ${booking.id}',
+  //                       style: const TextStyle(
+  //                         fontSize: 12,
+  //                         color: Colors.black54,
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 TextButton(
+  //                   onPressed: () {
+  //                     if (booking.id != null) {
+  //                       context
+  //                           .read<UserBloc>()
+  //                           .add(DeleteUserBookingEvent(booking.id!));
+  //                     } else {
+  //                       ScaffoldMessenger.of(context).showSnackBar(
+  //                         SnackBar(
+  //                             content:
+  //                                 Text("Booking ID is null, cannot delete.")),
+  //                       );
+  //                     }
+  //                   },
+  //                   child: const Text('Delete'),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //       // return buildBookingCard(bookings[index]);
+  //     },
+  //   );
+  // }
+   // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       booking.name,
+                          //       style: const TextStyle(
+                          //         fontSize: 18,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       'Age: ${booking.age}',
+                          //       style: const TextStyle(
+                          //         fontSize: 16,
+                          //         color: Colors.grey,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // const SizedBox(height: 8),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       'Place: ${booking.place}',
+                          //       style: const TextStyle(fontSize: 16),
+                          //     ),
+                          //   ],
+                          // ),
+                          // if (booking.id != null)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(top: 8.0),
+                          //     child: Text(
+                          //       'Booking ID: ${booking.id}',
+                          //       style: const TextStyle(
+                          //         fontSize: 12,
+                          //         color: Colors.black54,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 8.0),
+                          //   child: Text(
+                          //     'Booking ID: ${booking.bookId}',
+                          //     style: const TextStyle(
+                          //       fontSize: 12,
+                          //       color: Colors.black54,
+                          //     ),
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 8.0),
+                          //   child: Text(
+                          //     'Room ID: ${booking.cuid}',
+                          //     style: const TextStyle(
+                          //       fontSize: 12,
+                          //       color: Colors.black54,
+                          //     ),
+                          //   ),
+                          // ),
+                            // Widget buildErrorView(BuildContext context, String errorMessage) {
+  //   log(errorMessage);
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         const Icon(
+  //           Icons.error_outline,
+  //           color: Colors.red,
+  //           size: 60,
+  //         ),
+  //         const SizedBox(height: 16),
+  //         Text(
+  //           'Error Loading Bookings',
+  //           style: Theme.of(context).textTheme.titleLarge,
+  //         ),
+  //         Text(
+  //           errorMessage,
+  //           style: Theme.of(context).textTheme.bodyMedium,
+  //           textAlign: TextAlign.center,
+  //         ),
+  //         const SizedBox(height: 16),
+  //         ElevatedButton(
+  //           onPressed: () {
+  //             context.read<UserBloc>().add(GetUserDataEvent());
+  //           },
+  //           child: const Text('Retry'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget buildEmptyBookingsView() {
+  //   return const Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         Icon(
+  //           Icons.bookmark_border,
+  //           size: 80,
+  //           color: Colors.grey,
+  //         ),
+  //         SizedBox(height: 16),
+  //         Text(
+  //           'No Bookings Yet',
+  //           style: TextStyle(
+  //             fontSize: 18,
+  //             color: Colors.grey,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Widget buildBookingCard(
+  //   UserDataModel booking,
+  // ) {
+  //   return InkWell(
+  //     onTap: () {},
+  //     child: Card(
+  //       elevation: 4,
+  //       margin: const EdgeInsets.symmetric(vertical: 8),
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(12),
+  //       ),
+  //       child: Padding(
+  //         padding: const EdgeInsets.all(16.0),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text(
+  //               'Booked start: ${booking.startdate}',
+  //               style: const TextStyle(
+  //                 fontSize: 14,
+  //                 color: Colors.grey,
+  //               ),
+  //             ),
+  //             Text(
+  //               'Booked end: ${booking.enddate}',
+  //               style: const TextStyle(
+  //                 fontSize: 14,
+  //                 color: Colors.grey,
+  //               ),
+  //             ),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Text(
+  //                   booking.name,
+  //                   style: const TextStyle(
+  //                     fontSize: 18,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //                 Text(
+  //                   'Age: ${booking.age}',
+  //                   style: const TextStyle(
+  //                     fontSize: 16,
+  //                     color: Colors.grey,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //             const SizedBox(height: 8),
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 Text(
+  //                   'Place: ${booking.place}',
+  //                   style: const TextStyle(fontSize: 16),
+  //                 ),
+  //               ],
+  //             ),
+  //             if (booking.id != null)
+  //               Padding(
+  //                 padding: const EdgeInsets.only(top: 8.0),
+  //                 child: Text(
+  //                   'Booking ID: ${booking.id}',
+  //                   style: const TextStyle(
+  //                     fontSize: 12,
+  //                     color: Colors.black54,
+  //                   ),
+  //                 ),
+  //               ),
+  //             // TextButton(
+  //             //     onPressed: () {
+  //             //       context
+  //             //           .read<UserBloc>()
+  //             //           .add(DeleteUserBookingEvent(booking.id!));
+  //             //     },
+  //             //     child: Text('delete'))
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }

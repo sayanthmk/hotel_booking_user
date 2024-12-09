@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_list/bookings.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/bookings.dart';
 
 class BookingSuccessPage extends StatelessWidget {
   const BookingSuccessPage({super.key});

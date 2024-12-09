@@ -27,8 +27,9 @@ class GetHotelBookingsEvent extends UserEvent {
 // New Events for Deletion
 class DeleteUserBookingEvent extends UserEvent {
   final String bookingId;
+  final String hotelId;
 
-  DeleteUserBookingEvent(this.bookingId);
+  DeleteUserBookingEvent(this.bookingId, this.hotelId);
 }
 
 class DeleteHotelBookingEvent extends UserEvent {
