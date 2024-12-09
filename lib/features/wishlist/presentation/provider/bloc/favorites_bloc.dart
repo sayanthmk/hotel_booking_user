@@ -1,4 +1,3 @@
-// lib/features/home/presentation/bloc/favorites_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hotel_booking/features/wishlist/domain/usecase/wish_usecase.dart';

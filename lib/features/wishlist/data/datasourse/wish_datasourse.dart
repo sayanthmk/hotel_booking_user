@@ -1,4 +1,3 @@
-// lib/features/home/data/datasources/favorites_remote_datasource.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,7 +26,6 @@ class FavoritesRemoteDataSourceImpl implements FavoritesRemoteDataSource {
           .doc(currentUser.uid)
           .collection('favourites')
           .doc(hotelId);
-      // .set({'hotelId': hotelId, 'addedAt': FieldValue.serverTimestamp()});
       final docsnapshot = await docref.get();
       if (docsnapshot.exists) {
         throw Exception('Hotel is Already added');

@@ -51,9 +51,9 @@ class HotelDetailPage extends StatelessWidget {
                     //   ),
                     // ),
                     const HotelMap(),
-                    const SizedBox(
-                      height: 100,
-                    )
+                    // const SizedBox(
+                    //   height: 100,
+                    // )
                   ],
                 ),
               ),
@@ -63,15 +63,15 @@ class HotelDetailPage extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: CustomWideButton(
-        label: 'Book Now',
-        icon: Icons.book_online,
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => HotelBookingPage(),
-          ));
-        },
-      ),
+      // floatingActionButton: CustomWideButton(
+      //   label: 'Book Now',
+      //   icon: Icons.book_online,
+      //   onPressed: () {
+      //     Navigator.of(context).push(MaterialPageRoute(
+      //       builder: (context) => HotelBookingPage(),
+      //     ));
+      //   },
+      // ),
     );
   }
 }

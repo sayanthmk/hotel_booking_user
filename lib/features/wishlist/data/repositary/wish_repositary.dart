@@ -1,5 +1,3 @@
-// lib/features/home/data/repositories/favorites_repository_impl.dart
-
 import 'package:hotel_booking/features/wishlist/data/datasourse/wish_datasourse.dart';
 import 'package:hotel_booking/features/wishlist/domain/repos/wish_repos.dart';
 

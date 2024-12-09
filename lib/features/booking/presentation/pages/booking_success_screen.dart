@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/bookings.dart';
+import 'package:hotel_booking/utils/bottom_navbar/bottom_navbar.dart';
 
 class BookingSuccessPage extends StatelessWidget {
   const BookingSuccessPage({super.key});
@@ -7,11 +7,12 @@ class BookingSuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const UserBookingsPage(),
+          builder: (context) => const BtBar(),
         ),
+        (Route<dynamic> route) => false,
       );
     });
 
@@ -37,7 +38,7 @@ class BookingSuccessPage extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "Your operation was completed successfully.",
+              "Your Booking was completed successfully.",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),

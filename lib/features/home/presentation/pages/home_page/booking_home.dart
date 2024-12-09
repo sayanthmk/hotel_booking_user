@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/home_search_bar.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_gridview.dart';
+import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotel_serach_page.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_list_view.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/location_notification_bar.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/sort_hotels_by_location.dart';
@@ -22,7 +21,7 @@ class RoomBookingHome extends StatelessWidget {
               children: [
                 const LocationWithNotificationBar(),
                 const SizedBox(height: 20),
-                const HomeSearchBar(),
+                // const HomeSearchBar(),
                 const SizedBox(
                   height: 10,
                 ),

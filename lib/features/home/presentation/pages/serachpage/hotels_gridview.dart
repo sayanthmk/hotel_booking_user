@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/detail_page.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/widgets/filter.dart';
-import 'package:hotel_booking/features/home/presentation/providers/filter_bloc/filter_bloc.dart';
+import 'package:hotel_booking/features/home/presentation/pages/serachpage/searchbar.dart';
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
@@ -12,89 +11,6 @@ import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/ho
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_event.dart';
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_state.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
-
-// class HotelsGridView extends StatelessWidget {
-//   const HotelsGridView({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiBlocProvider(
-//       providers: [
-//         BlocProvider(
-//           create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
-//         ),
-//         BlocProvider(
-//           create: (context) => HotelSearchBloc(),
-//         ),
-
-//       ],
-//       child: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('Hotels'),
-//         ),
-//         body: Column(
-//           children: [
-//             const HotelSearchBar(),
-//             Expanded(
-//               child: BlocBuilder<HotelBloc, HotelState>(
-//                 builder: (context, hotelState) {
-//                   if (hotelState is HotelLoadingState) {
-//                     return const Center(child: CircularProgressIndicator());
-//                   } else if (hotelState is HotelLoadedState) {
-//                     return const HotelSearchResults();
-//                   } else if (hotelState is HotelErrorState) {
-//                     return Center(
-//                       child: Text(
-//                         hotelState.message,
-//                         style: const TextStyle(color: Colors.red),
-//                       ),
-//                     );
-//                   }
-//                   return const Center(child: Text('No hotels found'));
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class HotelSearchBar extends StatelessWidget {
-  const HotelSearchBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HotelBloc, HotelState>(
-      builder: (context, hotelState) {
-        if (hotelState is HotelLoadedState) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search hotels by name or city',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onChanged: (query) {
-                context.read<HotelSearchBloc>().add(
-                      SearchHotelsEvent(
-                        query: query,
-                        allHotels: hotelState.hotels,
-                      ),
-                    );
-              },
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
-}
 
 class HotelSearchResults extends StatelessWidget {
   const HotelSearchResults({super.key});
@@ -232,162 +148,8 @@ class HotelSearchResults extends StatelessWidget {
   }
 }
 
-// First, update the filter event in filter_bloc
-// part of 'filter_bloc.dart';
 
-abstract class FilterEvent {}
 
-class ApplyHotelFiltersEvent extends FilterEvent {
-  final bool? hasParking;
-  final bool? hasRestaurant;
-
-  ApplyHotelFiltersEvent({this.hasParking, this.hasRestaurant});
-}
-
-// Update the filter state
-// part of 'filter_bloc.dart';
-
-class FilterState {
-  final bool? hasParking;
-  final bool? hasRestaurant;
-
-  FilterState({this.hasParking, this.hasRestaurant});
-
-  FilterState copyWith({bool? hasParking, bool? hasRestaurant}) {
-    return FilterState(
-      hasParking: hasParking ?? this.hasParking,
-      hasRestaurant: hasRestaurant ?? this.hasRestaurant,
-    );
-  }
-}
-
-// Implement the filter bloc
-// part of 'filter_bloc.dart';
-
-class FilterBloc extends Bloc<FilterEvent, FilterState> {
-  FilterBloc() : super(FilterState()) {
-    on<ApplyHotelFiltersEvent>(_onApplyHotelFilters);
-  }
-
-  void _onApplyHotelFilters(
-      ApplyHotelFiltersEvent event, Emitter<FilterState> emit) {
-    emit(state.copyWith(
-        hasParking: event.hasParking, hasRestaurant: event.hasRestaurant));
-  }
-}
-
-// Create a new filter widget
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:hotel_booking/features/home/presentation/providers/filter_bloc/filter_bloc.dart';
-
-class HotelFilterWidget extends StatelessWidget {
-  const HotelFilterWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<FilterBloc, FilterState>(
-      builder: (context, filterState) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FilterChip(
-              label: const Text('Parking'),
-              selected: filterState.hasParking ?? false,
-              onSelected: (bool value) {
-                context.read<FilterBloc>().add(
-                      ApplyHotelFiltersEvent(hasParking: value),
-                    );
-              },
-            ),
-            FilterChip(
-              label: const Text('Restaurant'),
-              selected: filterState.hasRestaurant ?? false,
-              onSelected: (bool value) {
-                context.read<FilterBloc>().add(
-                      ApplyHotelFiltersEvent(hasRestaurant: value),
-                    );
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-// Update HotelsGridView to include the filter
-class HotelsGridView extends StatelessWidget {
-  const HotelsGridView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
-        ),
-        BlocProvider(
-          create: (context) => HotelSearchBloc(),
-        ),
-        BlocProvider(
-          create: (context) => FilterBloc(),
-        ),
-      ],
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Hotels'),
-        ),
-        body: Column(
-          children: [
-            const HotelSearchBar(),
-            const HotelFilterWidget(), // Add the filter widget
-            Expanded(
-              child: BlocBuilder<FilterBloc, FilterState>(
-                builder: (context, filterState) {
-                  return BlocBuilder<HotelBloc, HotelState>(
-                    builder: (context, hotelState) {
-                      if (hotelState is HotelLoadingState) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (hotelState is HotelLoadedState) {
-                        // Apply filters to the hotels
-                        final filteredHotels = hotelState.hotels.where((hotel) {
-                          bool parkingMatch = filterState.hasParking == null ||
-                              hotel.parkingFacility == filterState.hasParking;
-
-                          bool restaurantMatch =
-                              filterState.hasRestaurant == null ||
-                                  hotel.restaurantFacility ==
-                                      filterState.hasRestaurant;
-
-                          return parkingMatch && restaurantMatch;
-                        }).toList();
-
-                        // Update the HotelSearchBloc with filtered results
-                        context.read<HotelSearchBloc>().add(SearchHotelsEvent(
-                            query: '', allHotels: filteredHotels));
-
-                        return const HotelSearchResults();
-                      } else if (hotelState is HotelErrorState) {
-                        return Center(
-                          child: Text(
-                            hotelState.message,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        );
-                      }
-                      return const Center(child: Text('No hotels found'));
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 
 // abstract class HotelSearchEvent extends Equatable {
@@ -493,3 +255,152 @@ class HotelsGridView extends StatelessWidget {
 // import 'hotel_search_bloc.dart';
 // import 'hotel_search_event.dart';
 // import 'hotel_search_state.dart';
+// class HotelsGridView extends StatelessWidget {
+//   const HotelsGridView({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiBlocProvider(
+//       providers: [
+//         BlocProvider(
+//           create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
+//         ),
+//         BlocProvider(
+//           create: (context) => HotelSearchBloc(),
+//         ),
+
+//       ],
+//       child: Scaffold(
+//         appBar: AppBar(
+//           title: const Text('Hotels'),
+//         ),
+//         body: Column(
+//           children: [
+//             const HotelSearchBar(),
+//             Expanded(
+//               child: BlocBuilder<HotelBloc, HotelState>(
+//                 builder: (context, hotelState) {
+//                   if (hotelState is HotelLoadingState) {
+//                     return const Center(child: CircularProgressIndicator());
+//                   } else if (hotelState is HotelLoadedState) {
+//                     return const HotelSearchResults();
+//                   } else if (hotelState is HotelErrorState) {
+//                     return Center(
+//                       child: Text(
+//                         hotelState.message,
+//                         style: const TextStyle(color: Colors.red),
+//                       ),
+//                     );
+//                   }
+//                   return const Center(child: Text('No hotels found'));
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+// First, update the filter event in filter_bloc
+// part of 'filter_bloc.dart';
+
+// abstract class FilterEvent {}
+
+// class ApplyHotelFiltersEvent extends FilterEvent {
+//   final bool? hasParking;
+//   final bool? hasRestaurant;
+
+//   ApplyHotelFiltersEvent({this.hasParking, this.hasRestaurant});
+// }
+
+// // Update the filter state
+// // part of 'filter_bloc.dart';
+
+// class FilterState {
+//   final bool? hasParking;
+//   final bool? hasRestaurant;
+
+//   FilterState({this.hasParking, this.hasRestaurant});
+
+//   FilterState copyWith({bool? hasParking, bool? hasRestaurant}) {
+//     return FilterState(
+//       hasParking: hasParking ?? this.hasParking,
+//       hasRestaurant: hasRestaurant ?? this.hasRestaurant,
+//     );
+//   }
+// }
+
+// // Implement the filter bloc
+// // part of 'filter_bloc.dart';
+
+// class FilterBloc extends Bloc<FilterEvent, FilterState> {
+//   FilterBloc() : super(FilterState()) {
+//     on<ApplyHotelFiltersEvent>(_onApplyHotelFilters);
+//   }
+
+//   void _onApplyHotelFilters(
+//       ApplyHotelFiltersEvent event, Emitter<FilterState> emit) {
+//     emit(state.copyWith(
+//         hasParking: event.hasParking, hasRestaurant: event.hasRestaurant));
+//   }
+// }
+
+// Create a new filter widget
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:hotel_booking/features/home/presentation/providers/filter_bloc/filter_bloc.dart';
+
+// class HotelFilterWidget extends StatelessWidget {
+//   const HotelFilterWidget({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<FilterBloc, FilterState>(
+//       builder: (context, filterState) {
+//         return Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: [
+//             FilterChip(
+//               label: const Text('Parking'),
+//               selected: filterState.hasParking ?? false,
+//               onSelected: (bool value) {
+//                 context.read<FilterBloc>().add(
+//                       ApplyHotelFiltersEvent(hasParking: value),
+//                     );
+//               },
+//             ),
+//             FilterChip(
+//               label: const Text('Restaurant'),
+//               selected: filterState.hasRestaurant ?? false,
+//               onSelected: (bool value) {
+//                 context.read<FilterBloc>().add(
+//                       ApplyHotelFiltersEvent(hasRestaurant: value),
+//                     );
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+
+// Update HotelsGridView to include the filter
+    // child: TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Search hotels by name or city',
+            //     prefixIcon: const Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //   ),
+            //   onChanged: (query) {
+            //     context.read<HotelSearchBloc>().add(
+            //           SearchHotelsEvent(
+            //             query: query,
+            //             allHotels: hotelState.hotels,
+            //           ),
+            //         );
+            //   },
+            // ),

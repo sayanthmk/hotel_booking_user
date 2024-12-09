@@ -29,7 +29,7 @@ abstract class UserRemoteDataSource {
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final FirebaseFirestore _firestore;
   final FirebaseAuth _auth;
-  final Uuid _uuid = Uuid();
+  final Uuid _uuid = const Uuid();
 
   UserRemoteDataSourceImpl(this._firestore, this._auth);
 
@@ -142,15 +142,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
-      final bookingMap = bookingData.toMap();
+      // final bookingMap = bookingData.toMap();
       // bookingMap['userId'] = currentUser.uid;
-      final String bookingId = _uuid.v4();
+      // final String bookingId = _uuid.v4();
 
-      final bookingRef = _firestore
-          .collection('approved_hotels')
-          .doc(hotelId)
-          .collection('bookings')
-          .doc();
+      // final bookingRef = _firestore
+      //     .collection('approved_hotels')
+      //     .doc(hotelId)
+      //     .collection('bookings')
+      //     .doc();
       // log('users/bookings/save');
       // await _firestore
       //     .collection('approved_hotels')

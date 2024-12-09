@@ -26,7 +26,6 @@ class UserDataModel {
       required this.noc,
       required this.noa});
 
-  // Convert the UserDataModel to a Map
   Map<String, dynamic> toMap() {
     return {
       'cuid': roomId,
@@ -40,7 +39,6 @@ class UserDataModel {
     };
   }
 
-  // Create a UserDataModel instance from a Map
   factory UserDataModel.fromMap(
     Map<String, dynamic> map, {
     String? id,
@@ -51,7 +49,6 @@ class UserDataModel {
       bookId: map['bookingId'] ?? '',
       hotelId: map['hotelId'] ?? '',
       id: id,
-      // hotelId: map['hotelId'],
       roomId: rpt['cuid'] ?? '',
       name: rpt['name'] ?? '',
       age: rpt['age'] ?? 0,

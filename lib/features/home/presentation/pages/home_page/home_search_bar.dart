@@ -9,10 +9,11 @@ class HomeSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomSearchBar(
+          onChanged: (value) {},
           width: 340,
           hintText: 'Search',
           borderColor: HotelBookingColors.basictextcolor,

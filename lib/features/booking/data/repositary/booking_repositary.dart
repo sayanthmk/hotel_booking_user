@@ -33,13 +33,11 @@ class UserRepositoryImpl implements UserRepository {
     return await remoteDataSource.getHotelBookings(hotelId);
   }
 
-  // New method to delete a user booking
   @override
   Future<void> deleteUserBooking(String bookingId, String hotelId) async {
     return await remoteDataSource.deleteUserBooking(bookingId, hotelId);
   }
 
-  // New method to delete a hotel booking
   @override
   Future<void> deleteHotelBooking({
     required String hotelId,
@@ -51,7 +49,6 @@ class UserRepositoryImpl implements UserRepository {
     );
   }
 
-  // New method to get a single user booking
   @override
   Future<UserDataModel> getSingleUserBooking(String bookingId) async {
     return await remoteDataSource.getSingleUserBooking(bookingId);

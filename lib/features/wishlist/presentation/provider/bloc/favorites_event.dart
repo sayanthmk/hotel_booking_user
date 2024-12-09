@@ -1,4 +1,3 @@
-// lib/features/home/presentation/bloc/favorites_event.dart
 part of 'favorites_bloc.dart';
 
 abstract class FavoritesEvent extends Equatable {
