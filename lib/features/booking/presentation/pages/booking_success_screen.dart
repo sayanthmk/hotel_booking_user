@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_final_review.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_list/bookings.dart';
 
 class BookingSuccessPage extends StatelessWidget {
   const BookingSuccessPage({super.key});
@@ -10,7 +10,7 @@ class BookingSuccessPage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const BookingReviewScreen(),
+          builder: (context) => const UserBookingsPage(),
         ),
       );
     });

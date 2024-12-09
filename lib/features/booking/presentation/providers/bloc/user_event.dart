@@ -4,8 +4,9 @@ abstract class UserEvent {}
 
 class SaveUserDataEvent extends UserEvent {
   final UserDataModel userData;
+  final String hotelId;
 
-  SaveUserDataEvent(this.userData);
+  SaveUserDataEvent(this.userData, this.hotelId);
 }
 
 class GetUserDataEvent extends UserEvent {}
@@ -35,4 +36,9 @@ class DeleteHotelBookingEvent extends UserEvent {
   final String bookingId;
 
   DeleteHotelBookingEvent({required this.hotelId, required this.bookingId});
+}
+
+class GetSingleUserBookingEvent extends UserEvent {
+  final String bookingId;
+  GetSingleUserBookingEvent(this.bookingId); // New Event
 }

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/textfrom_field.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_success_screen.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/bookings.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_list/bookings.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
@@ -255,10 +255,10 @@ class HotelBookingPage extends StatelessWidget {
                                 if (selectedRange != null) {
                                   startdate = selectedRange.start;
                                   enddate = selectedRange.end;
-                                  print(
-                                      "Selected Start Date: ${selectedRange.start}");
-                                  print(
-                                      "Selected End Date: ${selectedRange.end}");
+                                  // print(
+                                  //     "Selected Start Date: ${selectedRange.start}");
+                                  // print(
+                                  //     "Selected End Date: ${selectedRange.end}");
                                 }
                               },
                             ),
@@ -288,7 +288,7 @@ class HotelBookingPage extends StatelessWidget {
                                           enddate: enddate,
                                           noc: int.parse(childcontroller.text),
                                           noa: int.parse(adultcontroller.text),
-                                          cuid: selectedRoomId!,
+                                          roomId: selectedRoomId!,
                                         );
 
                                         context.read<UserBloc>().add(
@@ -298,12 +298,13 @@ class HotelBookingPage extends StatelessWidget {
                                               ),
                                             );
                                         context.read<UserBloc>().add(
-                                              SaveUserDataEvent(bookingData),
+                                              SaveUserDataEvent(
+                                                  bookingData, hotelId),
                                             );
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(
                                           builder: (context) =>
-                                              BookingSuccessPage(),
+                                              const BookingSuccessPage(),
                                         ));
                                       }
                                     }

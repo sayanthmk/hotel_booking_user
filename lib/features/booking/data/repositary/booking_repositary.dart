@@ -8,8 +8,8 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<void> saveUserBooking(UserDataModel userData) async {
-    return await remoteDataSource.saveUserBooking(userData);
+  Future<void> saveUserBooking(UserDataModel userData, String hotelId) async {
+    return await remoteDataSource.saveUserBooking(userData, hotelId);
   }
 
   @override
@@ -49,5 +49,11 @@ class UserRepositoryImpl implements UserRepository {
       hotelId: hotelId,
       bookingId: bookingId,
     );
+  }
+
+  // New method to get a single user booking
+  @override
+  Future<UserDataModel> getSingleUserBooking(String bookingId) async {
+    return await remoteDataSource.getSingleUserBooking(bookingId);
   }
 }

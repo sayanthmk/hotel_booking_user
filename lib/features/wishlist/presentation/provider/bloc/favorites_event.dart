@@ -21,7 +21,6 @@ class LoadFavoritesEvent extends FavoritesEvent {}
 
 class RemoveFromFavoritesEvent extends FavoritesEvent {
   final String hotelId;
-
   const RemoveFromFavoritesEvent(this.hotelId);
 
   @override

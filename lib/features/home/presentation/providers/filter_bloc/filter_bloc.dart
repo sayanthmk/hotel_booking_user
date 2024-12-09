@@ -1,25 +1,25 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+// import 'package:bloc/bloc.dart';
+// import 'package:equatable/equatable.dart';
 
-part 'filter_event.dart';
-part 'filter_state.dart';
+// part 'filter_event.dart';
+// part 'filter_state.dart';
 
-class FilterBloc extends Bloc<FilterEvent, FilterState> {
-  FilterBloc() : super(const FilterState()) {
-    on<ToggleFilterEvent>((event, emit) {
-      final updatedFilters = List<String>.from(state.activeFilters);
+// class FilterBloc extends Bloc<FilterEvent, FilterState> {
+//   FilterBloc() : super(const FilterState()) {
+//     on<ToggleFilterEvent>((event, emit) {
+//       final updatedFilters = List<String>.from(state.activeFilters);
 
-      if (event.isSelected) {
-        updatedFilters.add(event.filter);
-      } else {
-        updatedFilters.remove(event.filter);
-      }
+//       if (event.isSelected) {
+//         updatedFilters.add(event.filter);
+//       } else {
+//         updatedFilters.remove(event.filter);
+//       }
 
-      emit(FilterState(activeFilters: updatedFilters));
-    });
+//       emit(FilterState(activeFilters: updatedFilters));
+//     });
 
-    on<ResetFiltersEvent>((_, emit) {
-      emit(const FilterState(activeFilters: []));
-    });
-  }
-}
+//     on<ResetFiltersEvent>((_, emit) {
+//       emit(const FilterState(activeFilters: []));
+//     });
+//   }
+// }

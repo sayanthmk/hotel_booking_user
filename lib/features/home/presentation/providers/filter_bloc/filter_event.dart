@@ -1,18 +1,18 @@
-part of 'filter_bloc.dart';
+// part of 'filter_bloc.dart';
 
-abstract class FilterEvent extends Equatable {
-  @override
-  List<Object> get props => [];
-}
+// abstract class FilterEvent extends Equatable {
+//   @override
+//   List<Object> get props => [];
+// }
 
-class ToggleFilterEvent extends FilterEvent {
-  final String filter;
-  final bool isSelected;
+// class ToggleFilterEvent extends FilterEvent {
+//   final String filter;
+//   final bool isSelected;
 
-  ToggleFilterEvent({required this.filter, required this.isSelected});
+//   ToggleFilterEvent({required this.filter, required this.isSelected});
 
-  @override
-  List<Object> get props => [filter, isSelected];
-}
+//   @override
+//   List<Object> get props => [filter, isSelected];
+// }
 
-class ResetFiltersEvent extends FilterEvent {}
+// class ResetFiltersEvent extends FilterEvent {}

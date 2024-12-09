@@ -1,10 +1,10 @@
-part of 'filter_bloc.dart';
+// part of 'filter_bloc.dart';
 
-class FilterState extends Equatable {
-  final List<String> activeFilters;
+// class FilterState extends Equatable {
+//   final List<String> activeFilters;
 
-  const FilterState({this.activeFilters = const []});
+//   const FilterState({this.activeFilters = const []});
 
-  @override
-  List<Object> get props => [activeFilters];
-}
+//   @override
+//   List<Object> get props => [activeFilters];
+// }

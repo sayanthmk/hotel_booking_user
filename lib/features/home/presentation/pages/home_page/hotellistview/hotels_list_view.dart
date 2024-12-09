@@ -102,8 +102,6 @@ class HotelsListView extends StatelessWidget {
                                           fontSize: 10),
                                     ),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           '${hotel.propertySetup}/night',
@@ -112,13 +110,13 @@ class HotelsListView extends StatelessWidget {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 10),
                                         ),
-                                        Text(
-                                          hotel.city,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10),
-                                        ),
+                                        // Text(
+                                        //   hotel.,
+                                        //   style: const TextStyle(
+                                        //       color: Colors.white,
+                                        //       fontWeight: FontWeight.bold,
+                                        //       fontSize: 10),
+                                        // ),
                                       ],
                                     ),
                                   ],

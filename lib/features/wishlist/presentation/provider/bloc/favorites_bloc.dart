@@ -51,6 +51,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
       emit(FavoritesLoading());
       await removeHotelFromFavorites(event.hotelId);
       emit(FavoriteRemoved());
+      add(LoadFavoritesEvent());
     } catch (e) {
       emit(FavoritesError(e.toString()));
     }

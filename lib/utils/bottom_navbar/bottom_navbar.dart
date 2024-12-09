@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/bookings.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_list/bookings.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
 import 'package:hotel_booking/features/profile/profile.dart';
 import 'package:hotel_booking/features/wishlist/presentation/page/wish_list.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/book_ui.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_page/book_ui.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/amenteties.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/floating_action_button.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/hotel_image_box.dart';

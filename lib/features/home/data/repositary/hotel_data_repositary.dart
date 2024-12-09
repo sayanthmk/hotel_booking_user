@@ -10,13 +10,13 @@ class HotelRepositoryImpl implements HotelRepository {
 
   @override
   Future<List<HotelEntity>> fetchHotels() async {
-    log('HotelRepositoryImpl: Fetching all hotels');
+    // log('HotelRepositoryImpl: Fetching all hotels');
     try {
       final hotels = await remoteDataSource.fetchHotels();
-      log('HotelRepositoryImpl: Successfully fetched ${hotels.length} hotels');
+      // log('HotelRepositoryImpl: Successfully fetched ${hotels.length} hotels');
       return hotels;
     } catch (error) {
-      log('HotelRepositoryImpl: Error fetching hotels - $error');
+      // log('HotelRepositoryImpl: Error fetching hotels - $error');
       rethrow;
     }
   }
@@ -27,13 +27,13 @@ class HotelRepositoryImpl implements HotelRepository {
     try {
       final hotel = await remoteDataSource.fetchHotelById(hotelId);
       if (hotel != null) {
-        log('HotelRepositoryImpl: Successfully fetched hotel with ID $hotelId');
+        // log('HotelRepositoryImpl: Successfully fetched hotel with ID $hotelId');
       } else {
-        log('HotelRepositoryImpl: Hotel with ID $hotelId not found');
+        // log('HotelRepositoryImpl: Hotel with ID $hotelId not found');
       }
       return hotel;
     } catch (error) {
-      log('HotelRepositoryImpl: Error fetching hotel by ID $hotelId - $error');
+      // log('HotelRepositoryImpl: Error fetching hotel by ID $hotelId - $error');
       rethrow;
     }
   }

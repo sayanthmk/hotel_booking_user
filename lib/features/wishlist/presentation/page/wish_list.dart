@@ -48,12 +48,12 @@ class FavoritesPage extends StatelessWidget {
                   child: BlocBuilder<HotelBloc, HotelState>(
                     builder: (context, hotelState) {
                       if (hotelState is HotelLoadingState) {
-                        return const Card(
-                          child: ListTile(
-                            title: Text('Loading hotel details...'),
-                          ),
-                        );
-                        // return CircularProgressIndicator();
+                        // return const Card(
+                        //   child: ListTile(
+                        //     title: Text('Loading hotel details...'),
+                        //   ),
+                        // );
+                        return const CircularProgressIndicator();
                       }
 
                       if (hotelState is HotelDetailLoadedState) {
@@ -155,12 +155,15 @@ class FavoritesPage extends StatelessWidget {
                                   // Book Now Button
                                   ElevatedButton(
                                     onPressed: () {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content: Text(
-                                                'Booking not implemented')),
-                                      );
+                                      context.read<FavoritesBloc>().add(
+                                          RemoveFromFavoritesEvent(
+                                              hotel.hotelId));
+                                      // ScaffoldMessenger.of(context)
+                                      //     .showSnackBar(
+                                      //   const SnackBar(
+                                      //       content: Text(
+                                      //           'Booking not implemented')),
+                                      // );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       minimumSize:
@@ -171,7 +174,7 @@ class FavoritesPage extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
-                                    child: const Text('Book Now'),
+                                    child: const Text('Remove'),
                                   ),
                                 ],
                               ),

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserDataModel {
   final String? id;
+  final String? bookId;
+  final String? hotelId;
   final String name;
   final int age;
   final String place;
@@ -9,11 +11,13 @@ class UserDataModel {
   final DateTime enddate;
   final int noc;
   final int noa;
-  final String cuid;
+  final String roomId;
 
   UserDataModel(
       {this.id,
-      required this.cuid,
+      this.bookId,
+      this.hotelId,
+      required this.roomId,
       required this.name,
       required this.age,
       required this.place,
@@ -22,13 +26,13 @@ class UserDataModel {
       required this.noc,
       required this.noa});
 
+  // Convert the UserDataModel to a Map
   Map<String, dynamic> toMap() {
     return {
-      'cuid': cuid,
+      'cuid': roomId,
       'name': name,
       'age': age,
       'place': place,
-      // 'date': Timestamp.fromDate(startdate),
       'startdate': Timestamp.fromDate(startdate),
       'enddate': Timestamp.fromDate(enddate),
       'noc': noc,
@@ -36,23 +40,30 @@ class UserDataModel {
     };
   }
 
-  factory UserDataModel.fromMap(Map<String, dynamic> map, {String? id}) {
-    final value = map['bookingDetails'];
-
+  // Create a UserDataModel instance from a Map
+  factory UserDataModel.fromMap(
+    Map<String, dynamic> map, {
+    String? id,
+    String? hotelId,
+  }) {
+    final rpt = map['bookingDetails'];
     return UserDataModel(
+      bookId: map['bookingId'] ?? '',
+      hotelId: map['hotelId'] ?? '',
       id: id,
-      cuid: value['cuid'] ?? '',
-      name: value['name'] ?? '',
-      age: value['age'] ?? 0,
-      place: value['place'] ?? '',
-      startdate: (value['startdate'] != null && value['startdate'] is Timestamp)
-          ? (value['startdate'] as Timestamp).toDate()
+      // hotelId: map['hotelId'],
+      roomId: rpt['cuid'] ?? '',
+      name: rpt['name'] ?? '',
+      age: rpt['age'] ?? 0,
+      place: rpt['place'] ?? '',
+      startdate: (rpt['startdate'] != null && rpt['startdate'] is Timestamp)
+          ? (rpt['startdate'] as Timestamp).toDate()
           : DateTime.now(),
-      enddate: (value['enddate'] != null && value['enddate'] is Timestamp)
-          ? (value['enddate'] as Timestamp).toDate()
+      enddate: (rpt['enddate'] != null && rpt['enddate'] is Timestamp)
+          ? (rpt['enddate'] as Timestamp).toDate()
           : DateTime.now(),
-      noc: value['noc'] ?? 0,
-      noa: value['noa'] ?? 0,
+      noc: rpt['noc'] ?? 0,
+      noa: rpt['noa'] ?? 0,
     );
   }
 }

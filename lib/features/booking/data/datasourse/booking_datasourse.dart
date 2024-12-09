@@ -4,7 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 
 abstract class UserRemoteDataSource {
-  Future<void> saveUserBooking(UserDataModel userData);
+  Future<void> saveUserBooking(
+    UserDataModel userData,
+    String hotelId,
+  );
   Future<List<UserDataModel>> getUserBookings();
 
   Future<void> saveHotelBooking({
@@ -13,6 +16,7 @@ abstract class UserRemoteDataSource {
   });
 
   Future<List<UserDataModel>> getHotelBookings(String hotelId);
+  Future<UserDataModel> getSingleUserBooking(String hotelId);
   // New method for deleting a booking
   Future<void> deleteUserBooking(String bookingId);
   Future<void> deleteHotelBooking({
@@ -28,20 +32,28 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl(this._firestore, this._auth);
 
   @override
-  Future<void> saveUserBooking(UserDataModel userData) async {
+  Future<void> saveUserBooking(
+    UserDataModel userData,
+    String hotelId,
+  ) async {
     try {
       final User? currentUser = _auth.currentUser;
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
-
+      final String bookingId = _firestore.collection('bookings').doc().id;
       final bookingRef = _firestore
           .collection('users')
           .doc(currentUser.uid)
           .collection('bookings')
           .doc();
       // log('users/bookings');
-      await bookingRef.set(userData.toMap());
+      // await bookingRef.set(userData.toMap());
+      await bookingRef.set({
+        'hotelId': hotelId,
+        'bookingId': bookingRef.id,
+        'bookingDetails': userData.toMap(),
+      });
     } catch (e) {
       throw Exception('Failed to save user booking: $e');
     }
@@ -77,6 +89,35 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
+  Future<UserDataModel> getSingleUserBooking(String bookingId) async {
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser == null) {
+        throw Exception('No authenticated user found');
+      }
+
+      final docSnapshot = await _firestore
+          .collection('users')
+          .doc(currentUser.uid)
+          .collection('bookings')
+          .doc(bookingId)
+          .get();
+
+      if (!docSnapshot.exists) {
+        throw Exception('Booking with ID $bookingId not found');
+      }
+
+      log('Fetching single user booking...');
+      log('Document ID: ${docSnapshot.id}');
+      log('Document Data: ${docSnapshot.data()}');
+
+      return UserDataModel.fromMap(docSnapshot.data()!, id: docSnapshot.id);
+    } catch (e) {
+      throw Exception('Failed to retrieve booking details: $e');
+    }
+  }
+
+  @override
   Future<void> saveHotelBooking({
     required String hotelId,
     required UserDataModel bookingData,
@@ -95,27 +136,28 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .collection('bookings')
           .doc();
       // log('users/bookings/save');
-      _firestore
+      await _firestore
           .collection('approved_hotels')
           .doc(hotelId)
           .collection('bookings')
           .doc(bookingRef.id)
           .set({
         'hotelId': hotelId,
+        'bookingId': bookingRef.id,
         'bookingDetails': bookingMap,
       });
 
-      await bookingRef.set(bookingMap);
+      // await bookingRef.set(bookingMap);
 
-      await _firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('bookings')
-          .doc(bookingRef.id)
-          .set({
-        'hotelId': hotelId,
-        'bookingDetails': bookingMap,
-      });
+      // await _firestore
+      //     .collection('users')
+      //     .doc(currentUser.uid)
+      //     .collection('bookings')
+      //     .doc(bookingRef.id)
+      //     .set({
+      //   'hotelId': hotelId,
+      //   'bookingDetails': bookingMap,
+      // });
     } catch (e) {
       throw Exception('Failed to save hotel booking: $e');
     }
@@ -129,7 +171,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .doc(hotelId)
           .collection('bookings')
           .get();
-      log('users/bookings/get hotel');
+      // log('users/bookings/get hotel');
       return querySnapshot.docs
           .map((doc) => UserDataModel.fromMap(doc.data(), id: doc.id))
           .toList();
@@ -153,7 +195,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .doc(bookingId);
 
       await bookingRef.delete();
-      log('Deleted user booking with ID: $bookingId');
+      // log('Deleted user booking with ID: $bookingId');
     } catch (e) {
       throw Exception('Failed to delete user booking: $e');
     }

@@ -15,12 +15,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetHotelBookingsEvent>(_onGetHotelBookings);
     on<DeleteUserBookingEvent>(_onDeleteUserBooking);
     on<DeleteHotelBookingEvent>(_onDeleteHotelBooking);
+    on<GetSingleUserBookingEvent>(_onGetSingleUserBooking); // New Event
   }
 
   void _onSaveUserData(SaveUserDataEvent event, Emitter<UserState> emit) async {
     try {
       emit(UserLoadingState());
-      await repository.saveUserBooking(event.userData);
+      await repository.saveUserBooking(event.userData, event.hotelId);
       emit(UserDataSavedState());
     } catch (e) {
       emit(UserErrorState('Failed to save user data: $e'));
@@ -86,6 +87,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       // add(GetHotelBookingsEvent());
     } catch (e) {
       emit(UserErrorState('Failed to delete hotel booking: $e'));
+    }
+  }
+
+  void _onGetSingleUserBooking(
+      GetSingleUserBookingEvent event, Emitter<UserState> emit) async {
+    try {
+      emit(UserLoadingState());
+      final booking = await repository.getSingleUserBooking(event.bookingId);
+      emit(SingleUserBookingLoadedState(booking));
+      // add(GetUserDataEvent());
+    } catch (e) {
+      emit(UserErrorState('Failed to load single user booking: $e'));
     }
   }
 }

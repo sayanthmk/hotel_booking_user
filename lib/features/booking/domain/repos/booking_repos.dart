@@ -1,7 +1,7 @@
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 
 abstract class UserRepository {
-  Future<void> saveUserBooking(UserDataModel userData);
+  Future<void> saveUserBooking(UserDataModel userData, String hotelId);
   Future<List<UserDataModel>> getUserBookings();
 
   Future<void> saveHotelBooking({
@@ -16,4 +16,5 @@ abstract class UserRepository {
     required String hotelId,
     required String bookingId,
   });
+  Future<UserDataModel> getSingleUserBooking(String bookingId);
 }
