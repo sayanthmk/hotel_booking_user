@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/email_signup.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/tabview_page.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/gradiant_button.dart';
@@ -41,7 +40,7 @@ class AuthSelectionPage extends StatelessWidget {
                       builder: (context) => const TabBarViewPage()),
                 );
               },
-              color: Colors.blue,
+              color: const Color(0xFF36C8F6),
               textColor: Colors.white,
               borderRadius: 10.0,
               padding:
@@ -50,7 +49,7 @@ class AuthSelectionPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
               height: 50,
               width: 300,
-              gradient: HotelBookingColors.primarybuttongradient,
+              // gradient: HotelBookingColors.primarybuttongradient,
             ),
             const SizedBox(
               height: 30,
@@ -63,7 +62,7 @@ class AuthSelectionPage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => SignUpPage()),
                 );
               },
-              color: Colors.blue,
+              color: const Color(0xFF36C8F6),
               textColor: Colors.white,
               borderRadius: 10.0,
               padding:
@@ -72,7 +71,7 @@ class AuthSelectionPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
               height: 50,
               width: 300,
-              gradient: HotelBookingColors.primarybuttongradient,
+              // gradient: HotelBookingColors.primarybuttongradient,
             ),
           ],
         ),

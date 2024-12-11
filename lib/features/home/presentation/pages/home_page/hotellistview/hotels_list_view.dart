@@ -23,7 +23,7 @@ class HotelsListView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is HotelLoadedState) {
             return SizedBox(
-              height: 280,
+              height: 250,
               child: Material(
                 color: HotelBookingColors.pagebackgroundcolor,
                 child: ListView.builder(
@@ -43,88 +43,160 @@ class HotelsListView extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Stack(
-                            children: [
-                              Container(
-                                width: 200,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(
-                                        hotel.images[0],
-                                      )),
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: const Offset(2, 2),
-                                    ),
-                                  ],
-                                ),
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.black.withOpacity(0.2),
-                                        Colors.transparent,
-                                      ],
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
+                        child: Card(
+                          child: Container(
+                            height: 100,
+                            width: 250,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 140,
+                                    width: 250,
+                                    // color: Colors.red,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          hotel.images[0],
+                                        ),
+                                      ),
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                bottom: 10,
-                                left: 10,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      hotel.hotelName,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    ),
-                                    Text(
-                                      hotel.city,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '${hotel.propertySetup}/night',
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 10),
-                                        ),
-                                        // Text(
-                                        //   hotel.,
-                                        //   style: const TextStyle(
-                                        //       color: Colors.white,
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: 10),
-                                        // ),
-                                      ],
-                                    ),
-                                  ],
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        hotel.hotelName,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Text(
+                                        '#${hotel.propertySetup}/nights',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '${hotel.city}/${hotel.country}',
+                                        style: TextStyle(
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      Text(hotel.hotelType),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
+                        // child: Padding(
+                        //   padding: const EdgeInsets.all(5.0),
+                        //   child: Stack(
+                        //     children: [
+                        //       Container(
+                        //         width: 250,
+                        //         decoration: BoxDecoration(
+                        //           image: DecorationImage(
+                        //             fit: BoxFit.fill,
+                        //             image: NetworkImage(
+                        //               hotel.images[0],
+                        //             ),
+                        //           ),
+                        //           color: Colors.grey,
+                        //           borderRadius: BorderRadius.circular(20),
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.black.withOpacity(0.2),
+                        //               spreadRadius: 1,
+                        //               blurRadius: 4,
+                        //               offset: const Offset(2, 2),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         margin:
+                        //             const EdgeInsets.symmetric(horizontal: 5),
+                        //         // child: Container(
+                        //         //   decoration: BoxDecoration(
+                        //         //     borderRadius: BorderRadius.circular(20),
+                        //         //     gradient: LinearGradient(
+                        //         //       colors: [
+                        //         //         Colors.black.withOpacity(0.2),
+                        //         //         Colors.transparent,
+                        //         //       ],
+                        //         //       begin: Alignment.bottomCenter,
+                        //         //       end: Alignment.topCenter,
+                        //         //     ),
+                        //         //   ),
+                        //         // ),
+                        //       ),
+                        //       Positioned(
+                        //         bottom: 10,
+                        //         left: 10,
+                        //         child: Column(
+                        //           children: [
+                        //             Text(
+                        //               hotel.hotelName,
+                        //               style: const TextStyle(
+                        //                   color: Colors.white,
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontSize: 20),
+                        //             ),
+                        //             Text(
+                        //               hotel.city,
+                        //               style: const TextStyle(
+                        //                   color: Colors.white,
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontSize: 10),
+                        //             ),
+                        //             Row(
+                        //               children: [
+                        //                 Text(
+                        //                   '${hotel.propertySetup}/night',
+                        //                   style: const TextStyle(
+                        //                       color: Colors.white,
+                        //                       fontWeight: FontWeight.bold,
+                        //                       fontSize: 10),
+                        //                 ),
+                        //                 // Text(
+                        //                 //   hotel.,
+                        //                 //   style: const TextStyle(
+                        //                 //       color: Colors.white,
+                        //                 //       fontWeight: FontWeight.bold,
+                        //                 //       fontSize: 10),
+                        //                 // ),
+                        //               ],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       );
                     }),
               ),

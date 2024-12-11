@@ -236,12 +236,12 @@ class HotelBookingPage extends StatelessWidget {
                                           roomId: selectedRoomId!,
                                         );
 
-                                        context.read<UserBloc>().add(
-                                              SaveHotelBookingEvent(
-                                                hotelId: hotelId,
-                                                bookingData: bookingData,
-                                              ),
-                                            );
+                                        // context.read<UserBloc>().add(
+                                        //       SaveHotelBookingEvent(
+                                        //         hotelId: hotelId,
+                                        //         bookingData: bookingData,
+                                        //       ),
+                                        //     );
                                         context.read<UserBloc>().add(
                                               SaveUserDataEvent(
                                                   bookingData, hotelId),

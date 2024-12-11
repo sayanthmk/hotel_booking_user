@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hotel_booking/features/home/domain/entity/hotel_entity.dart';
 
 class HotelModel extends HotelEntity {
@@ -31,7 +29,7 @@ class HotelModel extends HotelEntity {
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
-    log('model');
+    // log('model');
     return HotelModel(
       hotelId: json['userId'] ?? '',
       hotelType: json['hotel_type'] ?? '',

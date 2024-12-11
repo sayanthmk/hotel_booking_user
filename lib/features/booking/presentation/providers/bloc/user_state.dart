@@ -20,10 +20,9 @@ class UserErrorState extends UserState {
   UserErrorState(this.message);
 }
 
-// New State for Deletion
 class UserBookingDeletedState extends UserState {}
 
 class SingleUserBookingLoadedState extends UserState {
   final UserDataModel booking;
-  SingleUserBookingLoadedState(this.booking); // New State
+  SingleUserBookingLoadedState(this.booking);
 }

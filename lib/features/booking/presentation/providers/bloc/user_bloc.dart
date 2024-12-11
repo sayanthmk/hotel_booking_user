@@ -11,11 +11,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this.repository) : super(UserInitialState()) {
     on<SaveUserDataEvent>(_onSaveUserData);
     on<GetUserDataEvent>(_onGetUserData);
-    on<SaveHotelBookingEvent>(_onSaveHotelBooking);
+    // on<SaveHotelBookingEvent>(_onSaveHotelBooking);
     on<GetHotelBookingsEvent>(_onGetHotelBookings);
     on<DeleteUserBookingEvent>(_onDeleteUserBooking);
-    on<DeleteHotelBookingEvent>(_onDeleteHotelBooking);
-    on<GetSingleUserBookingEvent>(_onGetSingleUserBooking); // New Event
+    // on<DeleteHotelBookingEvent>(_onDeleteHotelBooking);
+    on<GetSingleUserBookingEvent>(_onGetSingleUserBooking);
   }
 
   void _onSaveUserData(SaveUserDataEvent event, Emitter<UserState> emit) async {
@@ -38,19 +38,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  void _onSaveHotelBooking(
-      SaveHotelBookingEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(UserLoadingState());
-      await repository.saveHotelBooking(
-        hotelId: event.hotelId,
-        bookingData: event.bookingData,
-      );
-      emit(UserDataSavedState());
-    } catch (e) {
-      emit(UserErrorState('Failed to save hotel booking: $e'));
-    }
-  }
+  // void _onSaveHotelBooking(
+  //     SaveHotelBookingEvent event, Emitter<UserState> emit) async {
+  //   try {
+  //     emit(UserLoadingState());
+  //     await repository.saveHotelBooking(
+  //       hotelId: event.hotelId,
+  //       bookingData: event.bookingData,
+  //     );
+  //     emit(UserDataSavedState());
+  //   } catch (e) {
+  //     emit(UserErrorState('Failed to save hotel booking: $e'));
+  //   }
+  // }
 
   void _onGetHotelBookings(
       GetHotelBookingsEvent event, Emitter<UserState> emit) async {
@@ -75,20 +75,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  void _onDeleteHotelBooking(
-      DeleteHotelBookingEvent event, Emitter<UserState> emit) async {
-    try {
-      emit(UserLoadingState());
-      await repository.deleteHotelBooking(
-        hotelId: event.hotelId,
-        bookingId: event.bookingId,
-      );
-      emit(UserBookingDeletedState());
-      // add(GetHotelBookingsEvent());
-    } catch (e) {
-      emit(UserErrorState('Failed to delete hotel booking: $e'));
-    }
-  }
+  // void _onDeleteHotelBooking(
+  //     DeleteHotelBookingEvent event, Emitter<UserState> emit) async {
+  //   try {
+  //     emit(UserLoadingState());
+  //     await repository.deleteHotelBooking(
+  //       hotelId: event.hotelId,
+  //       bookingId: event.bookingId,
+  //     );
+  //     emit(UserBookingDeletedState());
+  //     // add(GetHotelBookingsEvent());
+  //   } catch (e) {
+  //     emit(UserErrorState('Failed to delete hotel booking: $e'));
+  //   }
+  // }
 
   void _onGetSingleUserBooking(
       GetSingleUserBookingEvent event, Emitter<UserState> emit) async {

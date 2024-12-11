@@ -11,12 +11,12 @@ class SaveUserDataEvent extends UserEvent {
 
 class GetUserDataEvent extends UserEvent {}
 
-class SaveHotelBookingEvent extends UserEvent {
-  final String hotelId;
-  final UserDataModel bookingData;
+// class SaveHotelBookingEvent extends UserEvent {
+//   final String hotelId;
+//   final UserDataModel bookingData;
 
-  SaveHotelBookingEvent({required this.hotelId, required this.bookingData});
-}
+//   SaveHotelBookingEvent({required this.hotelId, required this.bookingData});
+// }
 
 class GetHotelBookingsEvent extends UserEvent {
   final String hotelId;
@@ -24,7 +24,6 @@ class GetHotelBookingsEvent extends UserEvent {
   GetHotelBookingsEvent(this.hotelId);
 }
 
-// New Events for Deletion
 class DeleteUserBookingEvent extends UserEvent {
   final String bookingId;
   final String hotelId;
@@ -32,14 +31,14 @@ class DeleteUserBookingEvent extends UserEvent {
   DeleteUserBookingEvent(this.bookingId, this.hotelId);
 }
 
-class DeleteHotelBookingEvent extends UserEvent {
-  final String hotelId;
-  final String bookingId;
+// class DeleteHotelBookingEvent extends UserEvent {
+//   final String hotelId;
+//   final String bookingId;
 
-  DeleteHotelBookingEvent({required this.hotelId, required this.bookingId});
-}
+//   DeleteHotelBookingEvent({required this.hotelId, required this.bookingId});
+// }
 
 class GetSingleUserBookingEvent extends UserEvent {
   final String bookingId;
-  GetSingleUserBookingEvent(this.bookingId); // New Event
+  GetSingleUserBookingEvent(this.bookingId);
 }
