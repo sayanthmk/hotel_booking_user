@@ -26,8 +26,8 @@ class BlocSection extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => di.sl<AuthBloc>(),
         ),
-        BlocProvider(
-          create: (_) => di.sl<StripePaymentBloc>(),
+        BlocProvider<StripeBloc>(
+          create: (context) => di.sl<StripeBloc>(),
         ),
         BlocProvider(
           create: (_) => di.sl<HotelBloc>(),

@@ -165,6 +165,45 @@ class FavoritesPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                height: 150,
+                width: 220,
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey.shade100,
+                ),
+                child: hotel.images.isNotEmpty
+                    ? Image.network(
+                        hotel.images[0],
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Center(
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.red.shade300,
+                              size: 32,
+                            ),
+                          );
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.image_not_supported,
+                          color: Colors.grey.shade400,
+                          size: 32,
+                        ),
+                      ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

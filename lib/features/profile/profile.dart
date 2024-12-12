@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/routepage.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/utils/alertbox.dart';
@@ -54,7 +53,7 @@ class MyProfile extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Text('My profile'),
       ),
     );

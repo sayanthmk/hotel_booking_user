@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
-import 'package:hotel_booking/features/auth/presentation/pages/routepage.dart';
-import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
-import 'package:hotel_booking/utils/alertbox.dart';
 
 class LocationWithNotificationBar extends StatelessWidget {
   const LocationWithNotificationBar({
@@ -59,31 +55,31 @@ class LocationWithNotificationBar extends StatelessWidget {
               ],
             ),
             InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CustomAlertDialog(
-                      titleText: 'Delete',
-                      contentText: 'Are you sure you want to logout?',
-                      buttonText1: 'Cancel',
-                      buttonText2: 'Logout',
-                      onPressButton1: () {
-                        Navigator.of(context).pop();
-                      },
-                      onPressButton2: () {
-                        Navigator.of(context).pop();
-                        context.read<AuthBloc>().add(SignOutEvent());
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const AuthSelectionPage(),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                );
-              },
+              // onTap: () {
+              //   showDialog(
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return CustomAlertDialog(
+              //         titleText: 'Delete',
+              //         contentText: 'Are you sure you want to logout?',
+              //         buttonText1: 'Cancel',
+              //         buttonText2: 'Logout',
+              //         onPressButton1: () {
+              //           Navigator.of(context).pop();
+              //         },
+              //         onPressButton2: () {
+              //           Navigator.of(context).pop();
+              //           context.read<AuthBloc>().add(SignOutEvent());
+              //           Navigator.of(context).pushReplacement(
+              //             MaterialPageRoute(
+              //               builder: (context) => const AuthSelectionPage(),
+              //             ),
+              //           );
+              //         },
+              //       );
+              //     },
+              //   );
+              // },
               child: Container(
                 height: 50,
                 width: 50,

@@ -1,15 +1,26 @@
-part of 'stripepayment_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class StripePaymentEvent {
+abstract class StripePaymentEvent extends Equatable {
   const StripePaymentEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
-class MakePayment extends StripePaymentEvent {
-  final double amount;
-  const MakePayment({required this.amount});
-}
-
-class UpdateAmount extends StripePaymentEvent {
+class UpdatePaymentAmount extends StripePaymentEvent {
   final String amount;
-  const UpdateAmount({required this.amount});
+
+  const UpdatePaymentAmount(this.amount);
+
+  @override
+  List<Object> get props => [amount];
+}
+
+class InitiatePayment extends StripePaymentEvent {
+  final double amount;
+
+  const InitiatePayment(this.amount);
+
+  @override
+  List<Object> get props => [amount];
 }

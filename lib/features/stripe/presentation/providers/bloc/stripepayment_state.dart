@@ -1,7 +1,10 @@
-part of 'stripepayment_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class StripePaymentState {
+abstract class StripePaymentState extends Equatable {
   const StripePaymentState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class StripePaymentInitial extends StripePaymentState {
@@ -22,6 +25,11 @@ class StripePaymentInitial extends StripePaymentState {
       errorMessage: errorMessage,
     );
   }
+
+  @override
+  List<Object> get props => [
+        amount,
+      ];
 }
 
 class StripePaymentLoading extends StripePaymentState {}
@@ -30,5 +38,9 @@ class StripePaymentSuccess extends StripePaymentState {}
 
 class StripePaymentFailure extends StripePaymentState {
   final String error;
+
   const StripePaymentFailure({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

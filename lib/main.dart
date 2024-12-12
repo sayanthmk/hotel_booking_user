@@ -2,9 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hotel_booking/bloc_section.dart';
+import 'package:hotel_booking/core/constants/stripe_keys.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart'
     as di;
-import 'package:hotel_booking/features/stripe/data/datasourse/consts.dart';
 import 'package:hotel_booking/firebase_options.dart';
 
 void main() async {

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -25,6 +26,11 @@ import 'package:hotel_booking/features/rooms/domain/usecase/rooms_usecase.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
+import 'package:hotel_booking/features/stripe/data/datasourse/stripe_datasourse.dart';
+import 'package:hotel_booking/features/stripe/data/repositary/stripe_repositary.dart';
+import 'package:hotel_booking/features/stripe/domain/repos/stripe_repos.dart';
+import 'package:hotel_booking/features/stripe/domain/usecase/stripe_usecase.dart';
+import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
 import 'package:hotel_booking/features/wishlist/data/datasourse/wish_datasourse.dart';
 import 'package:hotel_booking/features/wishlist/data/repositary/wish_repositary.dart';
 import 'package:hotel_booking/features/wishlist/domain/repos/wish_repos.dart';
@@ -162,6 +168,31 @@ Future<void> init() async {
         getFavoriteHotels: sl(),
         removeHotelFromFavorites: sl(),
       ));
+
+  ////////////////////////////////////////////////////////////////////////
+  sl.registerLazySingleton<Dio>(() => Dio());
+
+  // Register data sources
+  sl.registerLazySingleton<StripeRemoteDataSource>(
+    () => StripeRemoteDataSourceImpl(dio: sl<Dio>()),
+  );
+
+// Register repository
+  sl.registerLazySingleton<StripePaymentRepository>(
+    () => StripePaymentRepositoryImpl(
+        remoteDataSource: sl<StripeRemoteDataSource>()),
+  );
+
+// Register use case
+  sl.registerLazySingleton<CreatePaymentIntentUseCase>(
+    () => CreatePaymentIntentUseCase(sl<StripePaymentRepository>()),
+  );
+
+// Register BLoC
+  sl.registerFactory<StripeBloc>(
+    () => StripeBloc(
+        createPaymentIntentUseCase: sl<CreatePaymentIntentUseCase>()),
+  );
 }
 
 
@@ -204,3 +235,19 @@ Future<void> init() async {
   // sl.registerFactory(
   //   () => FavoritesBloc(AddHotelToFavorites(sl<FavoritesRepository>())),
   // );
+  //Register Remote datasourse
+
+//   sl.registerFactory<StripeRemoteDataSource>(
+//     () => StripeRemoteDataSourceImpl(dio: sl<Dio>()),
+//   );
+// //Register Repositary
+//   sl.registerFactory<StripePaymentRepository>(
+//     () => StripePaymentRepositoryImpl(
+//         remoteDataSource: sl<StripeRemoteDataSource>()),
+//   );
+//   // Use cases
+//   sl.registerFactory(() => CreatePaymentIntentUseCase(sl()));
+//   // Bloc
+//   sl.registerFactory<StripeBloc>(
+//     () => StripeBloc(createPaymentIntentUseCase: sl()),
+//   );

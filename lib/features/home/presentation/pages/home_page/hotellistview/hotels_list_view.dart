@@ -57,7 +57,6 @@ class HotelsListView extends StatelessWidget {
                                   child: Container(
                                     height: 140,
                                     width: 250,
-                                    // color: Colors.red,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
@@ -71,7 +70,7 @@ class HotelsListView extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -84,9 +83,10 @@ class HotelsListView extends StatelessWidget {
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        '#${hotel.propertySetup}/nights',
-                                        style: TextStyle(
-                                            color: Colors.black,
+                                        ' ₹${hotel.propertySetup}/night',
+                                        style: const TextStyle(
+                                            color: HotelBookingColors
+                                                .basictextcolor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14),
                                       ),
@@ -94,17 +94,27 @@ class HotelsListView extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        '${hotel.city}/${hotel.country}',
-                                        style: TextStyle(
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
+                                      SizedBox(
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.location_on,
+                                              color: Colors.red[600],
+                                            ),
+                                            Text(
+                                              '${hotel.city}/${hotel.country}',
+                                              style: TextStyle(
+                                                  color: Colors.grey[500],
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                       Text(hotel.hotelType),
                                     ],
@@ -114,7 +124,23 @@ class HotelsListView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // child: Padding(
+                      );
+                    }),
+              ),
+            );
+          } else if (state is HotelErrorState) {
+            return Center(
+              child: Text(
+                state.message,
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          }
+          return const Center(child: Text('No hotels found'));
+        }));
+  }
+}
+     // child: Padding(
                         //   padding: const EdgeInsets.all(5.0),
                         //   child: Stack(
                         //     children: [
@@ -197,19 +223,3 @@ class HotelsListView extends StatelessWidget {
                         //     ],
                         //   ),
                         // ),
-                      );
-                    }),
-              ),
-            );
-          } else if (state is HotelErrorState) {
-            return Center(
-              child: Text(
-                state.message,
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          }
-          return const Center(child: Text('No hotels found'));
-        }));
-  }
-}
