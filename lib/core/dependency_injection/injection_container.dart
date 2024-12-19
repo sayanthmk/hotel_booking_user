@@ -174,7 +174,8 @@ Future<void> init() async {
 
   // Register data sources
   sl.registerLazySingleton<StripeRemoteDataSource>(
-    () => StripeRemoteDataSourceImpl(dio: sl<Dio>()),
+    () => StripeRemoteDataSourceImpl(
+        dio: sl<Dio>(), firestore: sl<FirebaseFirestore>()),
   );
 
 // Register repository
@@ -188,10 +189,15 @@ Future<void> init() async {
     () => CreatePaymentIntentUseCase(sl<StripePaymentRepository>()),
   );
 
+  sl.registerLazySingleton<UpdatePaymentAmountUseCase>(
+    () => UpdatePaymentAmountUseCase(sl<StripePaymentRepository>()),
+  );
+
 // Register BLoC
   sl.registerFactory<StripeBloc>(
     () => StripeBloc(
-        createPaymentIntentUseCase: sl<CreatePaymentIntentUseCase>()),
+        createPaymentIntentUseCase: sl<CreatePaymentIntentUseCase>(),
+        updatePaymentAmountUseCase: sl<UpdatePaymentAmountUseCase>()),
   );
 }
 

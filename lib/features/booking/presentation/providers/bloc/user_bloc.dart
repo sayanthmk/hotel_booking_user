@@ -21,6 +21,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onSaveUserData(SaveUserDataEvent event, Emitter<UserState> emit) async {
     try {
       emit(UserLoadingState());
+
       await repository.saveUserBooking(event.userData, event.hotelId);
       emit(UserDataSavedState());
     } catch (e) {

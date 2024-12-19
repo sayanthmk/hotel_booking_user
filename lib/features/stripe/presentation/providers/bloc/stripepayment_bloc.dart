@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:hotel_booking/features/stripe/domain/usecase/stripe_usecase.dart';
@@ -6,9 +7,11 @@ import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripe
 
 class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
   final CreatePaymentIntentUseCase createPaymentIntentUseCase;
+  final UpdatePaymentAmountUseCase updatePaymentAmountUseCase;
 
   StripeBloc({
     required this.createPaymentIntentUseCase,
+    required this.updatePaymentAmountUseCase,
   }) : super(const StripePaymentInitial()) {
     on<UpdatePaymentAmount>(_onUpdatePaymentAmount);
     on<InitiatePayment>(_onInitiatePayment);
@@ -17,26 +20,20 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
   void _onUpdatePaymentAmount(
     UpdatePaymentAmount event,
     Emitter<StripePaymentState> emit,
-  ) {
-    if (state is StripePaymentInitial) {
-      final currentState = state as StripePaymentInitial;
+  ) async {
+    emit(StripePaymentLoading());
 
-      String? errorMessage;
-      if (event.amount.isNotEmpty) {
-        try {
-          final amount = double.parse(event.amount);
-          if (amount <= 0) {
-            errorMessage = 'Amount must be greater than 0';
-          }
-        } catch (_) {
-          errorMessage = 'Please enter a valid number';
-        }
-      }
-
-      emit(currentState.copyWith(
+    try {
+      log('StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState>');
+      await updatePaymentAmountUseCase(
+        hotelId: event.hotelId,
+        bookingData: event.bookingData,
         amount: event.amount,
-        errorMessage: errorMessage,
-      ));
+      );
+
+      emit(StripePaymentAmountUpdated());
+    } catch (e) {
+      emit(StripePaymentFailure(error: e.toString()));
     }
   }
 
@@ -47,6 +44,7 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     emit(StripePaymentLoading());
 
     try {
+      log('_onInitiatePayment');
       // Convert amount to cents
       final amountInCents = (event.amount * 100).round();
 
@@ -54,18 +52,27 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
       final paymentIntent = await createPaymentIntentUseCase(
         amount: amountInCents,
         currency: 'usd',
+        // currency: 'inr',
       );
 
       // Process Payment
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntent.clientSecret,
-          merchantDisplayName: "Your App Name",
+          merchantDisplayName: "Staywise",
         ),
       );
 
       await Stripe.instance.presentPaymentSheet();
-      await Stripe.instance.confirmPaymentSheetPayment();
+
+      // Update payment amount if additional data is provided
+      // if (event.bookingData != null && event.hotelId != null) {
+      //   await updatePaymentAmountUseCase(
+      //     hotelId: event.hotelId!,
+      //     bookingData: event.bookingData!,
+      //     amount: event.amount,
+      //   );
+      // }
 
       emit(StripePaymentSuccess());
     } catch (e) {
@@ -73,6 +80,93 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
     }
   }
 }
+
+
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:hotel_booking/features/stripe/domain/usecase/stripe_usecase.dart';
+// import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_event.dart';
+// import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_state.dart';
+
+// class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
+//   final CreatePaymentIntentUseCase createPaymentIntentUseCase;
+//   final UpdatePaymentAmountUseCase updatePaymentAmountUseCase;
+  
+
+//   StripeBloc({
+//     required this.createPaymentIntentUseCase,
+//     required this.updatePaymentAmountUseCase,
+//   }) : super(const StripePaymentInitial()) {
+//     on<UpdatePaymentAmount>(_onUpdatePaymentAmount);
+//     on<InitiatePayment>(_onInitiatePayment);
+//   }
+
+//   void _onUpdatePaymentAmount(
+//     UpdatePaymentAmount event,
+//     Emitter<StripePaymentState> emit,
+//   ) {
+//     if (state is StripePaymentInitial) {
+//       final currentState = state as StripePaymentInitial;
+
+//       String? errorMessage;
+//       if (event.amount.isNotEmpty) {
+//         try {
+//           final amount = double.parse(event.amount);
+//           if (amount <= 0) {
+//             errorMessage = 'Amount must be greater than 0';
+//           }
+//         } catch (_) {
+//           errorMessage = 'Please enter a valid number';
+//         }
+//       }
+
+//       emit(currentState.copyWith(
+//         amount: event.amount,
+//         errorMessage: errorMessage,
+//       ));
+//     }
+//   }
+
+//   Future<void> _onInitiatePayment(
+//     InitiatePayment event,
+//     Emitter<StripePaymentState> emit,
+//   ) async {
+//     emit(StripePaymentLoading());
+
+//     try {
+//       // Convert amount to cents
+//       final amountInCents = (event.amount * 100).round();
+
+//       // Create Payment Intent
+//       final paymentIntent = await createPaymentIntentUseCase(
+//         amount: amountInCents,
+//         currency: 'usd',
+//         //  currency: 'inr',
+//       );
+
+//       // Process Payment
+//       await Stripe.instance.initPaymentSheet(
+//         paymentSheetParameters: SetupPaymentSheetParameters(
+//           paymentIntentClientSecret: paymentIntent.clientSecret,
+//           merchantDisplayName: "Staywise",
+//         ),
+//       );
+
+//       await Stripe.instance.presentPaymentSheet();
+//       // await Stripe.instance.confirmPaymentSheetPayment();
+//       if (event.bookingData != null && event.hotelId != null) {
+//         await paymentService.updatePaymentAmount(
+//           hotelId: event.hotelId!,
+//           bookingData: event.bookingData!,
+//           amount: event.amount,
+//         );
+//       }
+//       emit(StripePaymentSuccess());
+//     } catch (e) {
+//       emit(StripePaymentFailure(error: e.toString()));
+//     }
+//   }
+// }
 
 
 // import 'package:bloc/bloc.dart';

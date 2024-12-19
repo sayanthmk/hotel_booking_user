@@ -1,380 +1,380 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
-import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_event.dart';
-import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_state.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
+// import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_event.dart';
+// import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_state.dart';
 
-class StripePaymentPage extends StatelessWidget {
-  const StripePaymentPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Stripe Payment')),
-      body: BlocConsumer<StripeBloc, StripePaymentState>(
-        listener: (context, state) {
-          if (state is StripePaymentSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Payment Successful!')),
-            );
-          }
-          if (state is StripePaymentFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Payment Failed: ${state.error}')),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is StripePaymentLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Enter Amount',
-                    errorText: state is StripePaymentInitial
-                        ? state.errorMessage
-                        : null,
-                  ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    context.read<StripeBloc>().add(
-                          UpdatePaymentAmount(value),
-                        );
-                  },
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: state is StripePaymentInitial &&
-                          state.errorMessage == null &&
-                          state.amount.isNotEmpty
-                      ? () {
-                          final amount = double.parse(state.amount);
-                          context.read<StripeBloc>().add(
-                                InitiatePayment(amount),
-                              );
-                        }
-                      : null,
-                  child: const Text('Pay Now'),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-// abstract class StripePaymentRepository {
-//   Future<PaymentIntentEntity> createPaymentIntent({
-//     required int amount,
-//     required String currency,
-//   });
-
-//   Future<void> processPayment(String clientSecret);
-// }
-
-// import '../entities/payment_intent_entity.dart';
-// import '../repositories/stripe_payment_repository.dart';
-
-// class CreatePaymentIntentUseCase {
-//   final StripePaymentRepository repository;
-
-//   CreatePaymentIntentUseCase(this.repository);
-
-//   Future<PaymentIntentEntity> call({
-//     required int amount,
-//     required String currency,
-//   }) async {
-//     return await repository.createPaymentIntent(
-//       amount: amount,
-//       currency: currency,
-//     );
-//   }
-// }
-
-// import 'package:flutter_stripe/flutter_stripe.dart';
-
-// import '../../domain/entities/payment_intent_entity.dart';
-// import '../../domain/repositories/stripe_payment_repository.dart';
-// import '../datasources/stripe_remote_datasource.dart';
-// import '../models/payment_intent_model.dart';
-
-// class StripePaymentRepositoryImpl implements StripePaymentRepository {
-//   final StripeRemoteDataSource remoteDataSource;
-
-//   StripePaymentRepositoryImpl(this.remoteDataSource);
+// class StripePaymentPage extends StatelessWidget {
+//   const StripePaymentPage({super.key});
 
 //   @override
-//   Future<PaymentIntentEntity> createPaymentIntent({
-//     required int amount,
-//     required String currency,
-//   }) async {
-//     final PaymentIntentModel paymentIntent =
-//         await remoteDataSource.createPaymentIntent(
-//       amount: amount,
-//       currency: currency,
-//     );
-//     return paymentIntent.toEntity();
-//   }
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text('Stripe Payment')),
+//       body: BlocConsumer<StripeBloc, StripePaymentState>(
+//         listener: (context, state) {
+//           if (state is StripePaymentSuccess) {
+//             ScaffoldMessenger.of(context).showSnackBar(
+//               const SnackBar(content: Text('Payment Successful!')),
+//             );
+//           }
+//           if (state is StripePaymentFailure) {
+//             ScaffoldMessenger.of(context).showSnackBar(
+//               SnackBar(content: Text('Payment Failed: ${state.error}')),
+//             );
+//           }
+//         },
+//         builder: (context, state) {
+//           if (state is StripePaymentLoading) {
+//             return const Center(child: CircularProgressIndicator());
+//           }
 
-//   @override
-//   Future<void> processPayment(String clientSecret) async {
-//     await Stripe.instance.initPaymentSheet(
-//       paymentSheetParameters: SetupPaymentSheetParameters(
-//         paymentIntentClientSecret: clientSecret,
-//         merchantDisplayName: "Your App Name",
+//           return Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: [
+//                 TextField(
+//                   decoration: InputDecoration(
+//                     labelText: 'Enter Amount',
+//                     errorText: state is StripePaymentInitial
+//                         ? state.errorMessage
+//                         : null,
+//                   ),
+//                   keyboardType: TextInputType.number,
+//                   onChanged: (value) {
+//                     context.read<StripeBloc>().add(
+//                           UpdatePaymentAmount(value),
+//                         );
+//                   },
+//                 ),
+//                 const SizedBox(height: 20),
+//                 ElevatedButton(
+//                   onPressed: state is StripePaymentInitial &&
+//                           state.errorMessage == null &&
+//                           state.amount.isNotEmpty
+//                       ? () {
+//                           final amount = double.parse(state.amount);
+//                           context.read<StripeBloc>().add(
+//                                 InitiatePayment(amount),
+//                               );
+//                         }
+//                       : null,
+//                   child: const Text('Pay Now'),
+//                 ),
+//               ],
+//             ),
+//           );
+//         },
 //       ),
 //     );
-
-//     await Stripe.instance.presentPaymentSheet();
-//     await Stripe.instance.confirmPaymentSheetPayment();
 //   }
 // }
+// // abstract class StripePaymentRepository {
+// //   Future<PaymentIntentEntity> createPaymentIntent({
+// //     required int amount,
+// //     required String currency,
+// //   });
 
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:equatable/equatable.dart';
-// import 'package:flutter_stripe/flutter_stripe.dart';
+// //   Future<void> processPayment(String clientSecret);
+// // }
 
-// import '../../domain/usecases/create_payment_intent_usecase.dart';
+// // import '../entities/payment_intent_entity.dart';
+// // import '../repositories/stripe_payment_repository.dart';
 
-// part 'stripe_payment_event.dart';
-// part 'stripe_payment_state.dart';
+// // class CreatePaymentIntentUseCase {
+// //   final StripePaymentRepository repository;
 
-// class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
-//   final CreatePaymentIntentUseCase createPaymentIntentUseCase;
+// //   CreatePaymentIntentUseCase(this.repository);
 
-//   StripeBloc({
-//     required this.createPaymentIntentUseCase,
-//   }) : super(const StripePaymentInitial()) {
-//     on<UpdatePaymentAmount>(_onUpdatePaymentAmount);
-//     on<InitiatePayment>(_onInitiatePayment);
-//   }
+// //   Future<PaymentIntentEntity> call({
+// //     required int amount,
+// //     required String currency,
+// //   }) async {
+// //     return await repository.createPaymentIntent(
+// //       amount: amount,
+// //       currency: currency,
+// //     );
+// //   }
+// // }
 
-//   void _onUpdatePaymentAmount(
-//     UpdatePaymentAmount event,
-//     Emitter<StripePaymentState> emit,
-//   ) {
-//     if (state is StripePaymentInitial) {
-//       final currentState = state as StripePaymentInitial;
+// // import 'package:flutter_stripe/flutter_stripe.dart';
 
-//       String? errorMessage;
-//       if (event.amount.isNotEmpty) {
-//         try {
-//           final amount = double.parse(event.amount);
-//           if (amount <= 0) {
-//             errorMessage = 'Amount must be greater than 0';
-//           }
-//         } catch (_) {
-//           errorMessage = 'Please enter a valid number';
-//         }
-//       }
+// // import '../../domain/entities/payment_intent_entity.dart';
+// // import '../../domain/repositories/stripe_payment_repository.dart';
+// // import '../datasources/stripe_remote_datasource.dart';
+// // import '../models/payment_intent_model.dart';
 
-//       emit(currentState.copyWith(
-//         amount: event.amount,
-//         errorMessage: errorMessage,
-//       ));
-//     }
-//   }
+// // class StripePaymentRepositoryImpl implements StripePaymentRepository {
+// //   final StripeRemoteDataSource remoteDataSource;
 
-//   Future<void> _onInitiatePayment(
-//     InitiatePayment event,
-//     Emitter<StripePaymentState> emit,
-//   ) async {
-//     emit(StripePaymentLoading());
+// //   StripePaymentRepositoryImpl(this.remoteDataSource);
 
-//     try {
-//       // Convert amount to cents
-//       final amountInCents = (event.amount * 100).round();
+// //   @override
+// //   Future<PaymentIntentEntity> createPaymentIntent({
+// //     required int amount,
+// //     required String currency,
+// //   }) async {
+// //     final PaymentIntentModel paymentIntent =
+// //         await remoteDataSource.createPaymentIntent(
+// //       amount: amount,
+// //       currency: currency,
+// //     );
+// //     return paymentIntent.toEntity();
+// //   }
 
-//       // Create Payment Intent
-//       final paymentIntent = await createPaymentIntentUseCase(
-//         amount: amountInCents,
-//         currency: 'usd',
-//       );
+// //   @override
+// //   Future<void> processPayment(String clientSecret) async {
+// //     await Stripe.instance.initPaymentSheet(
+// //       paymentSheetParameters: SetupPaymentSheetParameters(
+// //         paymentIntentClientSecret: clientSecret,
+// //         merchantDisplayName: "Your App Name",
+// //       ),
+// //     );
 
-//       // Process Payment
-//       await Stripe.instance.initPaymentSheet(
-//         paymentSheetParameters: SetupPaymentSheetParameters(
-//           paymentIntentClientSecret: paymentIntent.clientSecret,
-//           merchantDisplayName: "Your App Name",
-//         ),
-//       );
+// //     await Stripe.instance.presentPaymentSheet();
+// //     await Stripe.instance.confirmPaymentSheetPayment();
+// //   }
+// // }
 
-//       await Stripe.instance.presentPaymentSheet();
-//       await Stripe.instance.confirmPaymentSheetPayment();
+// // import 'package:flutter_bloc/flutter_bloc.dart';
+// // import 'package:equatable/equatable.dart';
+// // import 'package:flutter_stripe/flutter_stripe.dart';
 
-//       emit(StripePaymentSuccess());
-//     } catch (e) {
-//       emit(StripePaymentFailure(error: e.toString()));
-//     }
-//   }
-// }
+// // import '../../domain/usecases/create_payment_intent_usecase.dart';
 
-// Events
-// abstract class StripePaymentEvent extends Equatable {
-//   const StripePaymentEvent();
+// // part 'stripe_payment_event.dart';
+// // part 'stripe_payment_state.dart';
 
-//   @override
-//   List<Object> get props => [];
-// }
+// // class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
+// //   final CreatePaymentIntentUseCase createPaymentIntentUseCase;
 
-// class UpdatePaymentAmount extends StripePaymentEvent {
-//   final String amount;
+// //   StripeBloc({
+// //     required this.createPaymentIntentUseCase,
+// //   }) : super(const StripePaymentInitial()) {
+// //     on<UpdatePaymentAmount>(_onUpdatePaymentAmount);
+// //     on<InitiatePayment>(_onInitiatePayment);
+// //   }
 
-//   const UpdatePaymentAmount(this.amount);
+// //   void _onUpdatePaymentAmount(
+// //     UpdatePaymentAmount event,
+// //     Emitter<StripePaymentState> emit,
+// //   ) {
+// //     if (state is StripePaymentInitial) {
+// //       final currentState = state as StripePaymentInitial;
 
-//   @override
-//   List<Object> get props => [amount];
-// }
+// //       String? errorMessage;
+// //       if (event.amount.isNotEmpty) {
+// //         try {
+// //           final amount = double.parse(event.amount);
+// //           if (amount <= 0) {
+// //             errorMessage = 'Amount must be greater than 0';
+// //           }
+// //         } catch (_) {
+// //           errorMessage = 'Please enter a valid number';
+// //         }
+// //       }
 
-// class InitiatePayment extends StripePaymentEvent {
-//   final double amount;
+// //       emit(currentState.copyWith(
+// //         amount: event.amount,
+// //         errorMessage: errorMessage,
+// //       ));
+// //     }
+// //   }
 
-//   const InitiatePayment(this.amount);
+// //   Future<void> _onInitiatePayment(
+// //     InitiatePayment event,
+// //     Emitter<StripePaymentState> emit,
+// //   ) async {
+// //     emit(StripePaymentLoading());
 
-//   @override
-//   List<Object> get props => [amount];
-// }
+// //     try {
+// //       // Convert amount to cents
+// //       final amountInCents = (event.amount * 100).round();
 
-// States
-// abstract class StripePaymentState extends Equatable {
-//   const StripePaymentState();
+// //       // Create Payment Intent
+// //       final paymentIntent = await createPaymentIntentUseCase(
+// //         amount: amountInCents,
+// //         currency: 'usd',
+// //       );
 
-//   @override
-//   List<Object> get props => [];
-// }
+// //       // Process Payment
+// //       await Stripe.instance.initPaymentSheet(
+// //         paymentSheetParameters: SetupPaymentSheetParameters(
+// //           paymentIntentClientSecret: paymentIntent.clientSecret,
+// //           merchantDisplayName: "Your App Name",
+// //         ),
+// //       );
 
-// class StripePaymentInitial extends StripePaymentState {
-//   final String amount;
-//   final String? errorMessage;
+// //       await Stripe.instance.presentPaymentSheet();
+// //       await Stripe.instance.confirmPaymentSheetPayment();
 
-//   const StripePaymentInitial({
-//     this.amount = '',
-//     this.errorMessage,
-//   });
+// //       emit(StripePaymentSuccess());
+// //     } catch (e) {
+// //       emit(StripePaymentFailure(error: e.toString()));
+// //     }
+// //   }
+// // }
 
-//   StripePaymentInitial copyWith({
-//     String? amount,
-//     String? errorMessage,
-//   }) {
-//     return StripePaymentInitial(
-//       amount: amount ?? this.amount,
-//       errorMessage: errorMessage,
-//     );
-//   }
+// // Events
+// // abstract class StripePaymentEvent extends Equatable {
+// //   const StripePaymentEvent();
 
-//   @override
-//   List<Object> get props => [
-//         amount,
-//       ];
-// }
+// //   @override
+// //   List<Object> get props => [];
+// // }
 
-// class StripePaymentLoading extends StripePaymentState {}
+// // class UpdatePaymentAmount extends StripePaymentEvent {
+// //   final String amount;
 
-// class StripePaymentSuccess extends StripePaymentState {}
+// //   const UpdatePaymentAmount(this.amount);
 
-// class StripePaymentFailure extends StripePaymentState {
-//   final String error;
+// //   @override
+// //   List<Object> get props => [amount];
+// // }
 
-//   const StripePaymentFailure({required this.error});
+// // class InitiatePayment extends StripePaymentEvent {
+// //   final double amount;
 
-//   @override
-//   List<Object> get props => [error];
-// }
+// //   const InitiatePayment(this.amount);
 
-// abstract class StripeRemoteDataSource {
-//   Future<PaymentIntentModel> createPaymentIntent({
-//     required int amount,
-//     required String currency,
-//   });
-// }
+// //   @override
+// //   List<Object> get props => [amount];
+// // }
 
-// class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
-//   final Dio _dio;
+// // States
+// // abstract class StripePaymentState extends Equatable {
+// //   const StripePaymentState();
 
-//   StripeRemoteDataSourceImpl(this._dio);
+// //   @override
+// //   List<Object> get props => [];
+// // }
 
-//   @override
-//   Future<PaymentIntentModel> createPaymentIntent({
-//     required int amount,
-//     required String currency,
-//   }) async {
-//     try {
-//       final response = await _dio.post(
-//         "https://api.stripe.com/v1/payment_intents",
-//         data: {
-//           "amount": amount.toString(),
-//           "currency": currency,
-//         },
-//         options: Options(
-//           contentType: Headers.formUrlEncodedContentType,
-//           headers: {
-//             "Authorization": "Bearer $stripeSecretKey",
-//           },
-//         ),
-//       );
+// // class StripePaymentInitial extends StripePaymentState {
+// //   final String amount;
+// //   final String? errorMessage;
 
-//       if (response.statusCode == 200 && response.data != null) {
-//         return PaymentIntentModel.fromJson(response.data);
-//       }
-//       throw Exception('Failed to create payment intent');
-//     } catch (e) {
-//       rethrow;
-//     }
-//   }
-// }
+// //   const StripePaymentInitial({
+// //     this.amount = '',
+// //     this.errorMessage,
+// //   });
 
-// class PaymentIntentEntity {
-//   final String clientSecret;
-//   final int amount;
-//   final String currency;
+// //   StripePaymentInitial copyWith({
+// //     String? amount,
+// //     String? errorMessage,
+// //   }) {
+// //     return StripePaymentInitial(
+// //       amount: amount ?? this.amount,
+// //       errorMessage: errorMessage,
+// //     );
+// //   }
 
-//   const PaymentIntentEntity({
-//     required this.clientSecret,
-//     required this.amount,
-//     required this.currency,
-//   });
-// }
-// import '../../../domain/entities/payment_intent_entity.dart';
+// //   @override
+// //   List<Object> get props => [
+// //         amount,
+// //       ];
+// // }
 
-// import '../../../domain/entities/payment_intent_entity.dart';
+// // class StripePaymentLoading extends StripePaymentState {}
 
-// class PaymentIntentModel {
-//   final String clientSecret;
-//   final int amount;
-//   final String currency;
-//   final String id;
-//   final String status;
+// // class StripePaymentSuccess extends StripePaymentState {}
 
-//   const PaymentIntentModel({
-//     required this.clientSecret,
-//     required this.amount,
-//     required this.currency,
-//     required this.id,
-//     required this.status,
-//   });
-//   // Convert model to domain entity
-//   PaymentIntentEntity toEntity() {
-//     return PaymentIntentEntity(
-//       clientSecret: clientSecret,
-//       amount: amount,
-//       currency: currency,
-//     );
-//   }
+// // class StripePaymentFailure extends StripePaymentState {
+// //   final String error;
 
-//   factory PaymentIntentModel.fromJson(Map<String, dynamic> json) {
-//     return PaymentIntentModel(
-//       clientSecret: json['client_secret'] as String,
-//       amount: json['amount'] as int,
-//       currency: json['currency'] as String,
-//       id: json['id'] as String,
-//       status: json['status'] as String,
-//     );
-//   }
-// }
+// //   const StripePaymentFailure({required this.error});
+
+// //   @override
+// //   List<Object> get props => [error];
+// // }
+
+// // abstract class StripeRemoteDataSource {
+// //   Future<PaymentIntentModel> createPaymentIntent({
+// //     required int amount,
+// //     required String currency,
+// //   });
+// // }
+
+// // class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
+// //   final Dio _dio;
+
+// //   StripeRemoteDataSourceImpl(this._dio);
+
+// //   @override
+// //   Future<PaymentIntentModel> createPaymentIntent({
+// //     required int amount,
+// //     required String currency,
+// //   }) async {
+// //     try {
+// //       final response = await _dio.post(
+// //         "https://api.stripe.com/v1/payment_intents",
+// //         data: {
+// //           "amount": amount.toString(),
+// //           "currency": currency,
+// //         },
+// //         options: Options(
+// //           contentType: Headers.formUrlEncodedContentType,
+// //           headers: {
+// //             "Authorization": "Bearer $stripeSecretKey",
+// //           },
+// //         ),
+// //       );
+
+// //       if (response.statusCode == 200 && response.data != null) {
+// //         return PaymentIntentModel.fromJson(response.data);
+// //       }
+// //       throw Exception('Failed to create payment intent');
+// //     } catch (e) {
+// //       rethrow;
+// //     }
+// //   }
+// // }
+
+// // class PaymentIntentEntity {
+// //   final String clientSecret;
+// //   final int amount;
+// //   final String currency;
+
+// //   const PaymentIntentEntity({
+// //     required this.clientSecret,
+// //     required this.amount,
+// //     required this.currency,
+// //   });
+// // }
+// // import '../../../domain/entities/payment_intent_entity.dart';
+
+// // import '../../../domain/entities/payment_intent_entity.dart';
+
+// // class PaymentIntentModel {
+// //   final String clientSecret;
+// //   final int amount;
+// //   final String currency;
+// //   final String id;
+// //   final String status;
+
+// //   const PaymentIntentModel({
+// //     required this.clientSecret,
+// //     required this.amount,
+// //     required this.currency,
+// //     required this.id,
+// //     required this.status,
+// //   });
+// //   // Convert model to domain entity
+// //   PaymentIntentEntity toEntity() {
+// //     return PaymentIntentEntity(
+// //       clientSecret: clientSecret,
+// //       amount: amount,
+// //       currency: currency,
+// //     );
+// //   }
+
+// //   factory PaymentIntentModel.fromJson(Map<String, dynamic> json) {
+// //     return PaymentIntentModel(
+// //       clientSecret: json['client_secret'] as String,
+// //       amount: json['amount'] as int,
+// //       currency: json['currency'] as String,
+// //       id: json['id'] as String,
+// //       status: json['status'] as String,
+// //     );
+// //   }
+// // }

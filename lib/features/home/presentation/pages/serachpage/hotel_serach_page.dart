@@ -17,42 +17,51 @@ class HotelsGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Hotels List',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: HotelBookingColors.basictextcolor,
-          elevation: 0,
-        ),
-        body: Column(
-          children: [
-            const HotelSearchBar(),
-            Expanded(
-              child: BlocBuilder<HotelBloc, HotelState>(
-                builder: (context, hotelState) {
-                  if (hotelState is HotelLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (hotelState is HotelLoadedState) {
-                    context.read<HotelSearchBloc>().add(SearchHotelsEvent(
-                        query: '', allHotels: hotelState.hotels));
-
-                    return const HotelSearchResults();
-                  } else if (hotelState is HotelErrorState) {
-                    return Center(
-                      child: Text(
-                        hotelState.message,
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                    );
-                  }
-                  return const Center(child: Text('No hotels found'));
-                },
-              ),
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Hotels',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25),
             ),
-          ],
+            centerTitle: true,
+            backgroundColor: HotelBookingColors.basictextcolor,
+            elevation: 0,
+            iconTheme: const IconThemeData(color: Colors.white),
+          ),
+          body: Column(
+            children: [
+              const HotelSearchBar(),
+              Expanded(
+                child: BlocBuilder<HotelBloc, HotelState>(
+                  builder: (context, hotelState) {
+                    if (hotelState is HotelLoadingState) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (hotelState is HotelLoadedState) {
+                      context.read<HotelSearchBloc>().add(SearchHotelsEvent(
+                          query: '', allHotels: hotelState.hotels));
+
+                      return const HotelSearchResults();
+                    } else if (hotelState is HotelErrorState) {
+                      return Center(
+                        child: Text(
+                          hotelState.message,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      );
+                    }
+                    return const Center(child: Text('No hotels found'));
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

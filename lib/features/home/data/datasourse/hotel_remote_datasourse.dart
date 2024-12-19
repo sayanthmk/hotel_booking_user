@@ -13,6 +13,7 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
 
   @override
   Future<List<HotelModel>> fetchHotels() async {
+    //  log('HotelRemoteDataSource: Fetching hotel by ID $hotelId');
     // log('HotelRemoteDataSource: Fetching all hotels');
     try {
       QuerySnapshot querySnapshot = await firestore
@@ -30,12 +31,14 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
 
   @override
   Future<HotelModel?> fetchHotelById(String hotelId) async {
-    // log('HotelRemoteDataSource: Fetching hotel by ID $hotelId');
     try {
       DocumentSnapshot doc =
           await firestore.collection('approved_hotels').doc(hotelId).get();
       if (doc.exists) {
         return HotelModel.fromJson(doc.data() as Map<String, dynamic>);
+          //     return querySnapshot.docs
+          // .map((docst) => HotelModel.fromJson(docst.data() as Map<String, dynamic>))
+          // .toList();
       } else {
         // log('Hotel with ID $hotelId does not exist');
         return null;
@@ -45,4 +48,23 @@ class HotelRemoteDataSourceImpl implements HotelRemoteDataSource {
       rethrow;
     }
   }
+
 }
+  // @override
+  // Future<HotelModel?> fetchHotelById(String hotelId) async {
+  //   try {
+  //     DocumentSnapshot doc =
+  //         await firestore.collection('approved_hotels').doc(hotelId).get();
+  //     if (doc.exists) {
+  //       final data = doc.data();
+  //       if (data != null) {
+  //         return HotelModel.fromJson(data as Map<String, dynamic>);
+  //       }
+  //     }
+  //     print('Hotel with ID $hotelId does not exist or has no data.');
+  //     return null;
+  //   } catch (e) {
+  //     print('Error fetching hotel by ID $hotelId: $e');
+  //     rethrow;
+  //   }
+  // }

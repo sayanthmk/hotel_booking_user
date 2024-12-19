@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
+import 'package:hotel_booking/features/filter/filter.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
@@ -50,9 +51,12 @@ class BlocSection extends StatelessWidget {
         BlocProvider(
           create: (context) => HotelSearchBloc(),
         ),
-        BlocProvider(
-          create: (context) => HotelSearchBloc(),
-        ),
+        // BlocProvider(
+        //   create: (context) => HotelSearchBloc(),
+        // ),
+        // BlocProvider(
+        //   create: (context) => HotelFilterBloc(),
+        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

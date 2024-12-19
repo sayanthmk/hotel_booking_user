@@ -5,12 +5,11 @@ import 'package:hotel_booking/core/validator/validators.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/textfrom_field.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/calender_section.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_success_screen.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_page/payment_page.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_state.dart';
-import 'package:hotel_booking/features/stripe/presentation/pages/stripe_new.dart';
 
 class HotelBookingPage extends StatelessWidget {
   HotelBookingPage({super.key});
@@ -184,7 +183,6 @@ class HotelBookingPage extends StatelessWidget {
                                 textInputAction: TextInputAction.done,
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
-                                validator: CustomValidator.validateRequired,
                                 borderColor: Colors.grey,
                                 focusedBorderColor: Colors.blue,
                                 enabledBorderColor: Colors.grey,
@@ -202,18 +200,7 @@ class HotelBookingPage extends StatelessWidget {
                                   }
                                 },
                               ),
-                              Center(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const StripePaymentPage(),
-                                    ));
-                                  },
-                                  child: const Text('payment'),
-                                ),
-                              ),
+                              const Center(),
                               ElevatedButton(
                                 onPressed: state is! UserLoadingState
                                     ? () {
@@ -229,23 +216,19 @@ class HotelBookingPage extends StatelessWidget {
                                             noa:
                                                 int.parse(adultcontroller.text),
                                             roomId: selectedRoomId!,
+                                            paidAmount: 0,
                                           );
 
-                                          // context.read<UserBloc>().add(
-                                          //       SaveHotelBookingEvent(
-                                          //         hotelId: hotelId,
-                                          //         bookingData: bookingData,
-                                          //       ),
-                                          //     );
-                                          context.read<UserBloc>().add(
-                                                SaveUserDataEvent(
-                                                    bookingData, hotelId),
-                                              );
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                const BookingSuccessPage(),
-                                          ));
+                                          // Navigate to the payment page and pass booking data
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PaymentPage(
+                                                bookingData: bookingData,
+                                                hotelId: hotelId,
+                                              ),
+                                            ),
+                                          );
                                         }
                                       }
                                     : null,
@@ -337,3 +320,220 @@ class HotelBookingPage extends StatelessWidget {
                                 //   }
                                 //   return null;
                                 // },
+                                
+                                          // context.read<UserBloc>().add(
+                                          //       SaveHotelBookingEvent(
+                                          //         hotelId: hotelId,
+                                          //         bookingData: bookingData,
+                                          //       ),
+                                          //     );
+
+
+
+
+
+                                                 // Center(
+                              //   child: ElevatedButton(
+                              //     onPressed: () {
+                              //       Navigator.of(context)
+                              //           .push(MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             const StripePaymentPage(),
+                              //       ));
+                              //     },
+                              //     child: const Text('payment'),
+                              //   ),
+                              // ),
+                              // ElevatedButton(
+                              //   onPressed: state is! UserLoadingState
+                              //       ? () {
+                              //           if (_formKey.currentState!.validate()) {
+                              //             final bookingData = UserDataModel(
+
+                              //               name: nameController.text,
+                              //               age: int.parse(ageController.text),
+                              //               place: placeController.text,
+                              //               startdate: startdate,
+                              //               enddate: enddate,
+                              //               noc:
+                              //                   int.parse(childcontroller.text),
+                              //               noa:
+                              //                   int.parse(adultcontroller.text),
+                              //               roomId: selectedRoomId!,
+                              //             );
+
+                              //             context.read<UserBloc>().add(
+                              //                   SaveUserDataEvent(
+                              //                       bookingData, hotelId),
+                              //                 );
+
+                              //             Navigator.of(context)
+                              //                 .push(MaterialPageRoute(
+                              //               builder: (context) =>
+                              //                   const BookingSuccessPage(),
+                              //             ));
+                              //           }
+                              //         }
+                              //       : null,
+                              //   style: ElevatedButton.styleFrom(
+                              //     padding:
+                              //         const EdgeInsets.symmetric(vertical: 16),
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //     ),
+                              //   ),
+                              //   child: const Text(
+                              //     'Save Booking',
+                              //     style: TextStyle(fontSize: 16),
+                              //   ),
+                              // ),
+                                    // BlocConsumer<StripeBloc, StripePaymentState>(
+                              //   listener: (context, state) {
+                              //     if (state is StripePaymentSuccess) {
+                              //       ScaffoldMessenger.of(context).showSnackBar(
+                              //         const SnackBar(
+                              //             content: Text('Payment Successful!')),
+                              //       );
+                              //     }
+                              //     if (state is StripePaymentFailure) {
+                              //       ScaffoldMessenger.of(context).showSnackBar(
+                              //         SnackBar(
+                              //             content: Text(
+                              //                 'Payment Failed: ${state.error}')),
+                              //       );
+                              //     }
+                              //   },
+                              //   builder: (context, state) {
+                              //     if (state is StripePaymentLoading) {
+                              //       return const Center(
+                              //           child: CircularProgressIndicator());
+                              //     }
+
+                              //     return Padding(
+                              //       padding: const EdgeInsets.all(16.0),
+                              //       child: Column(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.center,
+                              //         children: [
+                              //           TextField(
+                              //             decoration: InputDecoration(
+                              //               labelText: 'Enter Amount',
+                              //               errorText:
+                              //                   state is StripePaymentInitial
+                              //                       ? state.errorMessage
+                              //                       : null,
+                              //             ),
+                              //             keyboardType: TextInputType.number,
+                              //             onChanged: (value) {
+                              //               context.read<StripeBloc>().add(
+                              //                     UpdatePaymentAmount(value),
+                              //                   );
+                              //             },
+                              //           ),
+                              //           const SizedBox(height: 20),
+                              //           ElevatedButton(
+                              //             onPressed: state is! UserLoadingState
+                              //                 ? () {
+                              //                     if (_formKey.currentState!
+                              //                         .validate()) {
+                              //                       final amount = state
+                              //                                   is StripePaymentInitial &&
+                              //                               state.amount
+                              //                                   .isNotEmpty
+                              //                           ? double.parse(
+                              //                               state.amount)
+                              //                           : 0.0; // Default to 0 if not set
+
+                              //                       final bookingData =
+                              //                           UserDataModel(
+                              //                         name: nameController.text,
+                              //                         age: int.parse(
+                              //                             ageController.text),
+                              //                         place:
+                              //                             placeController.text,
+                              //                         startdate: startdate,
+                              //                         enddate: enddate,
+                              //                         noc: int.parse(
+                              //                             childcontroller.text),
+                              //                         noa: int.parse(
+                              //                             adultcontroller.text),
+                              //                         roomId: selectedRoomId!,
+                              //                         paidAmount:
+                              //                             amount, // Add paidAmount here
+                              //                       );
+
+                              //                       context
+                              //                           .read<UserBloc>()
+                              //                           .add(
+                              //                             SaveUserDataEvent(
+                              //                                 bookingData,
+                              //                                 hotelId),
+                              //                           );
+                              //                       context
+                              //                           .read<StripeBloc>()
+                              //                           .add(
+                              //                             InitiatePayment(
+                              //                                 amount),
+                              //                           );
+
+                              //                       Navigator.of(context)
+                              //                           .push(MaterialPageRoute(
+                              //                         builder: (context) =>
+                              //                             const BookingSuccessPage(),
+                              //                       ));
+                              //                     }
+                              //                   }
+                              //                 : null,
+                              //             style: ElevatedButton.styleFrom(
+                              //               padding: const EdgeInsets.symmetric(
+                              //                   vertical: 16),
+                              //               shape: RoundedRectangleBorder(
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(10),
+                              //               ),
+                              //             ),
+                              //             child: const Text(
+                              //               'Save Booking',
+                              //               style: TextStyle(fontSize: 16),
+                              //             ),
+                              //           ),
+
+                              //         ],
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
+                              
+                                // validator: CustomValidator.validateRequired,
+                                // validator: (value) {
+                                //   if (value == null || value.isEmpty) {
+                                //     return 'Email is required';
+                                //   }
+                                //   const emailRegex =
+                                //       r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-z]{2,7}$';
+                                //   if (!RegExp(emailRegex).hasMatch(value)) {
+                                //     return 'Please enter a valid email address';
+                                //   }
+                                //   return null;
+                                // },
+                                
+                                          // context.read<UserBloc>().add(
+                                          //       SaveUserDataEvent(
+                                          //           bookingData, hotelId),
+                                          //     );
+
+                                          // Navigator.of(context)
+                                          //     .push(MaterialPageRoute(
+                                          //   builder: (context) =>
+                                          //       const BookingSuccessPage(),
+                                          // ));
+         // child: ElevatedButton(
+                                  //   onPressed: () {
+                                  //     Navigator.of(context)
+                                  //         .push(MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           const StripePaymentPage(),
+                                  //     ));
+                                  //   },
+                                  //   child: const Text('payment'),
+                                  // ),

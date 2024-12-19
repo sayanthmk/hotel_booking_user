@@ -7,7 +7,7 @@ class CustomSearchBar extends StatelessWidget {
   final Color textColor;
   final Color backgroundColor;
   final double? width;
-  final Function(String) onChanged; // Add the onChanged callback
+  final Function(String) onChanged;
 
   const CustomSearchBar({
     super.key,
@@ -17,7 +17,7 @@ class CustomSearchBar extends StatelessWidget {
     required this.textColor,
     required this.backgroundColor,
     this.width,
-    required this.onChanged, // Initialize the onChanged parameter
+    required this.onChanged,
   });
 
   @override
@@ -34,22 +34,31 @@ class CustomSearchBar extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: TextField(
           onChanged: (value) {
-            onChanged(value); // Call the passed onChanged callback
+            onChanged(value);
           },
           decoration: InputDecoration(
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: hintTextColor,
-            ),
-            border: InputBorder.none,
-            icon: Icon(
-              Icons.search,
-              color: hintTextColor,
-            ),
-          ),
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: hintTextColor,
+              ),
+              border: InputBorder.none,
+              suffixIcon: const InkWell(
+                // onTap: icontap,
+                child: Icon(
+                  Icons.cancel,
+                  color: Colors.grey,
+                ),
+              ),
+              // suffixIcon: Text('Cancel'),
+              prefixIcon: const Icon(Icons.search)
+              // icon: Icon(
+              //   Icons.search,
+              //   color: hintTextColor,
+              // ),
+              ),
           style: TextStyle(
             color: textColor,
           ),

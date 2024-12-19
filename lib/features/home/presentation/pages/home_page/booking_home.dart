@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/filter/newfilter.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotel_serach_page.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_list_view.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/location_notification_bar.dart';
@@ -13,6 +14,7 @@ class RoomBookingHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HotelBookingColors.pagebackgroundcolor,
+      // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -51,7 +53,14 @@ class RoomBookingHome extends StatelessWidget {
                 SectionHeader(
                   title: 'Suggested Hotels',
                   actionText: 'View All',
-                  ontap: () {},
+                  ontap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const MultiFilterProductsPage(),
+                    ));
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 const HotelsListView(),
               ],

@@ -23,7 +23,7 @@ class HotelsListView extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if (state is HotelLoadedState) {
             return SizedBox(
-              height: 250,
+              height: 260,
               child: Material(
                 color: HotelBookingColors.pagebackgroundcolor,
                 child: ListView.builder(
@@ -80,7 +80,7 @@ class HotelsListView extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 18),
+                                            fontSize: 22),
                                       ),
                                       Text(
                                         ' ₹${hotel.propertySetup}/night',
@@ -107,7 +107,7 @@ class HotelsListView extends StatelessWidget {
                                               color: Colors.red[600],
                                             ),
                                             Text(
-                                              '${hotel.city}/${hotel.country}',
+                                              '${hotel.city}/${hotel.state}',
                                               style: TextStyle(
                                                   color: Colors.grey[500],
                                                   fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class HotelsListView extends StatelessWidget {
                                       Text(hotel.hotelType),
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),

@@ -12,11 +12,13 @@ class UserDataModel {
   final int noc;
   final int noa;
   final String roomId;
+  final double? paidAmount;
 
   UserDataModel(
       {this.id,
       this.bookId,
       this.hotelId,
+      this.paidAmount,
       required this.roomId,
       required this.name,
       required this.age,
@@ -35,7 +37,8 @@ class UserDataModel {
       'startdate': Timestamp.fromDate(startdate),
       'enddate': Timestamp.fromDate(enddate),
       'noc': noc,
-      'noa': noa
+      'noa': noa,
+      'paidAmount': paidAmount,
     };
   }
 
@@ -61,6 +64,7 @@ class UserDataModel {
           : DateTime.now(),
       noc: rpt['noc'] ?? 0,
       noa: rpt['noa'] ?? 0,
+      paidAmount: rpt['paidAmount'] ?? 0,
     );
   }
 }
