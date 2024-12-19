@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotels_gridview.dart';
-import 'package:hotel_booking/features/home/presentation/pages/serachpage/searchbar.dart';
+import 'package:hotel_booking/features/home/presentation/pages/serachpage/widgets/searchbar.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';

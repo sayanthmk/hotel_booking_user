@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:hotel_booking/core/constants/stripe_keys.dart';
-import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
+// import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/stripe/data/model/stripe_model.dart';
 
 abstract class StripeRemoteDataSource {
@@ -10,13 +10,13 @@ abstract class StripeRemoteDataSource {
     required int amount,
     required String currency,
   });
-  Future<void> updatePaymentAmount({
-    // required int amount,
-    // required String currency,
-    required String hotelId,
-    required UserDataModel bookingData,
-    required double amount,
-  });
+  // Future<void> updatePaymentAmount({
+  //   // required int amount,
+  //   // required String currency,
+  //   required String hotelId,
+  //   required UserDataModel bookingData,
+  //   required double amount,
+  // });
 }
 
 class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
@@ -54,32 +54,32 @@ class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
     }
   }
 
-  @override
-  Future<void> updatePaymentAmount({
-    required String hotelId,
-    required UserDataModel bookingData,
-    required double amount,
-  }) async {
-    try {
-      log('updatePaymentAmount    StripeRemoteDataSource');
-      final bookingMap = bookingData.toMap();
-      bookingMap['paidAmount'] = amount;
+  // @override
+  // Future<void> updatePaymentAmount({
+  //   required String hotelId,
+  //   required UserDataModel bookingData,
+  //   required double amount,
+  // }) async {
+  //   try {
+  //     log('updatePaymentAmount    StripeRemoteDataSource');
+  //     final bookingMap = bookingData.toMap();
+  //     bookingMap['paidAmount'] = amount;
 
-      final bookingRef = firestore
-          .collection('approved_hotels')
-          .doc(hotelId)
-          .collection('bookings')
-          .doc(bookingData.bookId);
+  //     final bookingRef = firestore
+  //         .collection('approved_hotels')
+  //         .doc(hotelId)
+  //         .collection('bookings')
+  //         .doc(bookingData.bookId);
 
-      await bookingRef.set({
-        'bookingDetails': bookingMap,
-        'paymentStatus': 'completed',
-        'paymentTimestamp': FieldValue.serverTimestamp(),
-      });
-    } catch (e) {
-      throw Exception('Failed to update payment amount: $e');
-    }
-  }
+  //     await bookingRef.set({
+  //       'bookingDetails': bookingMap,
+  //       'paymentStatus': 'completed',
+  //       'paymentTimestamp': FieldValue.serverTimestamp(),
+  //     });
+  //   } catch (e) {
+  //     throw Exception('Failed to update payment amount: $e');
+  //   }
+  // }
 }
 
 

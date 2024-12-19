@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/booking_detail_page.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
-// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
-// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
-// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';
 import 'package:intl/intl.dart';
 
 class UserBookingsPage extends StatelessWidget {
@@ -223,7 +220,65 @@ class UserBookingsPage extends StatelessWidget {
                                 color: Colors.blue.shade800,
                               ),
                             ),
-                            // BlocProvider(
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+
+          return const Center(
+            child: Text('Something went wrong'),
+          );
+        },
+      ),
+    );
+  }
+}
+
+Widget buildBookingDetailRow({
+  required IconData icon,
+  required String label,
+  required String value,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4.0),
+    child: Row(
+      children: [
+        Icon(
+          icon,
+          color: Colors.blue.shade600,
+          size: 20,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.grey.shade700,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+      // BlocProvider(
                             //   create: (context) => context.read<HotelBloc>(),
                             //   child: BlocBuilder<HotelBloc, HotelState>(
                             //     builder: (context, hotelState) {
@@ -289,61 +344,6 @@ class UserBookingsPage extends StatelessWidget {
                             //     },
                             //   ),
                             // ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-
-          return const Center(
-            child: Text('Something went wrong'),
-          );
-        },
-      ),
-    );
-  }
-}
-
-Widget buildBookingDetailRow({
-  required IconData icon,
-  required String label,
-  required String value,
-}) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 4.0),
-    child: Row(
-      children: [
-        Icon(
-          icon,
-          color: Colors.blue.shade600,
-          size: 20,
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.grey.shade700,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              value,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
+                            // import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
+// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
+// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';

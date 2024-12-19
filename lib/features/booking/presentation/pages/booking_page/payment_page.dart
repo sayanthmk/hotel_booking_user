@@ -92,6 +92,15 @@ class PaymentPage extends StatelessWidget {
                               context
                                   .read<StripeBloc>()
                                   .add(InitiatePayment(amount));
+                              // await Future.delayed(const Duration(seconds: 2));
+                              // context.read<UserBloc>().add(
+                              //       SaveUserDataEvent(bookingData, hotelId),
+                              //     );
+                              // Navigate to success page after initiating payment
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //   builder: (context) =>
+                              //       const BookingSuccessPage(),
+                              // ));
                             }
                           }
                         : null,

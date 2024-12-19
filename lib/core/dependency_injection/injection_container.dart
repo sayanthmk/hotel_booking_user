@@ -189,15 +189,16 @@ Future<void> init() async {
     () => CreatePaymentIntentUseCase(sl<StripePaymentRepository>()),
   );
 
-  sl.registerLazySingleton<UpdatePaymentAmountUseCase>(
-    () => UpdatePaymentAmountUseCase(sl<StripePaymentRepository>()),
-  );
+  // sl.registerLazySingleton<UpdatePaymentAmountUseCase>(
+  //   () => UpdatePaymentAmountUseCase(sl<StripePaymentRepository>()),
+  // );
 
 // Register BLoC
   sl.registerFactory<StripeBloc>(
     () => StripeBloc(
-        createPaymentIntentUseCase: sl<CreatePaymentIntentUseCase>(),
-        updatePaymentAmountUseCase: sl<UpdatePaymentAmountUseCase>()),
+      createPaymentIntentUseCase: sl<CreatePaymentIntentUseCase>(),
+      // updatePaymentAmountUseCase: sl<UpdatePaymentAmountUseCase>(),
+    ),
   );
 }
 

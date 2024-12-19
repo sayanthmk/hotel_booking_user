@@ -3,9 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/bookings.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
-import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
-import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
-import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';
 import 'package:intl/intl.dart';
 
 class BookingDetailPageSection extends StatelessWidget {
@@ -117,132 +114,6 @@ class BookingDetailPageSection extends StatelessWidget {
                         value:
                             'Adults: ${booking.noa}, Children: ${booking.noc}',
                       ),
-                      BlocProvider(
-                        create: (context) => context.read<HotelBloc>(),
-                        child: BlocBuilder<HotelBloc, HotelState>(
-                          builder: (context, hotelState) {
-                            if (hotelState is HotelInitial) {
-                              context
-                                  .read<HotelBloc>()
-                                  .add(LoadHotelByIdEvent(booking.hotelId!));
-                            }
-                            if (hotelState is HotelLoadingState) {
-                              return const Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }
-                            if (hotelState is HotelLoadedState) {
-                              // final hotel = hotelState.hotels.firstWhere(
-                              //   (hotel) =>
-                              //       hotel.hotelId == booking.hotelId,
-                              // );
-
-                              final hotel = hotelState.hotels;
-                              return Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Hotel Details:',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue.shade800,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Hotel Name: ${hotel.first.bookingSince}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    Text(
-                                      'Location: ${hotel}',
-                                      style: const TextStyle(fontSize: 14),
-                                    ),
-                                    // Text(
-                                    //   'Amenities: ${hotel.amenities.join(', ')}',
-                                    //   style: const TextStyle(fontSize: 14),
-                                    // ),
-                                  ],
-                                ),
-                              );
-                              // return const Text('Hotel details not available.');
-                            }
-                            if (hotelState is HotelErrorState) {
-                              return Text(
-                                'Error: ${hotelState.message}',
-                                style: const TextStyle(color: Colors.red),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ),
-                      // BlocProvider(
-                      //   create: (context) => context.read<HotelBloc>(),
-                      //   child: BlocBuilder<HotelBloc, HotelState>(
-                      //     builder: (context, hotelState) {
-                      //       if (hotelState is HotelInitial) {
-                      //         context
-                      //             .read<HotelBloc>()
-                      //             .add(LoadHotelByIdEvent(booking.hotelId!));
-                      //       }
-                      //       if (hotelState is HotelLoadingState) {
-                      //         return const Padding(
-                      //           padding: EdgeInsets.all(16.0),
-                      //           child: Center(
-                      //             child: CircularProgressIndicator(),
-                      //           ),
-                      //         );
-                      //       }
-                      //       if (hotelState is HotelLoadedState) {
-                      //         final hotel = hotelState.hotels.firstWhere(
-                      //           (hotel) => hotel.hotelId == booking.hotelId,
-                      //         );
-                      //         // final hotel=hotelState.hotels
-                      //         return Padding(
-                      //           padding: const EdgeInsets.all(16.0),
-                      //           child: Column(
-                      //             crossAxisAlignment: CrossAxisAlignment.start,
-                      //             children: [
-                      //               Text(
-                      //                 'Hotel Details:',
-                      //                 style: TextStyle(
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.bold,
-                      //                   color: Colors.blue.shade800,
-                      //                 ),
-                      //               ),
-                      //               Text(
-                      //                 'Hotel Name: ${hotel.hotelName}',
-                      //                 style: const TextStyle(fontSize: 14),
-                      //               ),
-                      //               Text(
-                      //                 'Location: ${hotel.country}',
-                      //                 style: const TextStyle(fontSize: 14),
-                      //               ),
-                      //               // Text(
-                      //               //   'Amenities: ${hotel.amenities.join(', ')}',
-                      //               //   style: const TextStyle(fontSize: 14),
-                      //               // ),
-                      //             ],
-                      //           ),
-                      //         );
-                      //         // return const Text('Hotel details not available.');
-                      //       }
-                      //       if (hotelState is HotelErrorState) {
-                      //         return Text(
-                      //           'Error: ${hotelState.message}',
-                      //           style: const TextStyle(color: Colors.red),
-                      //         );
-                      //       }
-                      //       return const SizedBox.shrink();
-                      //     },
-                      //   ),
-                      // ),
                       const SizedBox(height: 12),
                       Center(
                         child: ElevatedButton.icon(
@@ -321,3 +192,135 @@ class BookingDetailPageSection extends StatelessWidget {
     );
   }
 }
+
+
+
+     // BlocProvider(
+                      //   create: (context) => context.read<HotelBloc>(),
+                      //   child: BlocBuilder<HotelBloc, HotelState>(
+                      //     builder: (context, hotelState) {
+                      //       if (hotelState is HotelInitial) {
+                      //         context
+                      //             .read<HotelBloc>()
+                      //             .add(LoadHotelByIdEvent(booking.hotelId!));
+                      //       }
+                      //       if (hotelState is HotelLoadingState) {
+                      //         return const Padding(
+                      //           padding: EdgeInsets.all(16.0),
+                      //           child: Center(
+                      //             child: CircularProgressIndicator(),
+                      //           ),
+                      //         );
+                      //       }
+                      //       if (hotelState is HotelLoadedState) {
+                      //         // final hotel = hotelState.hotels.firstWhere(
+                      //         //   (hotel) =>
+                      //         //       hotel.hotelId == booking.hotelId,
+                      //         // );
+
+                      //         final hotel = hotelState.hotels;
+                      //         return Padding(
+                      //           padding: const EdgeInsets.all(16.0),
+                      //           child: Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: [
+                      //               Text(
+                      //                 'Hotel Details:',
+                      //                 style: TextStyle(
+                      //                   fontSize: 16,
+                      //                   fontWeight: FontWeight.bold,
+                      //                   color: Colors.blue.shade800,
+                      //                 ),
+                      //               ),
+                      //               Text(
+                      //                 'Hotel Name: ${hotel.first.bookingSince}',
+                      //                 style: const TextStyle(fontSize: 14),
+                      //               ),
+                      //               Text(
+                      //                 'Location: ${hotel}',
+                      //                 style: const TextStyle(fontSize: 14),
+                      //               ),
+                      //               // Text(
+                      //               //   'Amenities: ${hotel.amenities.join(', ')}',
+                      //               //   style: const TextStyle(fontSize: 14),
+                      //               // ),
+                      //             ],
+                      //           ),
+                      //         );
+                      //         // return const Text('Hotel details not available.');
+                      //       }
+                      //       if (hotelState is HotelErrorState) {
+                      //         return Text(
+                      //           'Error: ${hotelState.message}',
+                      //           style: const TextStyle(color: Colors.red),
+                      //         );
+                      //       }
+                      //       return const SizedBox.shrink();
+                      //     },
+                      //   ),
+                      // ),
+                      // BlocProvider(
+                      //   create: (context) => context.read<HotelBloc>(),
+                      //   child: BlocBuilder<HotelBloc, HotelState>(
+                      //     builder: (context, hotelState) {
+                      //       if (hotelState is HotelInitial) {
+                      //         context
+                      //             .read<HotelBloc>()
+                      //             .add(LoadHotelByIdEvent(booking.hotelId!));
+                      //       }
+                      //       if (hotelState is HotelLoadingState) {
+                      //         return const Padding(
+                      //           padding: EdgeInsets.all(16.0),
+                      //           child: Center(
+                      //             child: CircularProgressIndicator(),
+                      //           ),
+                      //         );
+                      //       }
+                      //       if (hotelState is HotelLoadedState) {
+                      //         final hotel = hotelState.hotels.firstWhere(
+                      //           (hotel) => hotel.hotelId == booking.hotelId,
+                      //         );
+                      //         // final hotel=hotelState.hotels
+                      //         return Padding(
+                      //           padding: const EdgeInsets.all(16.0),
+                      //           child: Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             children: [
+                      //               Text(
+                      //                 'Hotel Details:',
+                      //                 style: TextStyle(
+                      //                   fontSize: 16,
+                      //                   fontWeight: FontWeight.bold,
+                      //                   color: Colors.blue.shade800,
+                      //                 ),
+                      //               ),
+                      //               Text(
+                      //                 'Hotel Name: ${hotel.hotelName}',
+                      //                 style: const TextStyle(fontSize: 14),
+                      //               ),
+                      //               Text(
+                      //                 'Location: ${hotel.country}',
+                      //                 style: const TextStyle(fontSize: 14),
+                      //               ),
+                      //               // Text(
+                      //               //   'Amenities: ${hotel.amenities.join(', ')}',
+                      //               //   style: const TextStyle(fontSize: 14),
+                      //               // ),
+                      //             ],
+                      //           ),
+                      //         );
+                      //         // return const Text('Hotel details not available.');
+                      //       }
+                      //       if (hotelState is HotelErrorState) {
+                      //         return Text(
+                      //           'Error: ${hotelState.message}',
+                      //           style: const TextStyle(color: Colors.red),
+                      //         );
+                      //       }
+                      //       return const SizedBox.shrink();
+                      //     },
+                      //   ),
+                      // ),
+//                       import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
+// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
+// import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';
