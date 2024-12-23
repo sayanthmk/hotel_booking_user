@@ -54,7 +54,7 @@ class CustomSearchBar extends StatelessWidget {
                   controller?.clear();
                   // onChanged('');
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.cancel,
                   color: Colors.grey,
                 ),

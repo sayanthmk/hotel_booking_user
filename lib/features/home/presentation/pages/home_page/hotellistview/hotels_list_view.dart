@@ -55,7 +55,7 @@ class HotelsListView extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    height: 140,
+                                    height: 130,
                                     width: 250,
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
@@ -70,7 +70,7 @@ class HotelsListView extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -80,7 +80,7 @@ class HotelsListView extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 22),
+                                            fontSize: 20),
                                       ),
                                       Text(
                                         ' ₹${hotel.propertySetup}/night',

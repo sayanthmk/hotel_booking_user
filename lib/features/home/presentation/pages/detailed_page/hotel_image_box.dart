@@ -14,8 +14,18 @@ class HotelImageBox extends StatelessWidget {
         BlocListener<FavoritesBloc, FavoritesState>(
           listener: (context, state) {
             if (state is FavoriteAdded) {
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   const SnackBar(content: Text('Added to favorites')),
+              // );
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Added to favorites')),
+                SnackBar(
+                  content: const Text('Added to favorites'),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               );
             } else if (state is FavoritesError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -91,19 +101,6 @@ class HotelImageBox extends StatelessWidget {
                     right: 10,
                     child: Row(
                       children: [
-                        //                       CustomCircleAvatar(
-                        //   iconColor: Colors.red,
-                        //   onTap: () {
-                        //     final userId = 'currentUserId'; // Replace with the actual current user ID
-                        //     final hotelId = hotel.hotelId;
-
-                        //     context.read<SelectedHotelBloc>().add(AddHotelToFavorites(
-                        //       userId: userId,
-                        //       hotelId: hotelId,
-                        //     ));
-                        //   },
-                        //   icon: Icons.favorite,
-                        // ),
                         CustomCircleAvatar(
                           iconColor: Colors.red,
                           onTap: () {
@@ -116,14 +113,6 @@ class HotelImageBox extends StatelessWidget {
                           },
                           icon: Icons.favorite,
                         ),
-
-                        // CustomCircleAvatar(
-                        //   iconColor: Colors.red,
-                        //   onTap: () {
-                        //     // hotel.hotelId
-                        //   },
-                        //   icon: Icons.favorite,
-                        // ),
                         const SizedBox(width: 10),
                         CustomCircleAvatar(
                           iconColor: Colors.black,
@@ -233,3 +222,16 @@ class HotelImageBox extends StatelessWidget {
     );
   }
 }
+          //                       CustomCircleAvatar(
+                        //   iconColor: Colors.red,
+                        //   onTap: () {
+                        //     final userId = 'currentUserId'; // Replace with the actual current user ID
+                        //     final hotelId = hotel.hotelId;
+
+                        //     context.read<SelectedHotelBloc>().add(AddHotelToFavorites(
+                        //       userId: userId,
+                        //       hotelId: hotelId,
+                        //     ));
+                        //   },
+                        //   icon: Icons.favorite,
+                        // ),

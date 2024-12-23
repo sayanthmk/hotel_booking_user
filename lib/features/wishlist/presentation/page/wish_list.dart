@@ -15,19 +15,39 @@ class FavoritesPage extends StatelessWidget {
     context.read<FavoritesBloc>().add(LoadFavoritesEvent());
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Favorites',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
             color: Colors.white,
             fontSize: 22,
+            fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
         backgroundColor: HotelBookingColors.basictextcolor,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(17),
+          ),
+        ),
       ),
+      // appBar: AppBar(
+      //   title: const Text(
+      //     'Favorites',
+      //     style: TextStyle(
+      //       fontWeight: FontWeight.bold,
+      //       color: Colors.white,
+      //       fontSize: 22,
+      //     ),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: HotelBookingColors.basictextcolor,
+      //   elevation: 0,
+      // ),
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (context, favoritesState) {
           if (favoritesState is FavoritesLoading) {
@@ -86,7 +106,6 @@ class FavoritesPage extends StatelessWidget {
                       if (hotelState is HotelDetailLoadedState) {
                         final hotel = hotelState.hotel;
 
-                        // return _buildHotelCard(context, hotel);
                         return FavoritesCard(
                           hotel: hotel,
                           hotelId: hotelId,
@@ -94,7 +113,6 @@ class FavoritesPage extends StatelessWidget {
                       }
 
                       if (hotelState is HotelErrorState) {
-                        // return _buildErrorCard(context, hotelId, hotelState);
                         return Card(
                           elevation: 6,
                           margin: const EdgeInsets.symmetric(vertical: 10),

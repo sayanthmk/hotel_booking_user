@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 
 class RoomCard extends StatelessWidget {
@@ -14,6 +15,7 @@ class RoomCard extends StatelessWidget {
         } else if (state is RoomCardLoaded) {
           final room = state.room;
           return Card(
+            color: Colors.white,
             elevation: 4,
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
@@ -119,8 +121,8 @@ class RoomCard extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.attach_money,
-                                    color: Theme.of(context).primaryColor),
+                                const Icon(Icons.currency_rupee,
+                                    color: HotelBookingColors.basictextcolor),
                                 const SizedBox(width: 4),
                                 Text(
                                   'Base Price:',
@@ -129,13 +131,13 @@ class RoomCard extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              '\$${room.basePrice}',
+                              '₹${room.basePrice}',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).primaryColor,
+                                    color: HotelBookingColors.basictextcolor,
                                   ),
                             ),
                           ],

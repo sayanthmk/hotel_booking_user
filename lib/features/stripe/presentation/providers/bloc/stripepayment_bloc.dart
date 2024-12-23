@@ -53,7 +53,7 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
       // Create Payment Intent
       final paymentIntent = await createPaymentIntentUseCase(
         amount: amountInCents,
-        currency: 'usd',
+        currency: 'inr',
         //  currency: 'inr',
       );
 

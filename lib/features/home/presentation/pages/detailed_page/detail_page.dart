@@ -15,6 +15,7 @@ class HotelDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: BlocBuilder<SelectedHotelBloc, SelectedHotelState>(
         builder: (context, state) {
           if (state is SelectedHotelLoaded) {

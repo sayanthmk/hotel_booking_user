@@ -62,7 +62,7 @@ class BlocSection extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Hotel Booking',
         theme: ThemeData(
-          textTheme: GoogleFonts.andikaTextTheme(),
+          textTheme: GoogleFonts.notoSansOriyaTextTheme(),
           // fontFamily: 'PTSans',
           primarySwatch: Colors.blue,
         ),
