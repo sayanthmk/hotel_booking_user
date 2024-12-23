@@ -37,7 +37,7 @@ class HotelsGridView extends StatelessWidget {
           ),
           body: Column(
             children: [
-              const HotelSearchBar(),
+              HotelSearchBar(),
               Expanded(
                 child: BlocBuilder<HotelBloc, HotelState>(
                   builder: (context, hotelState) {

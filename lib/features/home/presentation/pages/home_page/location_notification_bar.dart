@@ -55,7 +55,26 @@ class LocationWithNotificationBar extends StatelessWidget {
               ],
             ),
             InkWell(
-              // onTap: () {
+              child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(
+                  FontAwesomeIcons.bell,
+                  color: Color(0xFF1E91B6),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+    // onTap: () {
               //   showDialog(
               //     context: context,
               //     builder: (BuildContext context) {
@@ -80,22 +99,3 @@ class LocationWithNotificationBar extends StatelessWidget {
               //     },
               //   );
               // },
-              child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  FontAwesomeIcons.bell,
-                  color: Color(0xFF1E91B6),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

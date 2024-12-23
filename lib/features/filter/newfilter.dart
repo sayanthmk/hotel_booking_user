@@ -18,7 +18,7 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
   bool parkingFacility = true;
 
   final List<String> categories = ["chennai", "Fashion", "Books", "Home"];
-  final List<String> hotelTypes = ["2014", "2016", "Hotel", "Villa"];
+  final List<String> hotelTypes = ["2014", "2016", "Hotel", "Resort"];
 
   // List to store filtered products
   List<Map<String, dynamic>> _filteredProducts = [];

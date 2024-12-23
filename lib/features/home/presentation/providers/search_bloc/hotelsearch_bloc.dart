@@ -20,7 +20,6 @@ class HotelSearchBloc extends Bloc<HotelSearchEvent, HotelSearchState> {
     emit(HotelSearchLoadingState());
 
     try {
-      // Perform case-insensitive search on hotel name and city
       final filteredHotels = event.allHotels.where((hotel) {
         final query = event.query.toLowerCase();
         return hotel.hotelName.toLowerCase().contains(query) ||

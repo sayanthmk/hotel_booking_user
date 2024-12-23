@@ -65,8 +65,8 @@ class StripeBloc extends Bloc<StripePaymentEvent, StripePaymentState> {
         ),
       );
 
-      // await Stripe.instance.presentPaymentSheet();
-      await Stripe.instance.confirmPaymentSheetPayment();
+      await Stripe.instance.presentPaymentSheet();
+      // await Stripe.instance.confirmPaymentSheetPayment();
 
       emit(StripePaymentSuccess());
     } catch (e) {

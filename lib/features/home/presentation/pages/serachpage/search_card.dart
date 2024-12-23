@@ -43,7 +43,6 @@ class SearchHotelCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Hotel Image with Overlay
               Stack(
                 children: [
                   ClipRRect(

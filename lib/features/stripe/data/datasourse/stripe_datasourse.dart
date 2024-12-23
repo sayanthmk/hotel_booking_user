@@ -53,6 +53,7 @@ class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
       rethrow;
     }
   }
+}
 
   // @override
   // Future<void> updatePaymentAmount({
@@ -80,7 +81,7 @@ class StripeRemoteDataSourceImpl implements StripeRemoteDataSource {
   //     throw Exception('Failed to update payment amount: $e');
   //   }
   // }
-}
+
 
 
 

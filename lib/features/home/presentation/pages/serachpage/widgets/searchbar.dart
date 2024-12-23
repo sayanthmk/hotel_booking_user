@@ -8,7 +8,8 @@ import 'package:hotel_booking/features/home/presentation/providers/search_bloc/h
 import 'package:hotel_booking/features/home/presentation/widgets/customsearchbar.dart';
 
 class HotelSearchBar extends StatelessWidget {
-  const HotelSearchBar({super.key});
+  final TextEditingController searchController = TextEditingController();
+  HotelSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class HotelSearchBar extends StatelessWidget {
               },
               width: 340,
               hintText: 'Search',
+              controller: searchController,
               borderColor: HotelBookingColors.basictextcolor,
               hintTextColor: HotelBookingColors.basictextcolor,
               textColor: HotelBookingColors.basictextcolor,

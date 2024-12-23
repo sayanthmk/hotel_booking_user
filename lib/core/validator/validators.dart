@@ -34,4 +34,17 @@ class CustomValidator {
     }
     return null;
   }
+
+  static String? validatepayment(
+    String? value,
+  ) {
+    if (value == null || value.isEmpty) {
+      return 'Amount is required';
+    }
+    final amount = double.tryParse(value);
+    if (amount == null || amount <= 0) {
+      return 'Please enter a valid amount';
+    }
+    return null;
+  }
 }
