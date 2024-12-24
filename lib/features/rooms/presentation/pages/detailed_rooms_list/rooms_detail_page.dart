@@ -13,18 +13,6 @@ class RoomDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   title: const Text(
-      //     'Room Details',
-      //     style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-      //   ),
-      // ),
       appBar: AppBar(
         title: const Text(
           'Room Details',
@@ -272,3 +260,15 @@ class RoomDetailPage extends StatelessWidget {
     );
   }
 }
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
+      //     onPressed: () => Navigator.pop(context),
+      //   ),
+      //   title: const Text(
+      //     'Room Details',
+      //     style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+      //   ),
+      // ),

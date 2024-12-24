@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
@@ -62,6 +63,7 @@ class HotelBookingPage extends StatelessWidget {
             builder: (context, hotelState) {
               if (hotelState is SelectedHotelLoaded) {
                 final hotelId = hotelState.hotel.hotelId;
+                log(hotelId);
                 return BlocBuilder<SelectedRoomBloc, SelectedRoomState>(
                   builder: (context, roomState) {
                     String? selectedRoomId;

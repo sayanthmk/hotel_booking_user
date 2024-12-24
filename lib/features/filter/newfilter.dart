@@ -14,8 +14,8 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
 
   List<String> selectedCategories = [];
   List<String> selectedHotelTypes = [];
-  bool coupleFriendly = true;
-  bool parkingFacility = true;
+  bool coupleFriendly = false;
+  bool parkingFacility = false;
 
   final List<String> categories = ["chennai", "Fashion", "Books", "Home"];
   final List<String> hotelTypes = ["2014", "2016", "Hotel", "Resort"];

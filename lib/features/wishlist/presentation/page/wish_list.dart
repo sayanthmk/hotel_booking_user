@@ -130,6 +130,10 @@ class FavoritesPage extends StatelessWidget {
                                   color: Colors.red.shade700),
                               onPressed: () {
                                 // _showRemoveFavoriteDialog(context, hotelId);
+                                context
+                                    .read<FavoritesBloc>()
+                                    .add(RemoveFromFavoritesEvent(hotelId));
+                                // Navigator.of(context).pop();
                               },
                             ),
                           ),
