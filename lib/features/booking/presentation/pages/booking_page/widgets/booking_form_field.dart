@@ -7,12 +7,16 @@ class BookingCustomFormField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final TextInputType? keyboardType;
+  final FormFieldValidator<String>? validator;
+  final int? maxlength;
 
   const BookingCustomFormField({
     super.key,
     required this.label,
     required this.controller,
     this.keyboardType,
+    this.validator,
+    this.maxlength,
   });
 
   @override
@@ -30,13 +34,14 @@ class BookingCustomFormField extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         CustomTextFormField(
+          maxlength: maxlength,
           controller: controller,
           labelText: label,
           hintText: 'Enter $label',
           keyboardType: keyboardType ?? TextInputType.text,
           textInputAction: TextInputAction.next,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: CustomValidator.validateRequired,
+          validator: validator ?? CustomValidator.validateRequired,
           borderColor: Colors.grey.shade300,
           focusedBorderColor: HotelBookingColors.basictextcolor,
           enabledBorderColor: Colors.grey.shade300,

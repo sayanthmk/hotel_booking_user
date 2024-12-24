@@ -74,28 +74,3 @@ class LocationWithNotificationBar extends StatelessWidget {
     );
   }
 }
-    // onTap: () {
-              //   showDialog(
-              //     context: context,
-              //     builder: (BuildContext context) {
-              //       return CustomAlertDialog(
-              //         titleText: 'Delete',
-              //         contentText: 'Are you sure you want to logout?',
-              //         buttonText1: 'Cancel',
-              //         buttonText2: 'Logout',
-              //         onPressButton1: () {
-              //           Navigator.of(context).pop();
-              //         },
-              //         onPressButton2: () {
-              //           Navigator.of(context).pop();
-              //           context.read<AuthBloc>().add(SignOutEvent());
-              //           Navigator.of(context).pushReplacement(
-              //             MaterialPageRoute(
-              //               builder: (context) => const AuthSelectionPage(),
-              //             ),
-              //           );
-              //         },
-              //       );
-              //     },
-              //   );
-              // },

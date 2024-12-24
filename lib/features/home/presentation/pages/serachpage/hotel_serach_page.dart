@@ -22,6 +22,7 @@ class HotelsGridView extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: const Text(
               'Hotels',

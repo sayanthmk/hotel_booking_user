@@ -47,4 +47,24 @@ class CustomValidator {
     }
     return null;
   }
+
+  static String? validateAge(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Age cannot be empty';
+    }
+    if (value.length > 3) {
+      return 'Invalid Age';
+    }
+    return null;
+  }
+
+  static String? validateNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Value cannot be empty';
+    }
+    if (value.length > 1) {
+      return 'Invalid Value';
+    }
+    return null;
+  }
 }

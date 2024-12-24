@@ -103,7 +103,7 @@ class DateRangePickerWidgetState extends State<DateRangePickerWidget> {
             child: Text(
               selectedDateRange == null
                   ? "No date range selected"
-                  : "Selected: ${_formatDate(selectedDateRange!.start)} - ${_formatDate(selectedDateRange!.end)}",
+                  : "Selected: ${formatDate(selectedDateRange!.start)} - ${formatDate(selectedDateRange!.end)}",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: selectedDateRange == null
                         ? Colors.grey.shade600
@@ -132,7 +132,7 @@ class DateRangePickerWidgetState extends State<DateRangePickerWidget> {
     );
   }
 
-  String _formatDate(DateTime date) {
+  String formatDate(DateTime date) {
     return DateFormat('dd MMM yyyy').format(date);
   }
 }

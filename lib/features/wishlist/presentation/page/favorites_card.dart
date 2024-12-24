@@ -152,13 +152,7 @@ class FavoritesCard extends StatelessWidget {
                     const SizedBox(height: 12),
                     Row(
                       children: [
-                        // AmentityChip(label: 'Free WiFi', icon: Icons.wifi),
-                        // AmentityChip(
-                        //     label: 'Parking', icon: Icons.local_parking),
-                        // AmentityChip(label: 'AC', icon: Icons.ac_unit)
                         const Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // crossAxisAlignment: ,
                           children: [
                             AmentityChip(label: 'Free WiFi', icon: Icons.wifi),
                             AmentityChip(

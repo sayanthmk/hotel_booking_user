@@ -51,13 +51,28 @@ class PaymentPage extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const BookingSuccessPage(),
                 ));
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Payment Successful!')),
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(content: Text('Payment Successful!')),
+                // );
+                SnackBar(
+                  content: const Text('Payment Successful!'),
+                  backgroundColor: Colors.green,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 );
               }
               if (state is StripePaymentFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Payment Failed: ${state.error}')),
+                  SnackBar(
+                    content: Text('Payment Failed: ${state.error}'),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                 );
               }
             },
@@ -127,40 +142,3 @@ class PaymentPage extends StatelessWidget {
         ));
   }
 }
-  // const Padding(
-                      //   padding: EdgeInsets.all(8.0),
-                      //   child: Text(
-                      //     'Enter Amount',
-                      //     style: TextStyle(fontWeight: FontWeight.bold),
-                      //   ),
-                      // ),
-                      // TextFormField(
-                      //   controller: amountController,
-                      //   decoration: const InputDecoration(
-                      //     labelText: 'Amount',
-                      //     hintText: 'Enter the payment amount',
-                      //     border: OutlineInputBorder(),
-                      //   ),
-                      //   keyboardType: TextInputType.number,
-                      //   textInputAction: TextInputAction.done,
-                      //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //   validator: (value) {
-                      //     if (value == null || value.isEmpty) {
-                      //       return 'Amount is required';
-                      //     }
-                      //     final amount = double.tryParse(value);
-                      //     if (amount == null || amount <= 0) {
-                      //       return 'Please enter a valid amount';
-                      //     }
-                      //     return null;
-                      //   },
-                      // ),
-                          // await Future.delayed(const Duration(seconds: 2));
-                                    // context.read<UserBloc>().add(
-                                    //       SaveUserDataEvent(bookingData, hotelId),
-                                    //     );
-                                    // Navigate to success page after initiating payment
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //   builder: (context) =>
-                                    //       const BookingSuccessPage(),
-                                    // ));

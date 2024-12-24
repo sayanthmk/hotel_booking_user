@@ -86,8 +86,6 @@ class SearchHotelCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-              // Hotel Details
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -167,12 +165,3 @@ class SearchHotelCard extends StatelessWidget {
     );
   }
 }
-     // _buildAmenityChip(Icons.wifi, 'Free WiFi'),
-                        // const SizedBox(width: 8),
-                        // _buildAmenityChip(Icons.local_parking, 'Parking'),
-                        // const SizedBox(width: 8),
-                        // _buildAmenityChip(Icons.ac_unit, 'AC'),
-                        
-  // Widget _buildAmenityChip(IconData icon, String label) {
-  //   return AmentityChip();
-  // }

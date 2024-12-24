@@ -8,6 +8,7 @@ class CustomSearchBar extends StatelessWidget {
   final Color backgroundColor;
   final double? width;
   final Function(String) onChanged;
+  final VoidCallback? suffixontap;
   final TextEditingController? controller;
 
   const CustomSearchBar({
@@ -18,6 +19,7 @@ class CustomSearchBar extends StatelessWidget {
     required this.textColor,
     required this.backgroundColor,
     this.width,
+    this.suffixontap,
     required this.onChanged,
     this.controller,
   });
@@ -36,13 +38,15 @@ class CustomSearchBar extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        // padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.all(5),
         child: TextField(
           controller: controller,
           onChanged: (value) {
             onChanged(value);
           },
           decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
               hintText: hintText,
               hintStyle: TextStyle(
                 color: hintTextColor,
@@ -50,10 +54,11 @@ class CustomSearchBar extends StatelessWidget {
               border: InputBorder.none,
               suffixIcon: InkWell(
                 // onTap: icontap,
-                onTap: () {
-                  controller?.clear();
-                  // onChanged('');
-                },
+                onTap: suffixontap,
+                // onTap: () {
+                //   controller?.clear();
+
+                // },
                 child: const Icon(
                   Icons.cancel,
                   color: Colors.grey,

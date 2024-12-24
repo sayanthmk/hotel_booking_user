@@ -34,6 +34,15 @@ class HotelSearchBar extends StatelessWidget {
               hintTextColor: HotelBookingColors.basictextcolor,
               textColor: HotelBookingColors.basictextcolor,
               backgroundColor: Colors.white,
+              suffixontap: () {
+                searchController.clear();
+                context.read<HotelSearchBloc>().add(
+                      SearchHotelsEvent(
+                        query: '',
+                        allHotels: hotelState.hotels,
+                      ),
+                    );
+              },
             ),
           );
         }

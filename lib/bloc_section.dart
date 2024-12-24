@@ -50,12 +50,6 @@ class BlocSection extends StatelessWidget {
         BlocProvider(
           create: (context) => HotelSearchBloc(),
         ),
-        // BlocProvider(
-        //   create: (context) => HotelSearchBloc(),
-        // ),
-        // BlocProvider(
-        //   create: (context) => HotelFilterBloc(),
-        // ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

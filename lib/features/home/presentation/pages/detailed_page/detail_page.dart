@@ -52,23 +52,3 @@ class HotelDetailPage extends StatelessWidget {
     );
   }
 }
-
-                    // Center(
-                    //   child: ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.of(context).push(MaterialPageRoute(
-                    //         builder: (context) => HotelBookingPage(),
-                    //       ));
-                    //     },
-                    //     child: Text('press'),
-                    //   ),
-                    // ),
-                        // floatingActionButton: CustomWideButton(
-      //   label: 'Book Now',
-      //   icon: Icons.book_online,
-      //   onPressed: () {
-      //     Navigator.of(context).push(MaterialPageRoute(
-      //       builder: (context) => HotelBookingPage(),
-      //     ));
-      //   },
-      // ),

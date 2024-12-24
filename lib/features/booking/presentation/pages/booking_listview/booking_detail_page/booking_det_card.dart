@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
-import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/widgets/info_section.dart';
+import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/widgets/card_items_info_section.dart';
 import 'package:intl/intl.dart';
 
 class BookingDetailPageCard extends StatelessWidget {
   const BookingDetailPageCard({
     super.key,
     required this.booking,
-    // required this.startdate,
-    // required this.enddate,
   });
 
   final UserDataModel booking;
-  // final String startdate;
-  // final String enddate;
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +38,13 @@ class BookingDetailPageCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InfoSection(
+              BookCardItemsInfoSection(
                 label: 'Booking ID',
                 value: booking.bookId!.substring(0, 10).toUpperCase(),
                 icon: Icons.confirmation_number,
               ),
               const Divider(height: 32),
-              InfoSection(
+              BookCardItemsInfoSection(
                 label: 'Guest Name',
                 value: booking.name,
                 icon: Icons.person,
@@ -57,7 +53,7 @@ class BookingDetailPageCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: InfoSection(
+                    child: BookCardItemsInfoSection(
                       label: 'Check In',
                       value: startdate,
                       icon: Icons.calendar_today,
@@ -65,7 +61,7 @@ class BookingDetailPageCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: InfoSection(
+                    child: BookCardItemsInfoSection(
                       label: 'Check Out',
                       value: enddate,
                       icon: Icons.event_available,
@@ -77,7 +73,7 @@ class BookingDetailPageCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: InfoSection(
+                    child: BookCardItemsInfoSection(
                       label: 'Adults',
                       value: booking.noa.toString(),
                       icon: Icons.person_outline,
@@ -85,7 +81,7 @@ class BookingDetailPageCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   Expanded(
-                    child: InfoSection(
+                    child: BookCardItemsInfoSection(
                       label: 'Children',
                       value: booking.noc.toString(),
                       icon: Icons.child_care,
@@ -94,7 +90,7 @@ class BookingDetailPageCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              InfoSection(
+              BookCardItemsInfoSection(
                 label: 'Location',
                 value: booking.place,
                 icon: Icons.location_on,

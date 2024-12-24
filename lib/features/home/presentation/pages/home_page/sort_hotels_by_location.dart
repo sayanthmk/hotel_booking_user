@@ -31,7 +31,6 @@ class SortHotelsByLocation extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: Image.asset(
-                        // 'assets/images/mumbai_hotel.jpg',
                         location['image']!,
                         width: 60,
                         height: 60,

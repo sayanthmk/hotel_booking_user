@@ -14,9 +14,6 @@ class HotelImageBox extends StatelessWidget {
         BlocListener<FavoritesBloc, FavoritesState>(
           listener: (context, state) {
             if (state is FavoriteAdded) {
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   const SnackBar(content: Text('Added to favorites')),
-              // );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: const Text('Added to favorites'),
@@ -29,8 +26,18 @@ class HotelImageBox extends StatelessWidget {
               );
             } else if (state is FavoritesError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: ${state.message}')),
+                SnackBar(
+                  content: const Text('Already added to Favorites'),
+                  backgroundColor: Colors.red,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(content: Text('Error: ${state.message}')),
+              // );
             }
           },
         ),
@@ -222,16 +229,3 @@ class HotelImageBox extends StatelessWidget {
     );
   }
 }
-          //                       CustomCircleAvatar(
-                        //   iconColor: Colors.red,
-                        //   onTap: () {
-                        //     final userId = 'currentUserId'; // Replace with the actual current user ID
-                        //     final hotelId = hotel.hotelId;
-
-                        //     context.read<SelectedHotelBloc>().add(AddHotelToFavorites(
-                        //       userId: userId,
-                        //       hotelId: hotelId,
-                        //     ));
-                        //   },
-                        //   icon: Icons.favorite,
-                        // ),

@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 
-class InfoSection extends StatelessWidget {
+class HotelContactInfoRow extends StatelessWidget {
+  final IconData icon;
   final String label;
   final String value;
-  final IconData icon;
 
-  const InfoSection({
+  const HotelContactInfoRow({
     super.key,
+    required this.icon,
     required this.label,
     required this.value,
-    required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          size: 24,
-          color: HotelBookingColors.basictextcolor,
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: HotelBookingColors.basictextcolor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: HotelBookingColors.basictextcolor,
+            size: 20,
+          ),
         ),
         const SizedBox(width: 12),
         Expanded(
@@ -31,17 +37,17 @@ class InfoSection extends StatelessWidget {
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 value,
                 style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
                 ),
               ),
             ],

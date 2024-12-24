@@ -17,17 +17,6 @@ class UserRepositoryImpl implements UserRepository {
     return await remoteDataSource.getUserBookings();
   }
 
-  // @override
-  // Future<void> saveHotelBooking({
-  //   required String hotelId,
-  //   required UserDataModel bookingData,
-  // }) async {
-  //   return await remoteDataSource.saveHotelBooking(
-  //     hotelId: hotelId,
-  //     bookingData: bookingData,
-  //   );
-  // }
-
   @override
   Future<List<UserDataModel>> getHotelBookings(String hotelId) async {
     return await remoteDataSource.getHotelBookings(hotelId);
@@ -37,17 +26,6 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> deleteUserBooking(String bookingId, String hotelId) async {
     return await remoteDataSource.deleteUserBooking(bookingId, hotelId);
   }
-
-  // @override
-  // Future<void> deleteHotelBooking({
-  //   required String hotelId,
-  //   required String bookingId,
-  // }) async {
-  //   return await remoteDataSource.deleteHotelBooking(
-  //     hotelId: hotelId,
-  //     bookingId: bookingId,
-  //   );
-  // }
 
   @override
   Future<UserDataModel> getSingleUserBooking(String bookingId) async {
