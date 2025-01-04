@@ -4,6 +4,7 @@ import 'package:hotel_booking/core/dependency_injection/injection_container.dart
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/amenteties.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/hotel_image_box.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/hotel_map.dart';
+import 'package:hotel_booking/features/home/presentation/pages/detailed_page/report_reviewpage.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/pages/rooms_list/room_list_view.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/bloc/rooms_bloc.dart';
@@ -28,6 +29,8 @@ class HotelDetailPage extends StatelessWidget {
                     const HotelImageBox(),
                     //amentity
                     const Amenities(),
+                    //review report
+
                     //rooms
                     BlocProvider(
                       create: (context) =>
@@ -37,8 +40,12 @@ class HotelDetailPage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    //  map
 
+                    const ReviewReportPage(),
+                    //  map
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const HotelMap(),
                   ],
                 ),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
@@ -12,6 +11,8 @@ import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_state.dart';
+import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
+import 'package:hotel_booking/utils/snackbar.dart';
 
 class HotelBookingPage extends StatelessWidget {
   HotelBookingPage({super.key});
@@ -30,24 +31,8 @@ class HotelBookingPage extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Book Your Stay',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          centerTitle: true,
-          backgroundColor: HotelBookingColors.basictextcolor,
-          elevation: 0,
-          iconTheme: const IconThemeData(color: Colors.white),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
-            ),
-          ),
+        appBar: const BookingAppbar(
+          heading: 'Book Your Stay',
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -65,22 +50,24 @@ class HotelBookingPage extends StatelessWidget {
               if (hotelState is SelectedHotelLoaded) {
                 final hotelId = hotelState.hotel.hotelId;
 
-                log(hotelId);
                 return BlocBuilder<SelectedRoomBloc, SelectedRoomState>(
                   builder: (context, roomState) {
                     String? selectedRoomId;
                     if (roomState is RoomSelected) {
                       selectedRoomId = roomState.selectedRoom.roomId;
-                      // final noa=roomState.selectedRoom.extraAdultsAllowed;
                     }
                     return BlocConsumer<UserBloc, UserState>(
                       listener: (context, state) {
                         if (state is UserErrorState) {
-                          showErrorSnackBar(context, state.message);
+                          // showErrorSnackBar(context, state.message);
+                          showCustomSnackBar(
+                              context, state.message, Colors.red);
                         }
                         if (state is UserDataSavedState) {
-                          showSuccessSnackBar(
-                              context, 'Booking Saved Successfully');
+                          // showSuccessSnackBar(
+                          //     context, 'Booking Saved Successfully');
+                          showCustomSnackBar(context,
+                              'Booking Saved Successfully', Colors.green);
                           clearAllFields();
                         }
                       },
@@ -250,30 +237,5 @@ class HotelBookingPage extends StatelessWidget {
     adultcontroller.clear();
     childcontroller.clear();
   }
-
-  void showErrorSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
-
-  void showSuccessSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
 }
+   

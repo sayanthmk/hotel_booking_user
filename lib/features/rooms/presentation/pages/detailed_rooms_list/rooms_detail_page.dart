@@ -5,6 +5,7 @@ import 'package:hotel_booking/features/booking/presentation/pages/booking_page/b
 import 'package:hotel_booking/features/rooms/presentation/pages/detailed_rooms_list/detail_room_widgets.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_state.dart';
+import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
 
 class RoomDetailPage extends StatelessWidget {
   const RoomDetailPage({super.key});
@@ -13,32 +14,8 @@ class RoomDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          'Room Details',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            fontSize: 24,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: HotelBookingColors.basictextcolor,
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-          ),
-        ),
+      appBar: const BookingAppbar(
+        heading: 'Room Details',
       ),
       body: BlocBuilder<SelectedRoomBloc, SelectedRoomState>(
         builder: (context, state) {
@@ -260,15 +237,3 @@ class RoomDetailPage extends StatelessWidget {
     );
   }
 }
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   title: const Text(
-      //     'Room Details',
-      //     style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-      //   ),
-      // ),

@@ -9,6 +9,8 @@ import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_event.dart';
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_state.dart';
+import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
+import 'package:hotel_booking/utils/snackbar.dart';
 
 class PaymentPage extends StatelessWidget {
   final UserDataModel bookingData;
@@ -23,24 +25,8 @@ class PaymentPage extends StatelessWidget {
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Booking Payment Details',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: HotelBookingColors.basictextcolor,
-            elevation: 0,
-            iconTheme: const IconThemeData(color: Colors.white),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
-              ),
-            ),
+          appBar: const BookingAppbar(
+            heading: 'Booking Payment Details',
           ),
           body: BlocConsumer<StripeBloc, StripePaymentState>(
             listener: (context, state) {
@@ -54,26 +40,12 @@ class PaymentPage extends StatelessWidget {
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   const SnackBar(content: Text('Payment Successful!')),
                 // );
-                SnackBar(
-                  content: const Text('Payment Successful!'),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                );
+                showCustomSnackBar(
+                    context, 'Payment Successful!', Colors.green);
               }
               if (state is StripePaymentFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Payment Failed: ${state.error}'),
-                    backgroundColor: Colors.red,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                );
+                showCustomSnackBar(
+                    context, 'Payment Failed: ${state.error}', Colors.red);
               }
             },
             builder: (context, state) {
@@ -142,3 +114,4 @@ class PaymentPage extends StatelessWidget {
         ));
   }
 }
+   

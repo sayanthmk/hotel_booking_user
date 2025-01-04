@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/widgets/custom_circle.dart';
 import 'package:hotel_booking/features/wishlist/presentation/provider/bloc/favorites_bloc.dart';
+import 'package:hotel_booking/utils/snackbar.dart';
 
 class HotelImageBox extends StatelessWidget {
   const HotelImageBox({super.key});
@@ -14,27 +15,30 @@ class HotelImageBox extends StatelessWidget {
         BlocListener<FavoritesBloc, FavoritesState>(
           listener: (context, state) {
             if (state is FavoriteAdded) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('Added to favorites'),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              );
+              showCustomSnackBar(context, 'Added to favorites', Colors.green);
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     content: const Text('Added to favorites'),
+              //     backgroundColor: Colors.green,
+              //     behavior: SnackBarBehavior.floating,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //   ),
+              // );
             } else if (state is FavoritesError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text('Already added to Favorites'),
-                  backgroundColor: Colors.red,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              );
+              showCustomSnackBar(
+                  context, 'Already added to Favorites', Colors.red);
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     content: const Text('Already added to Favorites'),
+              //     backgroundColor: Colors.red,
+              //     behavior: SnackBarBehavior.floating,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //   ),
+              // );
               // ScaffoldMessenger.of(context).showSnackBar(
               //   SnackBar(content: Text('Error: ${state.message}')),
               // );

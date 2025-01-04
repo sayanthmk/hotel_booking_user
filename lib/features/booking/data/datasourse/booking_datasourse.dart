@@ -80,7 +80,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .doc(currentUser.uid)
           .collection('bookings')
           .get();
-      // log('users/bookings/get');
       final bookings = querySnapshot.docs
           .map((doc) => UserDataModel.fromMap(doc.data(), id: doc.id))
           .toList();
@@ -165,82 +164,3 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     }
   }
 }
-
-  // Future<void> saveHotelBooking({
-  //   required String hotelId,
-  //   required UserDataModel bookingData,
-
-  // });
-   // @override
-  // Future<void> saveHotelBooking({
-  //   required String hotelId,
-  //   required UserDataModel bookingData,
-  // }) async {
-  //   try {
-  //     final User? currentUser = _auth.currentUser;
-  //     if (currentUser == null) {
-  //       throw Exception('No authenticated user found');
-  //     }
-  //     // final bookingMap = bookingData.toMap();
-  //     // bookingMap['userId'] = currentUser.uid;
-  //     // final String bookingId = _uuid.v4();
-
-  //     // final bookingRef = _firestore
-  //     //     .collection('approved_hotels')
-  //     //     .doc(hotelId)
-  //     //     .collection('bookings')
-  //     //     .doc();
-  //     // log('users/bookings/save');
-  //     // await _firestore
-  //     //     .collection('approved_hotels')
-  //     //     .doc(hotelId)
-  //     //     .collection('bookings')
-  //     //     .doc(bookingId)
-  //     //     .set({
-  //     //   'hotelId': hotelId,
-  //     //   'bookingId': bookingId,
-  //     //   'bookingDetails': bookingMap,
-  //     // });
-
-  //     // await bookingRef.set(bookingMap);
-
-  //     // await _firestore
-  //     //     .collection('users')
-  //     //     .doc(currentUser.uid)
-  //     //     .collection('bookings')
-  //     //     .doc(bookingRef.id)
-  //     //     .set({
-  //     //   'hotelId': hotelId,
-  //     //   'bookingDetails': bookingMap,
-  //     // });
-  //   } catch (e) {
-  //     throw Exception('Failed to save hotel booking: $e');
-  //   }
-  // }
-    // @override
-  // Future<void> deleteHotelBooking({
-  //   required String hotelId,
-  //   required String bookingId,
-  // }) async {
-  //   try {
-  //     // final bookingRef = _firestore
-  //     //     .collection('approved_hotels')
-  //     //     .doc(hotelId)
-  //     //     .collection('bookings')
-  //     //     .doc(bookingId);
-
-  //     // await bookingRef.delete();
-  //     log('Deleted hotel booking with ID: $bookingId in hotel: $hotelId');
-  //   } catch (e) {
-  //     throw Exception('Failed to delete hotel booking: $e');
-  //   }
-  // }
-    // Future<void> deleteHotelBooking({
-  //   required String hotelId,
-  //   required String bookingId,
-  // });
-      // log('Fetching user bookings...');
-      // for (var doc in querySnapshot.docs) {
-      //   log('Document ID: ${doc.id}');
-      //   log('Document Data: ${doc.data()}');
-      // }

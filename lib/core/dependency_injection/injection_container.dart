@@ -19,6 +19,15 @@ import 'package:hotel_booking/features/home/domain/usecase/fetch_hotel_byid.dart
 import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
+import 'package:hotel_booking/features/location/location.dart';
+import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
+import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
+import 'package:hotel_booking/features/report/domain/repos/report_repo.dart';
+import 'package:hotel_booking/features/report/presentation/providers/bloc/report_bloc.dart';
+import 'package:hotel_booking/features/review/data/datasource/review_datasource.dart';
+import 'package:hotel_booking/features/review/data/repositary/review_repositary.dart';
+import 'package:hotel_booking/features/review/domain/repos/review_repos.dart';
+import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
 import 'package:hotel_booking/features/rooms/data/datasourse/room_remote_datasourse.dart';
 import 'package:hotel_booking/features/rooms/data/repositary/rooms_data_repositary.dart';
 import 'package:hotel_booking/features/rooms/domain/repos/rooms_domain_repositary.dart';
@@ -200,6 +209,58 @@ Future<void> init() async {
       // updatePaymentAmountUseCase: sl<UpdatePaymentAmountUseCase>(),
     ),
   );
+
+//////////////////////////////////////////////////////////////////////////////////
+
+  // Remote Data Source
+  sl.registerLazySingleton<ReportDataSource>(
+    () => ReportDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<ReportRepository>(
+    () => ReportRepositoryImpl(sl<ReportDataSource>()),
+  );
+
+  // Bloc
+  sl.registerFactory<ReportBloc>(
+    () => ReportBloc(sl<ReportRepository>()),
+  );
+
+  // Review dependencies
+  sl.registerLazySingleton<ReviewDataSource>(
+    () => ReviewDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  );
+
+  sl.registerLazySingleton<ReviewRepository>(
+    () => ReviewRepositoryImpl(sl<ReviewDataSource>()),
+  );
+
+  sl.registerFactory<ReviewBloc>(
+    () => ReviewBloc(sl<ReviewRepository>()),
+  );
+
+  //   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+
+  sl.registerLazySingleton<LocationRemoteDataSource>(
+    () => LiveLocationRemoteDataSource(
+      sl<FirebaseFirestore>(),
+      sl<FirebaseAuth>(),
+    ),
+  );
+
+  sl.registerLazySingleton<LocationRepository>(
+    () => LiveLocationRepositoryImpl(
+      remoteDataSource: sl<LocationRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerFactory<LocationBloc>(
+    () => LocationBloc(
+      sl<LocationRepository>(),
+    ),
+  );
 }
 
 
@@ -258,3 +319,19 @@ Future<void> init() async {
 //   sl.registerFactory<StripeBloc>(
 //     () => StripeBloc(createPaymentIntentUseCase: sl()),
 //   );
+//////////////////////////////////////////////////////////////////////
+
+  // // Remote Data Source
+  // sl.registerLazySingleton<ReviewDataSource>(
+  //   () => ReviewDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  // );
+
+  // // Repository
+  // sl.registerLazySingleton<ReviewRepository>(
+  //   () => ReviewRepositoryImpl(sl<ReviewDataSource>()),
+  // );
+
+  // // Bloc
+  // sl.registerFactory<ReviewBloc>(
+  //   () => ReviewBloc(sl<ReviewRepository>()),
+  // );

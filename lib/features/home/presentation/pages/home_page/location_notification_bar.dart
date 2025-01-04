@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/location/location.dart';
 
 class LocationWithNotificationBar extends StatelessWidget {
   const LocationWithNotificationBar({
@@ -55,6 +56,11 @@ class LocationWithNotificationBar extends StatelessWidget {
               ],
             ),
             InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MapPage(),
+                ));
+              },
               child: Container(
                 height: 50,
                 width: 50,

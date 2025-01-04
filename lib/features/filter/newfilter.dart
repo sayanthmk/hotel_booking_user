@@ -16,9 +16,11 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
   List<String> selectedHotelTypes = [];
   bool coupleFriendly = false;
   bool parkingFacility = false;
+  bool freecancel = false;
+  bool restaurentfacility = false;
 
   final List<String> categories = ["chennai", "Fashion", "Books", "Home"];
-  final List<String> hotelTypes = ["2014", "2016", "Hotel", "Resort"];
+  final List<String> hotelTypes = ["Villa", "Bunglow", "Hotel", "Resort"];
 
   // List to store filtered products
   List<Map<String, dynamic>> _filteredProducts = [];
@@ -38,12 +40,14 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
         query = query.where('Booking_since', whereIn: selectedHotelTypes);
       }
 
-      // Apply initial boolean filter (isAvailable = true)
       if (coupleFriendly) {
         query = query.where('couple_friendly', isEqualTo: true);
       }
       if (parkingFacility) {
         query = query.where('parking_facility', isEqualTo: true);
+      }
+      if (freecancel) {
+        query = query.where('free_cancel', isEqualTo: true);
       }
 
       // Execute query and fetch data
@@ -82,7 +86,7 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
                 selected.remove(item);
               }
             });
-            fetchFilteredProducts(); // Fetch updated results
+            fetchFilteredProducts();
           },
         );
       }).toList(),
@@ -127,6 +131,16 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
               fetchFilteredProducts();
             },
           ),
+          BooleanFilterWidget(
+            text: 'free_cancel',
+            isAvailable: freecancel,
+            onChanged: (value) {
+              setState(() {
+                freecancel = value;
+              });
+              fetchFilteredProducts();
+            },
+          ),
           const Divider(),
           const Text("Filtered Products:",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -137,18 +151,23 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
                     itemCount: _filteredProducts.length,
                     itemBuilder: (context, index) {
                       final product = _filteredProducts[index];
-                      return ListTile(
-                        title: Text(product['city'] ?? 'No City'),
-                        subtitle: Text(
-                            'Hotel: ${product['hotel_name'] ?? 'Unknown'}'),
-                        trailing: Column(
+                      return SizedBox(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Text(product['city'] ?? 'No City'),
+                            Text(
+                                'Hotel: ${product['hotel_name'] ?? 'Unknown'}'),
                             Text('Pincode: ${product['pincode'] ?? 'N/A'}'),
                             Text(
                                 'couple_friendly: ${product['couple_friendly'] == true ? "Yes" : "No"}'),
                             Text(
                                 'parking_facility: ${product['parking_facility'] == true ? "Yes" : "No"}'),
+                            Text(
+                                'free_cancel: ${product['free_cancel'] == true ? "Yes" : "No"}'),
+                            const SizedBox(
+                              height: 30,
+                            )
                           ],
                         ),
                       );
@@ -160,7 +179,6 @@ class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
     );
   }
 }
-// import 'package:flutter/material.dart';
 
 class BooleanFilterWidget extends StatelessWidget {
   final bool isAvailable;
@@ -192,25 +210,3 @@ class BooleanFilterWidget extends StatelessWidget {
     );
   }
 }
-// Build Boolean Switch
-  // Widget buildBooleanFilter() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       const Text("Show Available Only:",
-  //           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-  //       Switch(
-  //         value: coupleFriendly,
-  //         onChanged: (value) {
-  //           setState(() {
-  //             coupleFriendly = value;
-  //           });
-  //           fetchFilteredProducts();
-  //         },
-  //       ),
-  //       Text(coupleFriendly ? "Yes" : "No"),
-  //     ],
-  //   );
-  // }
-           // buildBooleanFilter(), // Boolean toggle filter
-          // Use the Custom Boolean Filter Widget

@@ -4,7 +4,6 @@ void showCustomSnackBar(BuildContext context, String message, Color color) {
   final snackBar = SnackBar(
     content: Row(
       children: [
-        // const Icon(Icons.check_circle, color: Colors.white),
         const SizedBox(width: 10),
         Expanded(
           child: Text(
@@ -14,7 +13,7 @@ void showCustomSnackBar(BuildContext context, String message, Color color) {
         ),
       ],
     ),
-    backgroundColor: color, // Use the color passed as an argument
+    backgroundColor: color,
     behavior: SnackBarBehavior.floating,
     margin: const EdgeInsets.all(10),
     shape: RoundedRectangleBorder(
@@ -30,6 +29,5 @@ void showCustomSnackBar(BuildContext context, String message, Color color) {
     // ),
   );
 
-  // Show the custom SnackBar
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

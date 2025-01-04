@@ -29,7 +29,6 @@ class HotelModel extends HotelEntity {
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
-    // log('model');
     return HotelModel(
       hotelId: json['userId'] ?? '',
       hotelType: json['hotel_type'] ?? '',

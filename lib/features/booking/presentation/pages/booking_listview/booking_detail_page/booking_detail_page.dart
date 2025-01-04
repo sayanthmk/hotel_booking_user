@@ -13,6 +13,7 @@ class BookingDetailPageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // appBar: const BookingAppbar(heading: 'Booking Details'),
       appBar: AppBar(
         title: const Text(
           'Booking Details',
