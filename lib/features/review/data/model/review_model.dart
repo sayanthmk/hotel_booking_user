@@ -3,24 +3,23 @@ class ReviewModel {
   final String? bookId;
   final String? hotelId;
   final String? reviewcontent;
-
-  final String? roomId;
+  final String? rating;
   final DateTime? reviewdate;
 
   ReviewModel({
     this.id,
     this.bookId,
     this.hotelId,
-    this.roomId,
     this.reviewdate,
     this.reviewcontent,
+    this.rating,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'roomId': roomId,
       'reviewdate': reviewdate,
       'review_content': reviewcontent,
+      'rating': rating,
     };
   }
 
@@ -29,13 +28,13 @@ class ReviewModel {
     String? id,
     String? hotelId,
   }) {
-    final rpt = map['bookingDetails'];
+    final rpt = map['reviewDetails'];
     return ReviewModel(
         bookId: map['bookingId'] ?? '',
         hotelId: map['hotelId'] ?? '',
         id: id,
-        roomId: rpt['roomId'] ?? '',
         reviewdate: rpt[DateTime.now()],
+        rating: rpt['rating'] ?? '',
         reviewcontent: rpt['review_content']);
   }
 }

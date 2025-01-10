@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hotel_booking/features/review/data/model/review_model.dart';
@@ -9,7 +10,6 @@ abstract class ReviewDataSource {
     String hotelId,
   );
   Future<List<ReviewModel>> getUserReview();
-
   Future<List<ReviewModel>> getHotelReview(String hotelId);
   Future<ReviewModel> getSingleUserReview(String hotelId);
   Future<void> deleteUserReview(String bookingId, String hotelId);
@@ -122,22 +122,25 @@ class ReviewDataSourceImpl implements ReviewDataSource {
   @override
   Future<List<ReviewModel>> getHotelReview(String hotelId) async {
     try {
-      // final adminId = _firestore.collection('approved_hotels').doc().id;
       final querySnapshot = await _firestore
           .collection('approved_hotels')
           .doc(hotelId)
-          .collection('reports')
+          .collection('reviews')
           .get();
-      return querySnapshot.docs
+      final reviews = querySnapshot.docs
           .map((doc) => ReviewModel.fromMap(doc.data(), id: doc.id))
           .toList();
+      for (var review in reviews) {
+        log('Review ID: ${review.id}, Data: ${review.toString()}');
+      }
+      return reviews;
     } catch (e) {
-      throw Exception('Failed to retrieve hotel Reports: $e');
+      throw Exception('Failed to retrieve hotel reviews: $e');
     }
   }
 
   @override
-  Future<void> deleteUserReview(String reportId, String hotelId) async {
+  Future<void> deleteUserReview(String reviewId, String hotelId) async {
     try {
       final User? currentUser = _auth.currentUser;
       if (currentUser == null) {
@@ -147,16 +150,16 @@ class ReviewDataSourceImpl implements ReviewDataSource {
       final bookingRef = _firestore
           .collection('users')
           .doc(currentUser.uid)
-          .collection('reports')
-          .doc(reportId);
+          .collection('reviews')
+          .doc(reviewId);
 
       await bookingRef.delete();
 
       final bookingRefr = _firestore
           .collection('admin')
           .doc(hotelId)
-          .collection('reports')
-          .doc(reportId);
+          .collection('reviews')
+          .doc(reviewId);
 
       await bookingRefr.delete();
     } catch (e) {

@@ -4,14 +4,14 @@ class UserDataModel {
   final String? id;
   final String? bookId;
   final String? hotelId;
-  final String name;
-  final int age;
-  final String place;
-  final DateTime startdate;
-  final DateTime enddate;
-  final int noc;
-  final int noa;
-  final String roomId;
+  final String? name;
+  final int? age;
+  final String? place;
+  final DateTime? startdate;
+  final DateTime? enddate;
+  final int? noc;
+  final int? noa;
+  final String? roomId;
   final double? paidAmount;
 
   UserDataModel(
@@ -19,14 +19,14 @@ class UserDataModel {
       this.bookId,
       this.hotelId,
       this.paidAmount,
-      required this.roomId,
-      required this.name,
-      required this.age,
-      required this.place,
-      required this.startdate,
-      required this.enddate,
-      required this.noc,
-      required this.noa});
+      this.roomId,
+      this.name,
+      this.age,
+      this.place,
+      this.startdate,
+      this.enddate,
+      this.noc,
+      this.noa});
 
   Map<String, dynamic> toMap() {
     return {
@@ -34,8 +34,8 @@ class UserDataModel {
       'name': name,
       'age': age,
       'place': place,
-      'startdate': Timestamp.fromDate(startdate),
-      'enddate': Timestamp.fromDate(enddate),
+      'startdate': Timestamp.fromDate(startdate!),
+      'enddate': Timestamp.fromDate(enddate!),
       'noc': noc,
       'noa': noa,
       'paidAmount': paidAmount,

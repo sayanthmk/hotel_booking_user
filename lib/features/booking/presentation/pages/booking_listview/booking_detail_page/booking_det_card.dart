@@ -13,8 +13,8 @@ class BookingDetailPageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String startdate = DateFormat('dd MMM yyyy').format(booking.startdate);
-    String enddate = DateFormat('dd MMM yyyy').format(booking.enddate);
+    String startdate = DateFormat('dd MMM yyyy').format(booking.startdate!);
+    String enddate = DateFormat('dd MMM yyyy').format(booking.enddate!);
     return Card(
       elevation: 8,
       shadowColor: Colors.black26,
@@ -46,7 +46,7 @@ class BookingDetailPageCard extends StatelessWidget {
               const Divider(height: 32),
               BookCardItemsInfoSection(
                 label: 'Guest Name',
-                value: booking.name,
+                value: booking.name!,
                 icon: Icons.person,
               ),
               const SizedBox(height: 20),
@@ -92,7 +92,7 @@ class BookingDetailPageCard extends StatelessWidget {
               const SizedBox(height: 20),
               BookCardItemsInfoSection(
                 label: 'Location',
-                value: booking.place,
+                value: booking.place!,
                 icon: Icons.location_on,
               ),
             ],

@@ -1,212 +1,212 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flutter/material.dart';
 
-class MultiFilterProductsPage extends StatefulWidget {
-  const MultiFilterProductsPage({super.key});
+// class MultiFilterProductsPage extends StatefulWidget {
+//   const MultiFilterProductsPage({super.key});
 
-  @override
-  State<MultiFilterProductsPage> createState() =>
-      _MultiFilterProductsPageState();
-}
+//   @override
+//   State<MultiFilterProductsPage> createState() =>
+//       _MultiFilterProductsPageState();
+// }
 
-class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+// class _MultiFilterProductsPageState extends State<MultiFilterProductsPage> {
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  List<String> selectedCategories = [];
-  List<String> selectedHotelTypes = [];
-  bool coupleFriendly = false;
-  bool parkingFacility = false;
-  bool freecancel = false;
-  bool restaurentfacility = false;
+//   List<String> selectedCategories = [];
+//   List<String> selectedHotelTypes = [];
+//   bool coupleFriendly = false;
+//   bool parkingFacility = false;
+//   bool freecancel = false;
+//   bool restaurentfacility = false;
 
-  final List<String> categories = ["chennai", "Fashion", "Books", "Home"];
-  final List<String> hotelTypes = ["Villa", "Bunglow", "Hotel", "Resort"];
+//   final List<String> categories = ["chennai", "Fashion", "Books", "Home"];
+//   final List<String> hotelTypes = ["Villa", "Bunglow", "Hotel", "Resort"];
 
-  // List to store filtered products
-  List<Map<String, dynamic>> _filteredProducts = [];
+//   // List to store filtered products
+//   List<Map<String, dynamic>> _filteredProducts = [];
 
-  // Fetch products with filters
-  Future<void> fetchFilteredProducts() async {
-    try {
-      Query query = _firestore.collection('approved_hotels');
+//   // Fetch products with filters
+//   Future<void> fetchFilteredProducts() async {
+//     try {
+//       Query query = _firestore.collection('approved_hotels');
 
-      // Apply category filters if selected
-      if (selectedCategories.isNotEmpty) {
-        query = query.where('city', whereIn: selectedCategories);
-      }
+//       // Apply category filters if selected
+//       if (selectedCategories.isNotEmpty) {
+//         query = query.where('city', whereIn: selectedCategories);
+//       }
 
-      // Apply hotel type filters if selected
-      if (selectedHotelTypes.isNotEmpty) {
-        query = query.where('Booking_since', whereIn: selectedHotelTypes);
-      }
+//       // Apply hotel type filters if selected
+//       if (selectedHotelTypes.isNotEmpty) {
+//         query = query.where('Booking_since', whereIn: selectedHotelTypes);
+//       }
 
-      if (coupleFriendly) {
-        query = query.where('couple_friendly', isEqualTo: true);
-      }
-      if (parkingFacility) {
-        query = query.where('parking_facility', isEqualTo: true);
-      }
-      if (freecancel) {
-        query = query.where('free_cancel', isEqualTo: true);
-      }
+//       if (coupleFriendly) {
+//         query = query.where('couple_friendly', isEqualTo: true);
+//       }
+//       if (parkingFacility) {
+//         query = query.where('parking_facility', isEqualTo: true);
+//       }
+//       if (freecancel) {
+//         query = query.where('free_cancel', isEqualTo: true);
+//       }
 
-      // Execute query and fetch data
-      QuerySnapshot querySnapshot = await query.get();
+//       // Execute query and fetch data
+//       QuerySnapshot querySnapshot = await query.get();
 
-      setState(() {
-        _filteredProducts = querySnapshot.docs
-            .map((doc) => doc.data() as Map<String, dynamic>)
-            .toList();
-      });
-    } catch (e) {
-      // print('Error fetching products: $e');
-    }
-  }
+//       setState(() {
+//         _filteredProducts = querySnapshot.docs
+//             .map((doc) => doc.data() as Map<String, dynamic>)
+//             .toList();
+//       });
+//     } catch (e) {
+//       // print('Error fetching products: $e');
+//     }
+//   }
 
-  @override
-  void initState() {
-    super.initState();
-    fetchFilteredProducts(); // Fetch products initially with isAvailable = true
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchFilteredProducts(); // Fetch products initially with isAvailable = true
+//   }
 
-  // Build Filter Chips
-  Widget buildFilterChips(
-      List<String> items, List<String> selected, Function(String) onSelected) {
-    return Wrap(
-      spacing: 10,
-      children: items.map((item) {
-        return FilterChip(
-          label: Text(item),
-          selected: selected.contains(item),
-          onSelected: (isSelected) {
-            setState(() {
-              if (isSelected) {
-                selected.add(item);
-              } else {
-                selected.remove(item);
-              }
-            });
-            fetchFilteredProducts();
-          },
-        );
-      }).toList(),
-    );
-  }
+//   // Build Filter Chips
+//   Widget buildFilterChips(
+//       List<String> items, List<String> selected, Function(String) onSelected) {
+//     return Wrap(
+//       spacing: 10,
+//       children: items.map((item) {
+//         return FilterChip(
+//           label: Text(item),
+//           selected: selected.contains(item),
+//           onSelected: (isSelected) {
+//             setState(() {
+//               if (isSelected) {
+//                 selected.add(item);
+//               } else {
+//                 selected.remove(item);
+//               }
+//             });
+//             fetchFilteredProducts();
+//           },
+//         );
+//       }).toList(),
+//     );
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Multi-Filter Products"),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          const Text("Select Categories:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          buildFilterChips(categories, selectedCategories,
-              (category) => fetchFilteredProducts()),
-          const Text("Select Hotel Items:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          buildFilterChips(hotelTypes, selectedHotelTypes,
-              (type) => fetchFilteredProducts()),
-          const SizedBox(height: 10),
-          BooleanFilterWidget(
-            text: 'couplefriendly',
-            isAvailable: coupleFriendly,
-            onChanged: (value) {
-              setState(() {
-                coupleFriendly = value;
-              });
-              fetchFilteredProducts();
-            },
-          ),
-          BooleanFilterWidget(
-            text: 'parkingFacility',
-            isAvailable: parkingFacility,
-            onChanged: (value) {
-              setState(() {
-                parkingFacility = value;
-              });
-              fetchFilteredProducts();
-            },
-          ),
-          BooleanFilterWidget(
-            text: 'free_cancel',
-            isAvailable: freecancel,
-            onChanged: (value) {
-              setState(() {
-                freecancel = value;
-              });
-              fetchFilteredProducts();
-            },
-          ),
-          const Divider(),
-          const Text("Filtered Products:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          Expanded(
-            child: _filteredProducts.isEmpty
-                ? const Center(child: Text("No Products Found"))
-                : ListView.builder(
-                    itemCount: _filteredProducts.length,
-                    itemBuilder: (context, index) {
-                      final product = _filteredProducts[index];
-                      return SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(product['city'] ?? 'No City'),
-                            Text(
-                                'Hotel: ${product['hotel_name'] ?? 'Unknown'}'),
-                            Text('Pincode: ${product['pincode'] ?? 'N/A'}'),
-                            Text(
-                                'couple_friendly: ${product['couple_friendly'] == true ? "Yes" : "No"}'),
-                            Text(
-                                'parking_facility: ${product['parking_facility'] == true ? "Yes" : "No"}'),
-                            Text(
-                                'free_cancel: ${product['free_cancel'] == true ? "Yes" : "No"}'),
-                            const SizedBox(
-                              height: 30,
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Multi-Filter Products"),
+//       ),
+//       body: Column(
+//         children: [
+//           const SizedBox(height: 10),
+//           const Text("Select Categories:",
+//               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+//           buildFilterChips(categories, selectedCategories,
+//               (category) => fetchFilteredProducts()),
+//           const Text("Select Hotel Items:",
+//               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+//           buildFilterChips(hotelTypes, selectedHotelTypes,
+//               (type) => fetchFilteredProducts()),
+//           const SizedBox(height: 10),
+//           BooleanFilterWidget(
+//             text: 'couplefriendly',
+//             isAvailable: coupleFriendly,
+//             onChanged: (value) {
+//               setState(() {
+//                 coupleFriendly = value;
+//               });
+//               fetchFilteredProducts();
+//             },
+//           ),
+//           BooleanFilterWidget(
+//             text: 'parkingFacility',
+//             isAvailable: parkingFacility,
+//             onChanged: (value) {
+//               setState(() {
+//                 parkingFacility = value;
+//               });
+//               fetchFilteredProducts();
+//             },
+//           ),
+//           BooleanFilterWidget(
+//             text: 'free_cancel',
+//             isAvailable: freecancel,
+//             onChanged: (value) {
+//               setState(() {
+//                 freecancel = value;
+//               });
+//               fetchFilteredProducts();
+//             },
+//           ),
+//           const Divider(),
+//           const Text("Filtered Products:",
+//               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+//           Expanded(
+//             child: _filteredProducts.isEmpty
+//                 ? const Center(child: Text("No Products Found"))
+//                 : ListView.builder(
+//                     itemCount: _filteredProducts.length,
+//                     itemBuilder: (context, index) {
+//                       final product = _filteredProducts[index];
+//                       return SizedBox(
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             Text(product['city'] ?? 'No City'),
+//                             Text(
+//                                 'Hotel: ${product['hotel_name'] ?? 'Unknown'}'),
+//                             Text('Pincode: ${product['pincode'] ?? 'N/A'}'),
+//                             Text(
+//                                 'couple_friendly: ${product['couple_friendly'] == true ? "Yes" : "No"}'),
+//                             Text(
+//                                 'parking_facility: ${product['parking_facility'] == true ? "Yes" : "No"}'),
+//                             Text(
+//                                 'free_cancel: ${product['free_cancel'] == true ? "Yes" : "No"}'),
+//                             const SizedBox(
+//                               height: 30,
+//                             )
+//                           ],
+//                         ),
+//                       );
+//                     },
+//                   ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
-class BooleanFilterWidget extends StatelessWidget {
-  final bool isAvailable;
-  final ValueChanged<bool> onChanged;
-  final String text;
+// class BooleanFilterWidget extends StatelessWidget {
+//   final bool isAvailable;
+//   final ValueChanged<bool> onChanged;
+//   final String text;
 
-  const BooleanFilterWidget({
-    super.key,
-    required this.isAvailable,
-    required this.onChanged,
-    required this.text,
-  });
+//   const BooleanFilterWidget({
+//     super.key,
+//     required this.isAvailable,
+//     required this.onChanged,
+//     required this.text,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          text,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        Switch(
-          value: isAvailable,
-          onChanged: onChanged, // Call the passed function when toggled
-        ),
-        Text(isAvailable ? "Yes" : "No"),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         Text(
+//           text,
+//           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//         ),
+//         Switch(
+//           value: isAvailable,
+//           onChanged: onChanged, // Call the passed function when toggled
+//         ),
+//         Text(isAvailable ? "Yes" : "No"),
+//       ],
+//     );
+//   }
+// }

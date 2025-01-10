@@ -21,6 +21,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
 
       await repository.saveUserReview(event.userData, event.hotelId);
       emit(UserReviewSavedState());
+      add(GetUserReviewEvent());
     } catch (e) {
       emit(UserReviewErrorState('Failed to save user data: $e'));
     }
@@ -30,8 +31,8 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       GetUserReviewEvent event, Emitter<ReviewState> emit) async {
     try {
       emit(UserReviewLoadingState());
-      final userData = await repository.getUserReview();
-      emit(UserReviewLoadedState(userData));
+      // final userData = await repository.getUserReview();
+      emit(UserReviewLoadedState());
     } catch (e) {
       emit(UserReviewErrorState('Failed to load user data: $e'));
     }
@@ -40,11 +41,11 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   void _onGetHotelReview(
       GetHotelReviewEvent event, Emitter<ReviewState> emit) async {
     try {
-      emit(UserReviewLoadingState());
-      final adminReports = await repository.getHotelReview(event.hotelId);
-      emit(UserReviewLoadedState(adminReports));
+      emit(HotelReviewLoadingState());
+      final reviews = await repository.getHotelReview(event.hotelId);
+      emit(HotelReviewLoadedState(reviews));
     } catch (e) {
-      emit(UserReviewErrorState('Failed to load hotel bookings: $e'));
+      emit(HotelReviewErrorState('Failed to load hotel reviews: $e'));
     }
   }
 

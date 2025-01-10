@@ -19,7 +19,12 @@ import 'package:hotel_booking/features/home/domain/usecase/fetch_hotel_byid.dart
 import 'package:hotel_booking/features/home/domain/usecase/hotel_usecase.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
+import 'package:hotel_booking/features/location/data/datasourse/location_datasourse.dart';
+import 'package:hotel_booking/features/location/data/repositary/location_repositary.dart';
+import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
 import 'package:hotel_booking/features/location/location.dart';
+import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
+import 'package:hotel_booking/features/profile/pr_page.dart';
 import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
 import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
 import 'package:hotel_booking/features/report/domain/repos/report_repo.dart';
@@ -259,6 +264,30 @@ Future<void> init() async {
   sl.registerFactory<LocationBloc>(
     () => LocationBloc(
       sl<LocationRepository>(),
+    ),
+  );
+
+  // Repositories
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(sl()),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+    () => GetProfileRemoteDataSource(sl(), sl()),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetProfileUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
+  sl.registerLazySingleton(() => UploadProfileImageUseCase(sl()));
+
+  // BLoC
+  sl.registerFactory(
+    () => ProfileBloc(
+      getProfileUseCase: sl(),
+      updateProfileUseCase: sl(),
+      uploadProfileImageUseCase: sl(),
     ),
   );
 }

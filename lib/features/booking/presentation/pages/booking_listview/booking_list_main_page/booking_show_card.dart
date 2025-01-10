@@ -16,8 +16,8 @@ class BookingShowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String startdate = DateFormat('dd MMM yyyy').format(booking.startdate);
-    String enddate = DateFormat('dd MMM yyyy').format(booking.enddate);
+    String startdate = DateFormat('dd MMM yyyy').format(booking.startdate!);
+    String enddate = DateFormat('dd MMM yyyy').format(booking.enddate!);
     return Card(
       color: Colors.white,
       elevation: 3,
@@ -45,7 +45,7 @@ class BookingShowCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      booking.name,
+                      booking.name!,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -138,7 +138,7 @@ class BookingShowCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      booking.place,
+                      booking.place!,
                       style: TextStyle(
                         color: Colors.grey.shade600,
                       ),

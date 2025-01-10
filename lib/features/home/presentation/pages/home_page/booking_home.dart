@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/filter/fil.dart';
 import 'package:hotel_booking/features/filter/newfilter.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotel_serach_page.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_list_view.dart';

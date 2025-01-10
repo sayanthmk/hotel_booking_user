@@ -72,6 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         final user = getCurrentUser();
         await setLoggedIn(); //shared pref
         emit(AuthAuthenticated(user!));
+        // log('bloc section SignInEmailPasswordEvent${user.email!}');
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }
@@ -86,6 +87,7 @@ class AuthBloc extends Bloc<AuthEvent, Authstate> {
         final user = getCurrentUser();
 
         emit(AuthAuthenticated(user!));
+        // log('bloc section ${user.email!}');
       } catch (e) {
         emit(AuthError(message: e.toString()));
       }

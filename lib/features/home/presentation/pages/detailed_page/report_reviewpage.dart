@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_page.dart';
+import 'package:hotel_booking/features/review/presentation/pages/rev.dart';
 import 'package:hotel_booking/features/review/presentation/pages/review_page.dart';
 
 class ReviewReportPage extends StatelessWidget {
@@ -24,7 +25,7 @@ class ReviewReportPage extends StatelessWidget {
                 child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HotelReviewPage(),
+                        builder: (context) => ReviewPage(),
                       ));
                     },
                     child: const Text(
@@ -56,9 +57,9 @@ class ReviewReportPage extends StatelessWidget {
               Card(
                 child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HotelReviewPage(),
-                      ));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => HotelReviewPage(),
+                      // ));
                     },
                     child: const Text(
                       'Contact',

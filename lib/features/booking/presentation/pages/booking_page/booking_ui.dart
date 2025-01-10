@@ -172,7 +172,7 @@ class HotelBookingPage extends StatelessWidget {
                                                 noa: int.parse(
                                                     adultcontroller.text),
                                                 roomId: selectedRoomId!,
-                                                paidAmount: 0,
+                                                // paidAmount: 0,
                                               );
                                               Navigator.push(
                                                 context,
@@ -238,4 +238,3 @@ class HotelBookingPage extends StatelessWidget {
     childcontroller.clear();
   }
 }
-   
