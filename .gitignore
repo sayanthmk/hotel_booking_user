@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/release
 
 #private api keys
-lib/core/constants/
+lib/core/constants
