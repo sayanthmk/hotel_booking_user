@@ -2,29 +2,19 @@ import 'package:hotel_booking/features/review/data/model/review_model.dart';
 
 abstract class ReviewEvent {}
 
-class SaveUserReviewEvent extends ReviewEvent {
-  final ReviewModel userData;
+class AddReview extends ReviewEvent {
+  final ReviewModel review;
   final String hotelId;
-
-  SaveUserReviewEvent(this.userData, this.hotelId);
+  AddReview(this.review, this.hotelId);
 }
 
-class GetUserReviewEvent extends ReviewEvent {}
-
-class GetHotelReviewEvent extends ReviewEvent {
+class FetchReviews extends ReviewEvent {
   final String hotelId;
-
-  GetHotelReviewEvent(this.hotelId);
+  FetchReviews(this.hotelId);
 }
 
-class DeleteUserReviewEvent extends ReviewEvent {
-  final String bookingId;
+class DeleteReview extends ReviewEvent {
+  final String reviewId;
   final String hotelId;
-
-  DeleteUserReviewEvent(this.bookingId, this.hotelId);
-}
-
-class GetSingleUserReviewEvent extends ReviewEvent {
-  final String bookingId;
-  GetSingleUserReviewEvent(this.bookingId);
+  DeleteReview(this.reviewId, this.hotelId);
 }

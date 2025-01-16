@@ -1,74 +1,38 @@
-import 'package:bloc/bloc.dart';
+import 'dart:developer';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotel_booking/features/review/data/model/review_model.dart';
 import 'package:hotel_booking/features/review/domain/repos/review_repos.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_event.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_state.dart';
 
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   final ReviewRepository repository;
+  List<ReviewModel> reviews = [];
 
-  ReviewBloc(this.repository) : super(UserInitialState()) {
-    on<SaveUserReviewEvent>(_onSaveUserReview);
-    on<GetUserReviewEvent>(_onGetUserReview);
-    on<GetHotelReviewEvent>(_onGetHotelReview);
-    on<DeleteUserReviewEvent>(_onDeleteUserReview);
-    on<GetSingleUserReviewEvent>(_onGetSingleUserReview);
-  }
+  ReviewBloc(this.repository) : super(ReviewInitial()) {
+    on<AddReview>((event, emit) async {
+      await repository.addReview(event.review, event.hotelId);
+      emit(ReviewLoaded(reviews));
+      add(FetchReviews(event.hotelId));
+    });
+    on<FetchReviews>((event, emit) async {
+      try {
+        reviews = await repository.fetchReviews(event.hotelId);
+        emit(ReviewLoaded(reviews));
+      } catch (e) {
+        emit(ReviewInitial());
+      }
+    });
 
-  void _onSaveUserReview(
-      SaveUserReviewEvent event, Emitter<ReviewState> emit) async {
-    try {
-      emit(UserReviewLoadingState());
-
-      await repository.saveUserReview(event.userData, event.hotelId);
-      emit(UserReviewSavedState());
-      add(GetUserReviewEvent());
-    } catch (e) {
-      emit(UserReviewErrorState('Failed to save user data: $e'));
-    }
-  }
-
-  void _onGetUserReview(
-      GetUserReviewEvent event, Emitter<ReviewState> emit) async {
-    try {
-      emit(UserReviewLoadingState());
-      // final userData = await repository.getUserReview();
-      emit(UserReviewLoadedState());
-    } catch (e) {
-      emit(UserReviewErrorState('Failed to load user data: $e'));
-    }
-  }
-
-  void _onGetHotelReview(
-      GetHotelReviewEvent event, Emitter<ReviewState> emit) async {
-    try {
-      emit(HotelReviewLoadingState());
-      final reviews = await repository.getHotelReview(event.hotelId);
-      emit(HotelReviewLoadedState(reviews));
-    } catch (e) {
-      emit(HotelReviewErrorState('Failed to load hotel reviews: $e'));
-    }
-  }
-
-  void _onDeleteUserReview(
-      DeleteUserReviewEvent event, Emitter<ReviewState> emit) async {
-    try {
-      emit(UserReviewLoadingState());
-      await repository.deleteUserReview(event.bookingId, event.hotelId);
-      emit(UserReviewDeletedState());
-      add(GetUserReviewEvent());
-    } catch (e) {
-      emit(UserReviewErrorState('Failed to delete user booking: $e'));
-    }
-  }
-
-  void _onGetSingleUserReview(
-      GetSingleUserReviewEvent event, Emitter<ReviewState> emit) async {
-    try {
-      emit(UserReviewLoadingState());
-      final booking = await repository.getSingleUserReview(event.bookingId);
-      emit(SingleUserReviewLoadedState(booking));
-    } catch (e) {
-      emit(UserReviewErrorState('Failed to load single user booking: $e'));
-    }
+    on<DeleteReview>((event, emit) async {
+      try {
+        await repository.deleteReview(event.reviewId, event.hotelId);
+        reviews = await repository.fetchReviews(event.hotelId);
+        emit(ReviewLoaded(reviews));
+        add(FetchReviews(event.hotelId));
+      } catch (e) {
+        log('Error deleting review: $e');
+      }
+    });
   }
 }

@@ -6,10 +6,9 @@ import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
-import 'package:hotel_booking/features/location/location.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
 import 'package:hotel_booking/features/profile/pr_page.dart';
-import 'package:hotel_booking/features/report/presentation/providers/bloc/report_bloc.dart';
+import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
@@ -56,14 +55,11 @@ class BlocSection extends StatelessWidget {
           create: (context) => HotelSearchBloc(),
         ),
         BlocProvider(
-          create: (context) => di.sl<ReportBloc>(),
+          create: (context) => di.sl<ReportIssueBloc>(),
         ),
         BlocProvider(
           create: (context) => di.sl<ReviewBloc>(),
         ),
-        // BlocProvider(
-        //   create: (context) => di.sl<FilterBloc>(),
-        // ),
         BlocProvider(
           create: (context) => di.sl<LocationBloc>(),
         ),
@@ -76,7 +72,6 @@ class BlocSection extends StatelessWidget {
         title: 'Hotel Booking',
         theme: ThemeData(
           textTheme: GoogleFonts.notoSansOriyaTextTheme(),
-          // fontFamily: 'PTSans',
           primarySwatch: Colors.blue,
         ),
         home: const LoginStatusPage(),

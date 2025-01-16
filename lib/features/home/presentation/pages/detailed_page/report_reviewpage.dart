@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/report/presentation/pages/report_page.dart';
-import 'package:hotel_booking/features/review/presentation/pages/rev.dart';
-import 'package:hotel_booking/features/review/presentation/pages/review_page.dart';
+import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
+import 'package:hotel_booking/features/review/presentation/pages/rev_new.dart';
 
 class ReviewReportPage extends StatelessWidget {
-  const ReviewReportPage({super.key});
+  final String hotelId;
+  const ReviewReportPage({
+    Key? key,
+    required this.hotelId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class ReviewReportPage extends StatelessWidget {
                 child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => HotelReportPage(),
+                        builder: (context) => ReportIssuePage(),
                       ));
                     },
                     child: const Text(

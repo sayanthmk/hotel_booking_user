@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/widgets/section_header.dart';
-import 'package:hotel_booking/features/report/presentation/pages/report_page.dart';
+import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 
 class Amenities extends StatelessWidget {
   const Amenities({super.key});
@@ -50,7 +50,7 @@ class Amenities extends StatelessWidget {
                   actionText: 'More',
                   ontap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HotelReportPage(),
+                      builder: (context) => const ReportIssuePage(),
                     ));
                   },
                 ),

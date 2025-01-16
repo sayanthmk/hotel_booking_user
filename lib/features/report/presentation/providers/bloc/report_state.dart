@@ -1,28 +1,28 @@
-import 'package:hotel_booking/features/report/data/model/report_model.dart';
+// import 'package:hotel_booking/features/report/data/model/report_model.dart';
 
-abstract class ReportState {}
+// abstract class ReportState {}
 
-class UserReportInitialState extends ReportState {}
+// class UserReportInitialState extends ReportState {}
 
-class UserReportLoadingState extends ReportState {}
+// class UserReportLoadingState extends ReportState {}
 
-class UserDataSavedState extends ReportState {}
+// class UserDataSavedState extends ReportState {}
 
-class UserReportLoadedState extends ReportState {
-  final List<ReportModel> userData;
+// class UserReportLoadedState extends ReportState {
+//   final List<ReportModel> userData;
 
-  UserReportLoadedState(this.userData);
-}
+//   UserReportLoadedState(this.userData);
+// }
 
-class UserReportErrorState extends ReportState {
-  final String message;
+// class UserReportErrorState extends ReportState {
+//   final String message;
 
-  UserReportErrorState(this.message);
-}
+//   UserReportErrorState(this.message);
+// }
 
-class UserBookingDeletedState extends ReportState {}
+// class UserBookingDeletedState extends ReportState {}
 
-class SingleUserReportLoadedState extends ReportState {
-  final ReportModel booking;
-  SingleUserReportLoadedState(this.booking);
-}
+// class SingleUserReportLoadedState extends ReportState {
+//   final ReportModel booking;
+//   SingleUserReportLoadedState(this.booking);
+// }

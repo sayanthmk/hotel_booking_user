@@ -4,52 +4,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hotel_booking/features/review/data/model/review_model.dart';
 import 'package:uuid/uuid.dart';
 
-abstract class ReviewDataSource {
-  Future<void> saveUserReview(
-    ReviewModel reviewData,
-    String hotelId,
-  );
-  Future<List<ReviewModel>> getUserReview();
-  Future<List<ReviewModel>> getHotelReview(String hotelId);
-  Future<ReviewModel> getSingleUserReview(String hotelId);
-  Future<void> deleteUserReview(String bookingId, String hotelId);
-}
-
-class ReviewDataSourceImpl implements ReviewDataSource {
+class FirebaseReviewDataSource {
   final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth;
-  final Uuid _uuid = const Uuid();
+  final FirebaseAuth auth;
 
-  ReviewDataSourceImpl(this._firestore, this._auth);
+  FirebaseReviewDataSource(this._firestore, this.auth);
 
-  @override
-  Future<void> saveUserReview(
-    ReviewModel reviewData,
-    String hotelId,
-  ) async {
+  Future<void> addReview(ReviewModel review, String hotelId) async {
+    const uuid = Uuid();
     try {
-      final User? currentUser = _auth.currentUser;
-      // final adminId = _firestore.collection('admin').doc().id;
+      final User? currentUser = auth.currentUser;
+
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
-      final String reviewId = _uuid.v4();
+      final String reviewId = uuid.v4();
+      final String userEmail = currentUser.email!;
       final bookingRef = _firestore
           .collection('users')
           .doc(currentUser.uid)
           .collection('reviews')
           .doc(reviewId);
-
+      log('Review datasourse called');
       await bookingRef.set(
         {
           'userId': currentUser.uid,
           'hotelId': hotelId,
           'reviewId': reviewId,
-          'reviewDetails': reviewData.toMap(),
+          'userEmail': userEmail,
+          'reviewDetails': review.toMap(),
         },
       );
 
-      ////////////////////////////////////////
       await _firestore
           .collection('approved_hotels')
           .doc(hotelId)
@@ -59,7 +45,8 @@ class ReviewDataSourceImpl implements ReviewDataSource {
         {
           'hotelId': hotelId,
           'reviewId': reviewId,
-          'reviewDetails': reviewData.toMap(),
+          'userEmail': userEmail,
+          'reviewDetails': review.toMap(),
         },
       );
     } catch (e) {
@@ -67,103 +54,42 @@ class ReviewDataSourceImpl implements ReviewDataSource {
     }
   }
 
-  @override
-  Future<List<ReviewModel>> getUserReview() async {
-    try {
-      final User? currentUser = _auth.currentUser;
-      if (currentUser == null) {
-        throw Exception('No authenticated user found');
-      }
-
-      final querySnapshot = await _firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('reviews')
-          .get();
-      final reports = querySnapshot.docs
-          .map((doc) => ReviewModel.fromMap(doc.data(), id: doc.id))
-          .toList();
-
-      return reports;
-    } catch (e) {
-      throw Exception('Failed to retrieve user reviews: $e');
-    }
+  Future<List<ReviewModel>> fetchReviews(String hotelId) async {
+    final querySnapshot = await _firestore
+        .collection('approved_hotels')
+        .doc(hotelId)
+        .collection('reviews')
+        .orderBy('reviewDetails', descending: true)
+        .get();
+    return querySnapshot.docs
+        .map((doc) => ReviewModel.fromMap(doc.data(), id: doc.id))
+        .toList();
   }
 
-  @override
-  Future<ReviewModel> getSingleUserReview(String reviewId) async {
+  Future<void> deleteReview(String reviewId, String hotelId) async {
     try {
-      final User? currentUser = _auth.currentUser;
+      final User? currentUser = auth.currentUser;
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
 
-      final docSnapshot = await _firestore
+      await _firestore
           .collection('users')
           .doc(currentUser.uid)
           .collection('reviews')
           .doc(reviewId)
-          .get();
+          .delete();
 
-      if (!docSnapshot.exists) {
-        throw Exception('Booking with ID $reviewId not found');
-      }
-
-      //   log('Fetching single user booking...');
-      //   log('Document ID: ${docSnapshot.id}');
-      //   log('Document Data: ${docSnapshot.data()}');
-
-      return ReviewModel.fromMap(docSnapshot.data()!, id: docSnapshot.id);
-    } catch (e) {
-      throw Exception('Failed to retrieve report details: $e');
-    }
-  }
-
-  @override
-  Future<List<ReviewModel>> getHotelReview(String hotelId) async {
-    try {
-      final querySnapshot = await _firestore
+      await _firestore
           .collection('approved_hotels')
           .doc(hotelId)
           .collection('reviews')
-          .get();
-      final reviews = querySnapshot.docs
-          .map((doc) => ReviewModel.fromMap(doc.data(), id: doc.id))
-          .toList();
-      for (var review in reviews) {
-        log('Review ID: ${review.id}, Data: ${review.toString()}');
-      }
-      return reviews;
+          .doc(reviewId)
+          .delete();
+
+      log('Review deleted successfully');
     } catch (e) {
-      throw Exception('Failed to retrieve hotel reviews: $e');
-    }
-  }
-
-  @override
-  Future<void> deleteUserReview(String reviewId, String hotelId) async {
-    try {
-      final User? currentUser = _auth.currentUser;
-      if (currentUser == null) {
-        throw Exception('No authenticated user found');
-      }
-
-      final bookingRef = _firestore
-          .collection('users')
-          .doc(currentUser.uid)
-          .collection('reviews')
-          .doc(reviewId);
-
-      await bookingRef.delete();
-
-      final bookingRefr = _firestore
-          .collection('admin')
-          .doc(hotelId)
-          .collection('reviews')
-          .doc(reviewId);
-
-      await bookingRefr.delete();
-    } catch (e) {
-      throw Exception('Failed to delete user booking: $e');
+      throw Exception('Failed to delete review: $e');
     }
   }
 }

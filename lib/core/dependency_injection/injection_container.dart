@@ -22,16 +22,11 @@ import 'package:hotel_booking/features/home/presentation/providers/selected_bloc
 import 'package:hotel_booking/features/location/data/datasourse/location_datasourse.dart';
 import 'package:hotel_booking/features/location/data/repositary/location_repositary.dart';
 import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
-import 'package:hotel_booking/features/location/location.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
 import 'package:hotel_booking/features/profile/pr_page.dart';
-import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
-import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
-import 'package:hotel_booking/features/report/domain/repos/report_repo.dart';
-import 'package:hotel_booking/features/report/presentation/providers/bloc/report_bloc.dart';
+import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 import 'package:hotel_booking/features/review/data/datasource/review_datasource.dart';
 import 'package:hotel_booking/features/review/data/repositary/review_repositary.dart';
-import 'package:hotel_booking/features/review/domain/repos/review_repos.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
 import 'package:hotel_booking/features/rooms/data/datasourse/room_remote_datasourse.dart';
 import 'package:hotel_booking/features/rooms/data/repositary/rooms_data_repositary.dart';
@@ -139,7 +134,7 @@ Future<void> init() async {
   sl.registerFactory<HotelBloc>(
       () => HotelBloc(hotelRepository: sl<HotelRepository>()));
 
-  //////////////////////////////////////////////////////////////////
+  ////////////////////////////Selected Hotel//////////////////////////////////////
 
   // rooms==================================
   sl.registerFactory(() => SelectedHotelBloc());
@@ -183,7 +178,8 @@ Future<void> init() async {
         removeHotelFromFavorites: sl(),
       ));
 
-  ////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////// //Stripe Payment///////////////////////////////////
+
   sl.registerLazySingleton<Dio>(() => Dio());
 
   // Register data sources
@@ -203,10 +199,6 @@ Future<void> init() async {
     () => CreatePaymentIntentUseCase(sl<StripePaymentRepository>()),
   );
 
-  // sl.registerLazySingleton<UpdatePaymentAmountUseCase>(
-  //   () => UpdatePaymentAmountUseCase(sl<StripePaymentRepository>()),
-  // );
-
 // Register BLoC
   sl.registerFactory<StripeBloc>(
     () => StripeBloc(
@@ -215,38 +207,24 @@ Future<void> init() async {
     ),
   );
 
-//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////Report Section///////////////////////////////////////////
 
   // Remote Data Source
-  sl.registerLazySingleton<ReportDataSource>(
-    () => ReportDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
-  );
+  // sl.registerLazySingleton<ReportDataSource>(
+  //   () => ReportDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  // );
 
-  // Repository
-  sl.registerLazySingleton<ReportRepository>(
-    () => ReportRepositoryImpl(sl<ReportDataSource>()),
-  );
+  // // Repository
+  // sl.registerLazySingleton<ReportRepository>(
+  //   () => ReportRepositoryImpl(sl<ReportDataSource>()),
+  // );
 
-  // Bloc
-  sl.registerFactory<ReportBloc>(
-    () => ReportBloc(sl<ReportRepository>()),
-  );
+  // // Bloc
+  // sl.registerFactory<ReportBloc>(
+  //   () => ReportBloc(sl<ReportRepository>()),
+  // );
 
-  // Review dependencies
-  sl.registerLazySingleton<ReviewDataSource>(
-    () => ReviewDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
-  );
-
-  sl.registerLazySingleton<ReviewRepository>(
-    () => ReviewRepositoryImpl(sl<ReviewDataSource>()),
-  );
-
-  sl.registerFactory<ReviewBloc>(
-    () => ReviewBloc(sl<ReviewRepository>()),
-  );
-
-  //   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
-  // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+///////////////////////////////////////Location///////////////////////////////////////////
 
   sl.registerLazySingleton<LocationRemoteDataSource>(
     () => LiveLocationRemoteDataSource(
@@ -266,7 +244,7 @@ Future<void> init() async {
       sl<LocationRepository>(),
     ),
   );
-
+///////////////////////////////////////Profile///////////////////////////////////////////
   // Repositories
   sl.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(sl()),
@@ -288,6 +266,60 @@ Future<void> init() async {
       getProfileUseCase: sl(),
       updateProfileUseCase: sl(),
       uploadProfileImageUseCase: sl(),
+    ),
+  );
+  ///////////////////////////////////////Review///////////////////////////////////////////
+
+  // // Review dependencies
+  // sl.registerLazySingleton<ReviewDataSource>(
+  //   () => ReviewDataSourceImpl(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+  // );
+
+  // sl.registerLazySingleton<ReviewRepository>(
+  //   () => ReviewRepositoryImpl(sl<ReviewDataSource>()),
+  // );
+
+  // sl.registerFactory<ReviewBloc>(
+  //   () => ReviewBloc(sl<ReviewRepository>()),
+  // );
+  // sl.registerLazySingleton<Uuid>(() => Uuid());
+  // sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  // sl.registerLazySingleton(() => FirebaseAuth.instance);
+  // sl.registerLazySingleton(() => Uuid());
+  sl.registerLazySingleton(() => FirebaseReviewDataSource(
+        sl<FirebaseFirestore>(),
+        sl<FirebaseAuth>(),
+      ));
+  sl.registerLazySingleton(
+      () => FirebaseReviewRepository(sl<FirebaseReviewDataSource>()));
+  sl.registerFactory<ReviewBloc>(
+      () => ReviewBloc(sl<FirebaseReviewRepository>()));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Firebase Services
+  // sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+
+  // DataSource
+  sl.registerLazySingleton<FirebaseIssueDataSource>(
+    () => FirebaseIssueDataSource(
+      sl<FirebaseFirestore>(),
+      sl<FirebaseAuth>(),
+    ),
+  );
+
+  // Repository
+  sl.registerLazySingleton<IssueRepository>(
+    () => FirebaseIssueRepository(
+      sl<FirebaseIssueDataSource>(),
+    ),
+  );
+
+  // BLoC
+  sl.registerFactory<ReportIssueBloc>(
+    () => ReportIssueBloc(
+      sl<IssueRepository>(),
     ),
   );
 }
@@ -364,3 +396,11 @@ Future<void> init() async {
   // sl.registerFactory<ReviewBloc>(
   //   () => ReviewBloc(sl<ReviewRepository>()),
   // );
+  
+  // sl.registerLazySingleton<UpdatePaymentAmountUseCase>(
+  //   () => UpdatePaymentAmountUseCase(sl<StripePaymentRepository>()),
+  // );
+  
+
+  //   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);

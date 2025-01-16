@@ -41,7 +41,9 @@ class HotelDetailPage extends StatelessWidget {
                       height: 20,
                     ),
 
-                    const ReviewReportPage(),
+                    ReviewReportPage(
+                      hotelId: hotel.hotelId,
+                    ),
                     //  map
                     const SizedBox(
                       height: 20,

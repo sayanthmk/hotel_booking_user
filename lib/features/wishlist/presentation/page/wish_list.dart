@@ -83,11 +83,11 @@ class FavoritesPage extends StatelessWidget {
                     builder: (context, hotelState) {
                       if (hotelState is HotelLoadingState) {
                         return const Center(
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.blue),
-                          ),
-                        );
+                            // child: CircularProgressIndicator(
+                            //   valueColor:
+                            //       AlwaysStoppedAnimation<Color>(Colors.blue),
+                            // ),
+                            );
                       }
 
                       if (hotelState is HotelDetailLoadedState) {
