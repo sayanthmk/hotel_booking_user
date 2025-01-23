@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
-import 'package:hotel_booking/features/profile/profile.dart';
-
-import '../auth/presentation/pages/routepage.dart';
+import 'package:hotel_booking/features/profile/domain/usecase/profile_usecase.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile_page.dart';
+import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
+import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_event.dart';
+import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_state.dart';
+import 'package:hotel_booking/features/settings/settings_page.dart';
+import '../../../auth/presentation/pages/routepage.dart';
 
 class ProfileUiNew extends StatelessWidget {
   const ProfileUiNew({super.key});
@@ -13,25 +17,11 @@ class ProfileUiNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton.filled(
-              onPressed: () {
-                context.read<AuthBloc>().add(SignOutEvent());
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const AuthSelectionPage()),
-                  (Route<dynamic> route) => false,
-                );
-              },
-              icon: const Icon(Icons.logout))
-        ],
-      ),
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) =>
-            UserProfileBloc(sl<FetchUsers>(), sl<UpdateCurrentUser>())
-              ..add(LoadUsers()),
+        create: (context) => UserProfileBloc(sl<FetchUsers>(),
+            sl<UpdateCurrentUser>(), sl<UploadProfileImageUser>())
+          ..add(LoadUsers()),
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
             if (state is UserLoading) {
@@ -77,7 +67,7 @@ class ProfileUiNew extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        _buildStatCard(),
+                        // _buildStatCard(),
                         _buildInformationCard(context),
                       ],
                     ),
@@ -95,22 +85,22 @@ class ProfileUiNew extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard() {
-    return Card(
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildStatColumn('Battles', 'text'),
-            _buildStatColumn('Birthday', 'April 7th'),
-            _buildStatColumn('Age', '19 yrs'),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildStatCard() {
+  //   return Card(
+  //     color: Colors.white,
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(16.0),
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         children: [
+  //           _buildStatColumn('Battles', 'text'),
+  //           _buildStatColumn('Birthday', 'April 7th'),
+  //           _buildStatColumn('Age', '19 yrs'),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildInformationCard(BuildContext context) {
     return Container(
@@ -121,7 +111,7 @@ class ProfileUiNew extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
           child: SizedBox(
             width: 310.0,
-            height: 300.0,
+            height: 350.0,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
@@ -133,56 +123,56 @@ class ProfileUiNew extends StatelessWidget {
                         TextStyle(fontSize: 17.0, fontWeight: FontWeight.w800),
                   ),
                   Divider(color: Colors.grey[300]),
-                  _buildInfoRow(
-                    context,
-                    icon: Icons.home,
-                    label: "Guild",
-                    value: "FairyTail, Magnolia",
+                  SettingsInfoRow(
+                    ontap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingsPage(),
+                      ));
+                    },
+                    icon: Icons.settings,
+                    label: 'Settings',
+                    // value: "FairyTail, Magnolia",
                   ),
-                  _buildInfoRow(
-                    context,
-                    icon: Icons.auto_awesome,
-                    label: "Magic",
-                    value: "Spatial & Sword Magic, Telekinesis",
-                  ),
-                  _buildInfoRow(
-                    context,
+                  SettingsInfoRow(
+                    ontap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => UserProfileListPage(),
+                      ));
+                    },
                     icon: Icons.favorite,
-                    label: "Loves",
-                    value: "Eating cakes",
+                    label: "Profile",
+                    // value: "Eating cakes",
                   ),
-                  _buildInfoRow(
-                    context,
-                    icon: Icons.people,
-                    label: "Team",
-                    value: "Team Natsu",
+                  SettingsInfoRow(
+                    ontap: () {},
+                    icon: Icons.contact_support_sharp,
+                    label: "Conatct US",
+                    // value: "Eating cakes",
+                  ),
+                  SettingsInfoRow(
+                    ontap: () {},
+                    icon: Icons.question_answer,
+                    label: "FAQs",
+                    // value: "Team Natsu",
+                  ),
+                  SettingsInfoRow(
+                    ontap: () {
+                      context.read<AuthBloc>().add(SignOutEvent());
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const AuthSelectionPage()),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    icon: Icons.logout_rounded,
+                    label: "Logout",
+                    // value: "Team Natsu",
                   ),
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(BuildContext context,
-      {required IconData icon, required String label, required String value}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        children: [
-          Icon(icon, size: 35, color: Colors.blueAccent[400]),
-          const SizedBox(width: 20.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(label, style: const TextStyle(fontSize: 15.0)),
-              Text(value,
-                  style: const TextStyle(fontSize: 12.0, color: Colors.grey)),
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -197,33 +187,39 @@ class ProfileUiNew extends StatelessWidget {
     );
   }
 }
-  // Widget _buildHeaderSection(BuildContext context) {
-  //   return Container(
-  //     height: MediaQuery.of(context).size.height * 0.40,
-  //     width: double.infinity,
-  //     decoration: BoxDecoration(
-  //       gradient: LinearGradient(
-  //         colors: [
-  //           HotelBookingColors.lighttextcolor,
-  //           HotelBookingColors.basictextcolor,
-  //         ],
-  //       ),
-  //     ),
-  //     child: const Column(
-  //       children: [
-  //         SizedBox(height: 60.0),
-  //         CircleAvatar(
-  //           radius: 65.0,
-  //           backgroundImage: AssetImage('assets/images/hotel_image.jpg'),
-  //           backgroundColor: Colors.white,
-  //         ),
-  //         SizedBox(height: 10.0),
-  //         Text('Erza Scarlet',
-  //             style: TextStyle(color: Colors.white, fontSize: 20.0)),
-  //         SizedBox(height: 10.0),
-  //         Text('S Class Mage',
-  //             style: TextStyle(color: Colors.white, fontSize: 15.0)),
-  //       ],
-  //     ),
-  //   );
-  // }
+
+class SettingsInfoRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback ontap;
+
+  const SettingsInfoRow(
+      {super.key,
+      required this.icon,
+      required this.label,
+      required this.ontap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: ontap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(
+          children: [
+            Icon(icon, size: 35, color: Colors.blueAccent[400]),
+            const SizedBox(width: 20.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: const TextStyle(fontSize: 15.0)),
+                // Text(value!,
+                //     style: const TextStyle(fontSize: 12.0, color: Colors.grey)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

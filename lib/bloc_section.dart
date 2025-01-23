@@ -7,7 +7,8 @@ import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/ho
 import 'package:hotel_booking/features/home/presentation/providers/search_bloc/hotelsearch_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-import 'package:hotel_booking/features/profile/profile.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile.dart';
+import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';

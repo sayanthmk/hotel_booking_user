@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hotel_booking/features/auth/data/datasourses/googledatasourse.dart';
@@ -23,7 +24,12 @@ import 'package:hotel_booking/features/location/data/datasourse/location_datasou
 import 'package:hotel_booking/features/location/data/repositary/location_repositary.dart';
 import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-import 'package:hotel_booking/features/profile/profile.dart';
+import 'package:hotel_booking/features/profile/data/datasource/profile_datasourse.dart';
+import 'package:hotel_booking/features/profile/data/repositary/profile_repositary.dart';
+import 'package:hotel_booking/features/profile/domain/repos/profile_repos.dart';
+import 'package:hotel_booking/features/profile/domain/usecase/profile_usecase.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile.dart';
+import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 import 'package:hotel_booking/features/review/data/datasource/review_datasource.dart';
 import 'package:hotel_booking/features/review/data/repositary/review_repositary.dart';
@@ -248,16 +254,23 @@ Future<void> init() async {
 
   // sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
   // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
-  sl.registerLazySingleton<FirebaseUserProfileDataSource>(
-      () => FirebaseUserProfileDataSource(sl<FirebaseFirestore>()));
+
+  // Register FirebaseStorage
+  sl.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
+  sl.registerLazySingleton<FirebaseUserProfileDataSource>(() =>
+      FirebaseUserProfileDataSource(
+          sl<FirebaseFirestore>(), sl<FirebaseStorage>()));
   sl.registerLazySingleton<UserProfileRepository>(
       () => UserProfileRepositoryImpl(sl<FirebaseUserProfileDataSource>()));
   sl.registerLazySingleton<FetchUsers>(
       () => FetchUsers(sl<UserProfileRepository>()));
   sl.registerLazySingleton<UpdateCurrentUser>(
       () => UpdateCurrentUser(sl<UserProfileRepository>()));
+  sl.registerLazySingleton<UploadProfileImageUser>(
+      () => UploadProfileImageUser(sl<UserProfileRepository>()));
   sl.registerFactory<UserProfileBloc>(
-    () => UserProfileBloc(sl<FetchUsers>(), sl<UpdateCurrentUser>()),
+    () => UserProfileBloc(sl<FetchUsers>(), sl<UpdateCurrentUser>(),
+        sl<UploadProfileImageUser>()),
   );
   // // Repositories
   // sl.registerLazySingleton<ProfileRepository>(

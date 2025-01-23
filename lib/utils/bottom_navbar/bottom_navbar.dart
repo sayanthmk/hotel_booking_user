@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_list_main_page/bookings.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
-import 'package:hotel_booking/features/profile/pr_ui_page.dart';
-import 'package:hotel_booking/features/profile/profile.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/pr_ui_page.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile.dart';
 import 'package:hotel_booking/features/wishlist/presentation/page/wish_list.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 

@@ -1,33 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
+
+import 'package:geocoding/geocoding.dart';
 
 class LocationNamePage extends StatelessWidget {
   const LocationNamePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LocationBloc(GetIt.I.get<LocationRepository>())
-        ..add(const FetchUserLocationEvent()),
-      child: const MapView(),
-    );
-  }
-}
-
-class MapView extends StatelessWidget {
-  const MapView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    String? address;
-
+    // Start location updates when the widget is built
     Timer.periodic(const Duration(seconds: 100), (_) {
       if (context.mounted) {
         context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
@@ -35,346 +21,190 @@ class MapView extends StatelessWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Map View')),
-      body: BlocConsumer<LocationBloc, LocationState>(
-        listener: (context, state) {
-          if (state is LocationLoaded) {
-            address = 'Fetching address...';
-      
-          } else if (state is LocationError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
-          } else if (state is LocationLoaded) {
-            address = state.address;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Address: $address')),
-            );
-          }
-        },
+      appBar: AppBar(
+        title: const Text('Location Name'),
+      ),
+      body: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
-          return Center(
-            child: state is LocationLoading
-                ? const CircularProgressIndicator()
-                : state is LocationLoaded
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Location Details:'),
-                          Text(address ?? 'Fetching address...'),
-                        ],
-                      )
-                    : const Text('Press the button to update location.'),
+          return Stack(
+            children: [
+              // _buildMap(state),
+              if (state is LocationLoading)
+                const Positioned.fill(
+                  child: ColoredBox(
+                    color: Colors.black26,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+              if (state is LocationError)
+                _buildErrorWidget(context, state.message),
+              // showCustomSnackBar(context,state.message,Colors.black45),
+
+              if (state is LocationLoaded) _buildAddressWidget(state.position),
+            ],
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
-        },
-        child: const Icon(Icons.location_on),
+    );
+  }
+
+  Widget _buildAddressWidget(LatLng position) {
+    return FutureBuilder<String>(
+      future: _getAddressFromLatLng(position),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (snapshot.hasError || !snapshot.hasData) {
+          return const Positioned(
+            bottom: 16,
+            left: 16,
+            right: 16,
+            child: Text(
+              'Unable to fetch address',
+              style: TextStyle(color: Colors.red),
+            ),
+          );
+        }
+
+        return Positioned(
+          bottom: 16,
+          left: 16,
+          right: 16,
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                snapshot.data!,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<String> _getAddressFromLatLng(LatLng position) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final Placemark place = placemarks.first;
+        return '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+      }
+    } catch (e) {
+      return 'Failed to get address: $e';
+    }
+    return 'Unknown Location';
+  }
+
+  Widget _buildErrorWidget(BuildContext context, String message) {
+    return Positioned(
+      top: 16,
+      left: 16,
+      right: 16,
+      child: Material(
+        elevation: 4,
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.red.shade100,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              const Icon(Icons.error_outline, color: Colors.red),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  context
+                      .read<LocationBloc>()
+                      .add(const FetchCurrentLocationEvent());
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
+  // Widget _buildMap(LocationState state) {
+  //   if (state is LocationLoaded) {
+  //     return GoogleMap(
+  //       initialCameraPosition: CameraPosition(
+  //         target: state.position,
+  //         zoom: 15,
+  //       ),
+  //       markers: {
+  //         Marker(
+  //           markerId: const MarkerId('currentLocation'),
+  //           position: state.position,
+  //           infoWindow: const InfoWindow(title: 'Current Location'),
+  //         ),
+  //       },
+  //       myLocationEnabled: true,
+  //       myLocationButtonEnabled: true,
+  //       zoomControlsEnabled: true,
+  //       mapType: MapType.normal,
+  //     );
+  //   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:get_it/get_it.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
-// import 'package:geocoding/geocoding.dart';
-
-// class LocationNamePage extends StatelessWidget {
-//   const LocationNamePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider(
-//       create: (context) => LocationBloc(GetIt.I.get<LocationRepository>())
-//         ..add(const FetchUserLocationEvent()),
-//       child: const LocationNameView(),
-//     );
-//   }
-// }
-
-// class LocationNameView extends StatelessWidget {
-//   const LocationNameView({super.key});
-
-//   Future<String> _getAddressFromLatLng(LatLng position) async {
-//     try {
-//       List<Placemark> placemarks =
-//           await placemarkFromCoordinates(position.latitude, position.longitude);
-//       if (placemarks.isNotEmpty) {
-//         final place = placemarks.first;
-//         return "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
-//       }
-//       return "Unknown Location";
-//     } catch (e) {
-//       return "Error retrieving address";
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Current Location'),
-//       ),
-//       body: BlocBuilder<LocationBloc, LocationState>(
-//         builder: (context, state) {
-//           if (state is LocationLoaded) {
-//             return FutureBuilder<String>(
-//               future: _getAddressFromLatLng(state.position),
-//               builder: (context, snapshot) {
-//                 if (snapshot.connectionState == ConnectionState.waiting) {
-//                   return const Center(child: CircularProgressIndicator());
-//                 } else if (snapshot.hasError) {
-//                   return const Center(
-//                     child: Text('Error retrieving location name'),
-//                   );
-//                 } else {
-//                   return Center(
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(16),
-//                       child: Text(
-//                         snapshot.data ?? 'Location not available',
-//                         style: const TextStyle(fontSize: 18),
-//                         textAlign: TextAlign.center,
-//                       ),
-//                     ),
-//                   );
-//                 }
-//               },
-//             );
-//           } else if (state is LocationLoading) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (state is LocationError) {
-//             return Center(
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Text(
-//                       state.message,
-//                       style: const TextStyle(color: Colors.red, fontSize: 16),
-//                       textAlign: TextAlign.center,
-//                     ),
-//                     const SizedBox(height: 16),
-//                     ElevatedButton(
-//                       onPressed: () {
-//                         context
-//                             .read<LocationBloc>()
-//                             .add(const FetchCurrentLocationEvent());
-//                       },
-//                       child: const Text('Retry'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             );
-//           }
-//           return const Center(
-//             child: Text('Press the button to fetch location'),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-// // import 'package:flutter/material.dart';
-// // import 'package:flutter_bloc/flutter_bloc.dart';
-// // import 'package:google_maps_flutter/google_maps_flutter.dart';
-// // import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-// // import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
-// // import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
-
-// // class LocationNamePage extends StatelessWidget {
-// //   final LatLng position;
-
-// //   const LocationNamePage({Key? key, required this.position}) : super(key: key);
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: const Text('Location Name'),
-// //       ),
-// //       body: BlocProvider(
-// //         create: (context) => LocationBloc(context.read())
-// //           ..add(FetchAddressFromLatLngEvent(position)),
-// //         child: BlocBuilder<LocationBloc, LocationState>(
-// //           builder: (context, state) {
-// //             if (state is LocationLoading) {
-// //               return const Center(child: CircularProgressIndicator());
-// //             } else if (state is LocationError) {
-// //               return Center(child: Text(state.message));
-// //             } else if (state is LocationLoaded) {
-// //               return Center(
-// //                 child: Column(
-// //                   mainAxisAlignment: MainAxisAlignment.center,
-// //                   children: [
-// //                     Text(
-// //                       'Latitude: ${state.position.latitude}, Longitude: ${state.position.longitude}',
-// //                       style: const TextStyle(fontSize: 18),
-// //                     ),
-// //                     const SizedBox(height: 10),
-// //                     Text(
-// //                       'Address: ${context.read<LocationBloc>().repository.getAddressFromLatLng(position)}',
-// //                       style: const TextStyle(fontSize: 18),
-// //                       textAlign: TextAlign.center,
-// //                     ),
-// //                   ],
-// //                 ),
-// //               );
-// //             }
-// //             return const Center(child: Text('No data available'));
-// //           },
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
-
-// class LocationAddressPage extends StatelessWidget {
-//   const LocationAddressPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // Dispatch the event to fetch the current location when the page is built
-//     context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Current Location'),
-//       ),
-//       body: BlocBuilder<LocationBloc, LocationState>(
-//         builder: (context, state) {
-//           if (state is LocationLoading) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (state is LocationLoaded) {
-//             return Padding(
-//               padding: const EdgeInsets.all(16.0),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   const Text(
-//                     'Current Location:',
-//                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//                   ),
-//                   const SizedBox(height: 10),
-//                   Text(
-//                     'Latitude: ${state.position.latitude}',
-//                     style: const TextStyle(fontSize: 16),
-//                   ),
-//                   Text(
-//                     'Longitude: ${state.position.latitude}',
-//                     style: const TextStyle(fontSize: 16),
-//                   ),
-//                   const SizedBox(height: 20),
-//                   if (state.accuracy != null)
-//                     Text(
-//                       'Accuracy: ${state.accuracy} meters',
-//                       style: const TextStyle(fontSize: 16),
-//                     ),
-//                   const SizedBox(height: 20),
-//                   // Display the fetched address (if available)
-//                   Text(
-//                     'Address: ${state.position.latitude}, ${state.position.longitude}',
-//                     style: const TextStyle(fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//             );
-//           } else if (state is LocationError) {
-//             return Center(child: Text('Error: ${state.message}'));
-//           }
-//           return const Center(child: Text('Unknown State'));
-//         },
-//       ),
-//     );
-//   }
-// }
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
-// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
-
-// class LocationNamePage extends StatelessWidget {
-//   const LocationNamePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Location Name'),
-//       ),
-//       body: BlocBuilder<LocationBloc, LocationState>(
-//         builder: (context, state) {
-//           if (state is LocationLoading) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (state is LocationError) {
-//             return Center(child: Text(state.message));
-//           } else if (state is LocationLoaded) {
-//             // Fetch the address from the LatLng position when the location is loaded
-//             context
-//                 .read<LocationBloc>()
-//                 .add(FetchAddressFromLatLngEvent(state.position));
-
-//             return Center(
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Text(
-//                     'Latitude: ${state.position.latitude}, Longitude: ${state.position.longitude}',
-//                     style: const TextStyle(fontSize: 18),
-//                   ),
-//                   const SizedBox(height: 10),
-//                   // Display the address from the LocationBloc
-//                   Text(
-//                     'Address: ${state.address ?? "Loading address..."}',
-//                     style: const TextStyle(fontSize: 18),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ],
-//               ),
-//             );
-//           }
-//           return const Center(child: Text('No data available'));
-//         },
-//       ),
-//     );
-//   }
-// }
+  //   // Default map centered at a default location
+  //   return const GoogleMap(
+  //     initialCameraPosition: CameraPosition(
+  //       target: LatLng(0, 0),
+  //       zoom: 2,
+  //     ),
+  //     myLocationEnabled: true,
+  //     myLocationButtonEnabled: false,
+  //     zoomControlsEnabled: true,
+  //     mapType: MapType.normal,
+  //   );
+  // }
+      // actions: [
+          // IconButton(
+          //   icon: const Icon(Icons.my_location),
+          //   onPressed: () {
+          //     context
+          //         .read<LocationBloc>()
+          //         .add(const FetchCurrentLocationEvent());
+          //   },
+          // ),
+          // IconButton(
+          //   icon: const Icon(Icons.map),
+          //   onPressed: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //       builder: (context) => const LocationNamePage(),
+          //     ));
+          //   },
+          // ),
+        // ],
+            // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
+      //   },
+      //   label: const Text('Update Location'),
+      //   icon: const Icon(Icons.location_on),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
