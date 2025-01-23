@@ -16,32 +16,9 @@ class HotelImageBox extends StatelessWidget {
           listener: (context, state) {
             if (state is FavoriteAdded) {
               showCustomSnackBar(context, 'Added to favorites', Colors.green);
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: const Text('Added to favorites'),
-              //     backgroundColor: Colors.green,
-              //     behavior: SnackBarBehavior.floating,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //   ),
-              // );
             } else if (state is FavoritesError) {
               showCustomSnackBar(
                   context, 'Already added to Favorites', Colors.red);
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content: const Text('Already added to Favorites'),
-              //     backgroundColor: Colors.red,
-              //     behavior: SnackBarBehavior.floating,
-              //     shape: RoundedRectangleBorder(
-              //       borderRadius: BorderRadius.circular(10),
-              //     ),
-              //   ),
-              // );
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(content: Text('Error: ${state.message}')),
-              // );
             }
           },
         ),
@@ -148,7 +125,7 @@ class HotelImageBox extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 80,
+                          height: 50,
                           width: 200,
                           child: Text(
                             hotel.hotelName,
@@ -160,7 +137,7 @@ class HotelImageBox extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        // const SizedBox(height: 10),
                         Container(
                           padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(

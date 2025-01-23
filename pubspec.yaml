@@ -65,6 +65,10 @@ dependencies:
   location: ^7.0.1
   flutter_polyline_points: ^2.1.0
   image_picker: ^1.1.2
+  geolocator: ^13.0.2
+  flutter_gemini: ^2.0.3
+  dash_chat_2: ^0.0.20
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

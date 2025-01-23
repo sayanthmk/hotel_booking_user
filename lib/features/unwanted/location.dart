@@ -1,52 +1,105 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
-import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
-import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
 
-class MapPage extends StatelessWidget {
-  const MapPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Live Location"),
-      ),
-      body: BlocProvider(
-        create: (_) => LocationBloc(GetIt.I.get<LocationRepository>())
-          ..add(FetchUserLocationEvent()),
-        child: BlocBuilder<LocationBloc, LocationState>(
-          builder: (context, state) {
-            if (state is LocationLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is LocationLoaded) {
-              return GoogleMap(
-                initialCameraPosition: CameraPosition(
-                  target: state.position,
-                  zoom: 15,
-                ),
-                markers: {
-                  Marker(
-                    markerId: const MarkerId("currentLocation"),
-                    position: state.position,
-                  ),
-                },
-              );
-            } else if (state is LocationError) {
-              return Center(child: Text(state.message));
-            } else {
-              return const Center(child: Text("Loading..."));
-            }
-          },
-        ),
-      ),
-    );
-  }
-}
+// class LocationDetailsCard extends StatelessWidget {
+//   final LatLng position;
+
+//   const LocationDetailsCard({
+//     super.key,
+//     required this.position,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       margin: const EdgeInsets.all(16),
+//       child: Padding(
+//         padding: const EdgeInsets.all(16),
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             ListTile(
+//               leading: const Icon(Icons.location_on),
+//               title: const Text('Current Location'),
+//               subtitle: Text(
+//                 'Lat: ${position.latitude.toStringAsFixed(4)}\n'
+//                 'Lng: ${position.longitude.toStringAsFixed(4)}',
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:get_it/get_it.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:hotel_booking/features/location/domain/entity/location_entity.dart';
+// import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
+// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
+// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_event.dart';
+// import 'package:hotel_booking/features/location/presentation/providers/bloc/location_state.dart';
+// import 'dart:async';
+
+// class MapPage extends StatelessWidget {
+//   const MapPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final locationBloc = LocationBloc(GetIt.I.get<LocationRepository>())
+//       ..add(FetchUserLocationEvent());
+
+//     Timer.periodic(const Duration(seconds: 10), (timer) {
+//       // Replace with actual GPS location retrieval
+//       final newLocation = LocationEntity(
+//         latitude: 12.9716 + (timer.tick * 0.0001), // Mocked dynamic update
+//         longitude: 77.5946 + (timer.tick * 0.0001),
+//         timestamp: DateTime.now(),
+//       );
+//       locationBloc.add(UpdateUserLocationEvent(newLocation));
+//     });
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Live Location"),
+//       ),
+//       body: BlocProvider.value(
+//         value: locationBloc,
+//         child: BlocBuilder<LocationBloc, LocationState>(
+//           builder: (context, state) {
+//             if (state is LocationLoading) {
+//               return const Center(child: CircularProgressIndicator());
+//             } else if (state is LocationLoaded) {
+//               return GoogleMap(
+//                 initialCameraPosition: CameraPosition(
+//                   target: state.position,
+//                   zoom: 15,
+//                 ),
+//                 markers: {
+//                   Marker(
+//                     markerId: const MarkerId("currentLocation"),
+//                     position: state.position,
+//                   ),
+//                 },
+//               );
+//             } else if (state is LocationError) {
+//               return Center(child: Text(state.message));
+//             } else {
+//               return const Center(child: Text("Loading..."));
+//             }
+//           },
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';

@@ -26,9 +26,6 @@ class EmailPasswordLoginPage extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Email Login'),
-        // ),
         backgroundColor: HotelBookingColors.white,
         body: BlocListener<AuthBloc, Authstate>(
           listener: (context, state) {
@@ -83,14 +80,6 @@ class EmailPasswordLoginPage extends StatelessWidget {
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // validator: (value) {
-                        //   if (value == null || value.isEmpty) {
-                        //     return 'Password is required';
-                        //   } else if (value.length < 6) {
-                        //     return 'Password must be at least 6 characters';
-                        //   }
-                        //   return null;
-                        // },
                         validator: CustomValidator.validatePassword,
                         borderColor: Colors.grey,
                         focusedBorderColor: Colors.blue,

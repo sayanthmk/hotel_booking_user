@@ -24,6 +24,7 @@ class HotelBookingPage extends StatelessWidget {
   final TextEditingController adultcontroller = TextEditingController();
   late final DateTime startdate;
   late final DateTime enddate;
+  final DateTime currentDate = DateTime.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -172,7 +173,7 @@ class HotelBookingPage extends StatelessWidget {
                                                 noa: int.parse(
                                                     adultcontroller.text),
                                                 roomId: selectedRoomId!,
-                                                // paidAmount: 0,
+                                                // currentDate: currentDate,
                                               );
                                               Navigator.push(
                                                 context,

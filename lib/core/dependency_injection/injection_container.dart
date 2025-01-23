@@ -23,7 +23,7 @@ import 'package:hotel_booking/features/location/data/datasourse/location_datasou
 import 'package:hotel_booking/features/location/data/repositary/location_repositary.dart';
 import 'package:hotel_booking/features/location/domain/repos/location_repos.dart';
 import 'package:hotel_booking/features/location/presentation/providers/bloc/location_bloc.dart';
-import 'package:hotel_booking/features/profile/pr_page.dart';
+import 'package:hotel_booking/features/profile/profile.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 import 'package:hotel_booking/features/review/data/datasource/review_datasource.dart';
 import 'package:hotel_booking/features/review/data/repositary/review_repositary.dart';
@@ -245,29 +245,43 @@ Future<void> init() async {
     ),
   );
 ///////////////////////////////////////Profile///////////////////////////////////////////
-  // Repositories
-  sl.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(sl()),
-  );
 
-  // Data sources
-  sl.registerLazySingleton<ProfileRemoteDataSource>(
-    () => GetProfileRemoteDataSource(sl(), sl()),
+  // sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  // sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  sl.registerLazySingleton<FirebaseUserProfileDataSource>(
+      () => FirebaseUserProfileDataSource(sl<FirebaseFirestore>()));
+  sl.registerLazySingleton<UserProfileRepository>(
+      () => UserProfileRepositoryImpl(sl<FirebaseUserProfileDataSource>()));
+  sl.registerLazySingleton<FetchUsers>(
+      () => FetchUsers(sl<UserProfileRepository>()));
+  sl.registerLazySingleton<UpdateCurrentUser>(
+      () => UpdateCurrentUser(sl<UserProfileRepository>()));
+  sl.registerFactory<UserProfileBloc>(
+    () => UserProfileBloc(sl<FetchUsers>(), sl<UpdateCurrentUser>()),
   );
+  // // Repositories
+  // sl.registerLazySingleton<ProfileRepository>(
+  //   () => ProfileRepositoryImpl(sl()),
+  // );
 
-  // Use cases
-  sl.registerLazySingleton(() => GetProfileUseCase(sl()));
-  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
-  sl.registerLazySingleton(() => UploadProfileImageUseCase(sl()));
+  // // Data sources
+  // sl.registerLazySingleton<ProfileRemoteDataSource>(
+  //   () => GetProfileRemoteDataSource(sl(), sl()),
+  // );
 
-  // BLoC
-  sl.registerFactory(
-    () => ProfileBloc(
-      getProfileUseCase: sl(),
-      updateProfileUseCase: sl(),
-      uploadProfileImageUseCase: sl(),
-    ),
-  );
+  // // Use cases
+  // sl.registerLazySingleton(() => GetProfileUseCase(sl()));
+  // sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
+  // sl.registerLazySingleton(() => UploadProfileImageUseCase(sl()));
+
+  // // BLoC
+  // sl.registerFactory(
+  //   () => ProfileBloc(
+  //     getProfileUseCase: sl(),
+  //     updateProfileUseCase: sl(),
+  //     uploadProfileImageUseCase: sl(),
+  //   ),
+  // );
   ///////////////////////////////////////Review///////////////////////////////////////////
 
   // // Review dependencies

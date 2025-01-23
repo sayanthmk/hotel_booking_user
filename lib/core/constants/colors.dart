@@ -21,4 +21,5 @@ class HotelBookingColors {
 
   static const Color pagebackgroundcolor = Color(0xFFF5F9FF);
   static const Color basictextcolor = Color(0xFF1E91B6);
+  static Color lighttextcolor = const Color(0xFF1E91B6).withOpacity(0.8);
 }

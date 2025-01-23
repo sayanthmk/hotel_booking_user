@@ -15,7 +15,6 @@ class RoomBookingHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: HotelBookingColors.pagebackgroundcolor,
-      // backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

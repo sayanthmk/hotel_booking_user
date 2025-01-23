@@ -82,12 +82,7 @@ class FavoritesPage extends StatelessWidget {
                   child: BlocBuilder<HotelBloc, HotelState>(
                     builder: (context, hotelState) {
                       if (hotelState is HotelLoadingState) {
-                        return const Center(
-                            // child: CircularProgressIndicator(
-                            //   valueColor:
-                            //       AlwaysStoppedAnimation<Color>(Colors.blue),
-                            // ),
-                            );
+                        return const Center();
                       }
 
                       if (hotelState is HotelDetailLoadedState) {
@@ -119,13 +114,11 @@ class FavoritesPage extends StatelessWidget {
                                 context
                                     .read<FavoritesBloc>()
                                     .add(RemoveFromFavoritesEvent(hotelId));
-                                // Navigator.of(context).pop();
                               },
                             ),
                           ),
                         );
                       }
-
                       return const SizedBox.shrink();
                     },
                   ),

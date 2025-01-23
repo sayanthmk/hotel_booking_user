@@ -13,20 +13,23 @@ class UserDataModel {
   final int? noa;
   final String? roomId;
   final double? paidAmount;
+  // final DateTime? currentDate;
 
-  UserDataModel(
-      {this.id,
-      this.bookId,
-      this.hotelId,
-      this.paidAmount,
-      this.roomId,
-      this.name,
-      this.age,
-      this.place,
-      this.startdate,
-      this.enddate,
-      this.noc,
-      this.noa});
+  UserDataModel({
+    this.id,
+    this.bookId,
+    this.hotelId,
+    this.paidAmount,
+    this.roomId,
+    this.name,
+    this.age,
+    this.place,
+    this.startdate,
+    this.enddate,
+    this.noc,
+    this.noa,
+    // this.currentDate,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -39,6 +42,7 @@ class UserDataModel {
       'noc': noc,
       'noa': noa,
       'paidAmount': paidAmount,
+      // "currentDate": Timestamp.fromDate(currentDate!),
     };
   }
 
@@ -65,6 +69,10 @@ class UserDataModel {
       noc: rpt['noc'] ?? 0,
       noa: rpt['noa'] ?? 0,
       paidAmount: rpt['paidAmount'] ?? 0,
+      // currentDate:
+      //     (rpt['currentDate'] != null && rpt['currentDate'] is Timestamp)
+      //         ? (rpt['currentDate'] as Timestamp).toDate()
+      //         : null,
     );
   }
 }
