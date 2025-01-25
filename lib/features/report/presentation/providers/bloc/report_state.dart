@@ -1,28 +1,60 @@
-// import 'package:hotel_booking/features/report/data/model/report_model.dart';
+import 'package:equatable/equatable.dart';
+import 'package:hotel_booking/features/report/data/model/report_model.dart';
 
-// abstract class ReportState {}
+abstract class ReportIssueState extends Equatable {
+  const ReportIssueState();
 
-// class UserReportInitialState extends ReportState {}
+  @override
+  List<Object> get props => [];
+}
 
-// class UserReportLoadingState extends ReportState {}
+class ReportIssueImageUploadedState extends ReportIssueState {
+  final String imageUrl;
 
-// class UserDataSavedState extends ReportState {}
+  const ReportIssueImageUploadedState(this.imageUrl);
 
-// class UserReportLoadedState extends ReportState {
-//   final List<ReportModel> userData;
+  @override
+  List<Object> get props => [imageUrl];
+}
 
-//   UserReportLoadedState(this.userData);
-// }
+class ReportIssueInitialState extends ReportIssueState {}
 
-// class UserReportErrorState extends ReportState {
-//   final String message;
+class ReportIssueLoadingState extends ReportIssueState {}
 
-//   UserReportErrorState(this.message);
-// }
+class ReportIssueSuccessState extends ReportIssueState {
+  final String successMessage;
 
-// class UserBookingDeletedState extends ReportState {}
+  const ReportIssueSuccessState({required this.successMessage});
 
-// class SingleUserReportLoadedState extends ReportState {
-//   final ReportModel booking;
-//   SingleUserReportLoadedState(this.booking);
-// }
+  @override
+  List<Object> get props => [successMessage];
+}
+
+class ReportIssueFailureState extends ReportIssueState {
+  final String errorMessage;
+
+  const ReportIssueFailureState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}
+
+class GetReportedIssuesInitial extends ReportIssueState {}
+
+class GetReportedIssuesLoading extends ReportIssueState {}
+
+class GetReportedIssuesLoaded extends ReportIssueState {
+  final List<IssueModel> issues;
+  const GetReportedIssuesLoaded({required this.issues});
+
+  @override
+  List<Object> get props => [issues];
+}
+
+class GetReportedIssuesError extends ReportIssueState {
+  final String errorMessage;
+  const GetReportedIssuesError({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

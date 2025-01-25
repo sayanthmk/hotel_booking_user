@@ -1,11 +1,9 @@
-// import 'package:hotel_booking/features/report/data/model/report_model.dart';
+import 'dart:io';
+import 'package:hotel_booking/features/report/data/model/report_model.dart';
 
-// abstract class ReportRepository {
-//   Future<void> saveUserReport(ReportModel userData, String hotelId);
-//   Future<List<ReportModel>> getUserReports();
-
-//   Future<List<ReportModel>> getAdminReports(String hotelId);
-//   Future<void> deleteUserReport(String bookingId, String hotelId);
-
-//   Future<ReportModel> getSingleUserReport(String bookingId);
-// }
+abstract class IssueRepository {
+  Future<void> reportIssue(IssueModel issue, String hotelId, File imageFile);
+  Future<List<IssueModel>> fetchReportedIssues(String hotelId);
+  Future<void> deleteReportedIssue(String issueId, String hotelId);
+  // Future<String> uploadRepImage(File imageFile);
+}

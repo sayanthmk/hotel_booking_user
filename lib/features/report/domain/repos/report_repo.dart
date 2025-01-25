@@ -1,34 +1,34 @@
-// import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
-// import 'package:hotel_booking/features/report/data/model/report_model.dart';
-// import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
+import 'dart:developer';
+import 'dart:io';
 
-// class ReportRepositoryImpl implements ReportRepository {
-//   final ReportDataSource remoteDataSource;
+import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
+import 'package:hotel_booking/features/report/data/model/report_model.dart';
+import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
 
-//   ReportRepositoryImpl(this.remoteDataSource);
+class FirebaseIssueRepository implements IssueRepository {
+  final FirebaseIssueDataSource dataSource;
 
-//   @override
-//   Future<void> saveUserReport(ReportModel userData, String hotelId) async {
-//     return await remoteDataSource.saveUserReport(userData, hotelId);
-//   }
+  FirebaseIssueRepository(this.dataSource);
 
-//   @override
-//   Future<List<ReportModel>> getUserReports() async {
-//     return await remoteDataSource.getUserReport();
-//   }
+  @override
+  Future<void> reportIssue(
+      IssueModel issue, String hotelId, File imageFile) async {
+    await dataSource.reportIssue(issue, hotelId, imageFile);
+    log('Reported issue in repository');
+  }
 
-//   @override
-//   Future<List<ReportModel>> getAdminReports(String hotelId) async {
-//     return await remoteDataSource.getAdminReports(hotelId);
-//   }
+  @override
+  Future<List<IssueModel>> fetchReportedIssues(String hotelId) async {
+    return dataSource.fetchReportedIssues(hotelId);
+  }
 
-//   @override
-//   Future<void> deleteUserReport(String bookingId, String hotelId) async {
-//     return await remoteDataSource.deleteUserReports(bookingId, hotelId);
-//   }
+  @override
+  Future<void> deleteReportedIssue(String issueId, String hotelId) async {
+    await dataSource.deleteReportedIssue(issueId, hotelId);
+  }
 
-//   @override
-//   Future<ReportModel> getSingleUserReport(String bookingId) async {
-//     return await remoteDataSource.getSingleUserReports(bookingId);
-//   }
-// }
+  // @override
+  // Future<String> uploadRepImage(File imageFile) async {
+  //   return await dataSource.uploadReportImage(imageFile);
+  // }
+}

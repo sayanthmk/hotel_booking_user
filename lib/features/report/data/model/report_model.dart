@@ -1,40 +1,38 @@
-// class ReportModel {
-//   final String? id;
-//   final String? bookId;
-//   final String? hotelId;
-//   final String? reportcontent;
-//   final String? roomId;
-//   final DateTime? reportdate;
+class IssueModel {
+  final String? id;
+  final String? hotelId;
+  final String? issueContent;
+  final DateTime? issueDate;
+  final String? userEmail;
+  final String? reportImage;
 
-//   ReportModel({
-//     this.id,
-//     this.bookId,
-//     this.hotelId,
-//     this.roomId,
-//     this.reportdate,
-//     this.reportcontent,
-//   });
+  IssueModel({
+    this.id,
+    this.hotelId,
+    this.issueContent,
+    this.issueDate,
+    this.userEmail,
+    this.reportImage,
+  });
 
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'roomId': roomId,
-//       'reportdate': reportdate,
-//       'report_content': reportcontent,
-//     };
-//   }
+  Map<String, dynamic> toMap() {
+    return {
+      'issueDate': issueDate?.toIso8601String(),
+      'issue_content': issueContent,
+      'reportImage': reportImage,
+    };
+  }
 
-//   factory ReportModel.fromMap(
-//     Map<String, dynamic> map, {
-//     String? id,
-//     String? hotelId,
-//   }) {
-//     final rpt = map['bookingDetails'];
-//     return ReportModel(
-//         bookId: map['bookingId'] ?? '',
-//         hotelId: map['hotelId'] ?? '',
-//         id: id,
-//         roomId: rpt['roomId'] ?? '',
-//         reportdate: rpt[DateTime.now()],
-//         reportcontent: rpt['report_content']);
-//   }
-// }
+  factory IssueModel.fromMap(Map<String, dynamic> map,
+      {String? id, String? hotelId}) {
+    return IssueModel(
+        hotelId: map['hotelId'] ?? '',
+        id: id,
+        issueDate: (map['issueDate'] != null)
+            ? DateTime.parse(map['issueDate'])
+            : DateTime.now(),
+        issueContent: map['issue_content'] ?? '',
+        userEmail: map['userEmail'] ?? '',
+        reportImage: map['reportImage'] ?? '');
+  }
+}

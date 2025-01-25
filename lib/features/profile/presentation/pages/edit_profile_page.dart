@@ -43,9 +43,9 @@ class EditUserProfile extends StatelessWidget {
               final user = state.user;
 
               // Populate fields with user data
-              nameController.text = user.name ?? '';
-              locationController.text = user.location ?? '';
-              phoneController.text = user.phoneNumber ?? '';
+              nameController.text = user.name;
+              locationController.text = user.location;
+              phoneController.text = user.phoneNumber;
 
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -123,7 +123,6 @@ class EditUserProfile extends StatelessWidget {
             } else if (state is UserError) {
               return Center(child: Text(state.message));
             }
-
             return const Center(child: Text('Something went wrong.'));
           },
         ),

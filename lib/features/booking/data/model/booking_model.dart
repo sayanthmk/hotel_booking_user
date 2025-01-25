@@ -13,7 +13,7 @@ class UserDataModel {
   final int? noa;
   final String? roomId;
   final double? paidAmount;
-  // final DateTime? currentDate;
+  final DateTime? bookingDate; // Add current date field
 
   UserDataModel({
     this.id,
@@ -28,7 +28,7 @@ class UserDataModel {
     this.enddate,
     this.noc,
     this.noa,
-    // this.currentDate,
+    this.bookingDate, // Initialize currentDate
   });
 
   Map<String, dynamic> toMap() {
@@ -42,7 +42,7 @@ class UserDataModel {
       'noc': noc,
       'noa': noa,
       'paidAmount': paidAmount,
-      // "currentDate": Timestamp.fromDate(currentDate!),
+      'bookingDate': Timestamp.fromDate(bookingDate!), // Add currentDate to map
     };
   }
 
@@ -69,10 +69,10 @@ class UserDataModel {
       noc: rpt['noc'] ?? 0,
       noa: rpt['noa'] ?? 0,
       paidAmount: rpt['paidAmount'] ?? 0,
-      // currentDate:
-      //     (rpt['currentDate'] != null && rpt['currentDate'] is Timestamp)
-      //         ? (rpt['currentDate'] as Timestamp).toDate()
-      //         : null,
+      bookingDate:
+          (rpt['bookingDate'] != null && rpt['bookingDate'] is Timestamp)
+              ? (rpt['bookingDate'] as Timestamp).toDate()
+              : DateTime.now(), // Set current date when reading data
     );
   }
 }

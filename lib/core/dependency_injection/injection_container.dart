@@ -30,7 +30,11 @@ import 'package:hotel_booking/features/profile/domain/repos/profile_repos.dart';
 import 'package:hotel_booking/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/profile.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
+import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
+import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
+import 'package:hotel_booking/features/report/domain/repos/report_repo.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
+import 'package:hotel_booking/features/report/presentation/providers/bloc/report_bloc.dart';
 import 'package:hotel_booking/features/review/data/datasource/review_datasource.dart';
 import 'package:hotel_booking/features/review/data/repositary/review_repositary.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
@@ -75,9 +79,11 @@ Future<void> init() async {
   );
 
   // Repositories===========================================================================================
-  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
-        firebaseDataSource: sl<FirebaseDataSource>(),
-      ));
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      firebaseDataSource: sl<FirebaseDataSource>(),
+    ),
+  );
 
   // Usecases========================================================================
   sl.registerLazySingleton(() => SignInWithGoogle(repository: sl()));
@@ -333,6 +339,7 @@ Future<void> init() async {
     () => FirebaseIssueDataSource(
       sl<FirebaseFirestore>(),
       sl<FirebaseAuth>(),
+      sl<FirebaseStorage>(),
     ),
   );
 

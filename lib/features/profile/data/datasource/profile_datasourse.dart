@@ -10,7 +10,6 @@ class FirebaseUserProfileDataSource {
 
   FirebaseUserProfileDataSource(this.firestore, this.storage);
 
-  /// Fetch the current user's profile data from Firestore.
   Future<UserProfileModel?> fetchUser() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser == null) {

@@ -1,30 +1,50 @@
-// import 'package:hotel_booking/features/report/data/model/report_model.dart';
+import 'dart:io';
 
-// abstract class ReportEvent {}
+import 'package:equatable/equatable.dart';
 
-// class SaveUserReportEvent extends ReportEvent {
-//   final ReportModel userData;
-//   final String hotelId;
+abstract class ReportIssueEvent extends Equatable {
+  const ReportIssueEvent();
 
-//   SaveUserReportEvent(this.userData, this.hotelId);
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class GetUserReportEvent extends ReportEvent {}
+class ReportIssueImageEvent extends ReportIssueEvent {
+  final File imageFile;
 
-// class GetAdminReportsEvent extends ReportEvent {
-//   final String hotelId;
+  const ReportIssueImageEvent(this.imageFile);
 
-//   GetAdminReportsEvent(this.hotelId);
-// }
+  @override
+  List<Object> get props => [imageFile];
+}
 
-// class DeleteUserReportsEvent extends ReportEvent {
-//   final String bookingId;
-//   final String hotelId;
+class SubmitReportEvent extends ReportIssueEvent {
+  final String issueContent;
+  final String hotelId;
+  final File? imageFile;
 
-//   DeleteUserReportsEvent(this.bookingId, this.hotelId);
-// }
+  const SubmitReportEvent(
+      {required this.issueContent, required this.hotelId, this.imageFile});
 
-// class GetSingleUserReportsEvent extends ReportEvent {
-//   final String bookingId;
-//   GetSingleUserReportsEvent(this.bookingId);
-// }
+  @override
+  List<Object> get props =>
+      [issueContent, hotelId, if (imageFile != null) imageFile!];
+}
+
+class FetchReportedIssuesEvent extends ReportIssueEvent {
+  final String hotelId;
+  const FetchReportedIssuesEvent({required this.hotelId});
+
+  @override
+  List<Object> get props => [hotelId];
+}
+
+class DeleteReportedIssueEvent extends ReportIssueEvent {
+  final String issueId;
+  final String hotelId;
+  const DeleteReportedIssueEvent(
+      {required this.issueId, required this.hotelId});
+
+  @override
+  List<Object> get props => [issueId, hotelId];
+}

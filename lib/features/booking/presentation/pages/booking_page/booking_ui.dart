@@ -173,7 +173,7 @@ class HotelBookingPage extends StatelessWidget {
                                                 noa: int.parse(
                                                     adultcontroller.text),
                                                 roomId: selectedRoomId!,
-                                                // currentDate: currentDate,
+                                                bookingDate: currentDate,
                                               );
                                               Navigator.push(
                                                 context,

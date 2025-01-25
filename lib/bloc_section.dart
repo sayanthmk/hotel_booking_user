@@ -10,6 +10,7 @@ import 'package:hotel_booking/features/location/presentation/providers/bloc/loca
 import 'package:hotel_booking/features/profile/presentation/pages/profile.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
 import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
+import 'package:hotel_booking/features/report/presentation/providers/bloc/report_bloc.dart';
 import 'package:hotel_booking/features/review/presentation/providers/bloc/review_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_bloc/room_card_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';

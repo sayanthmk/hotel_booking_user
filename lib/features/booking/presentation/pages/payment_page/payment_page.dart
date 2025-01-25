@@ -42,8 +42,10 @@ class PaymentPage extends StatelessWidget {
                   noc: bookingData.noc,
                   noa: bookingData.noa,
                   roomId: bookingData.roomId,
-                  paidAmount: double.parse(
-                      amountController.text), // Add the entered amount
+
+                  paidAmount: double.parse(amountController.text),
+                  bookingDate: bookingData.bookingDate,
+                  // Add the entered amount
                 );
                 context
                     .read<UserBloc>()
