@@ -3,84 +3,33 @@ import 'dart:typed_data';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HotelBookingChat extends StatefulWidget {
   const HotelBookingChat({super.key});
 
   @override
-  State<HotelBookingChat> createState() => _HotelBookingChatState();
+  State<HotelBookingChat> createState() => HotelBookingChatState();
 }
 
-class _HotelBookingChatState extends State<HotelBookingChat> {
+class HotelBookingChatState extends State<HotelBookingChat> {
   final Gemini gemini = Gemini.instance;
   List<ChatMessage> messages = [];
   ChatUser currentUser = ChatUser(id: "0", firstName: "Guest");
   ChatUser hotelBot = ChatUser(
     id: "1",
-    firstName: "Hotel Assistant",
-    profileImage:
-        "https://studiovisual.com.br/wp-content/uploads/2024/04/Gemini-1.jpg",
+    firstName: "Booking Assistant",
+    profileImage: "assets/images/hotel_image.jpg",
   );
 
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      final welcomeMessage = ChatMessage(
-        user: hotelBot,
-        createdAt: DateTime.now(),
-        text: "Welcome to Luxury Hotel! How may I assist you today?\n\n"
-            "I can help you with:\n"
-            "• Room bookings and availability\n"
-            "• Room types and amenities\n"
-            "• Check-in/check-out information\n"
-            "• Hotel facilities\n"
-            "• Special requests",
-      );
-      setState(() {
-        messages = [welcomeMessage];
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF1B4F72),
-                Color(0xFF2E86C1),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: AppBar(
-            backgroundColor: Colors.transparent,
-            centerTitle: true,
-            title: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.hotel, color: Colors.white),
-                SizedBox(width: 8),
-                Text(
-                  "Luxury Hotel Booking",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            elevation: 0,
-          ),
-        ),
+      appBar: const BookingAppbar(
+        heading: 'Booking Assistant',
       ),
       body: DashChat(
         inputOptions: InputOptions(
@@ -116,13 +65,6 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
               icon: const Icon(Icons.image),
               tooltip: "Share room image for inquiry",
             ),
-            IconButton(
-              onPressed: () {
-                _showQuickResponses();
-              },
-              icon: const Icon(Icons.list),
-              tooltip: "Quick booking queries",
-            ),
           ],
         ),
         currentUser: currentUser,
@@ -130,61 +72,8 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
         messages: messages,
         messageOptions: const MessageOptions(
           showTime: true,
-          containerColor: Color(0xFF1B4F72),
+          containerColor: HotelBookingColors.basictextcolor,
           textColor: Colors.white,
-        ),
-      ),
-    );
-  }
-
-  void _showQuickResponses() {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.calendar_today),
-              title: const Text("Check room availability"),
-              onTap: () {
-                Navigator.pop(context);
-                sendMessage(
-                  ChatMessage(
-                    user: currentUser,
-                    createdAt: DateTime.now(),
-                    text:
-                        "I'd like to check room availability for the next weekend",
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.hotel),
-              title: const Text("Room types"),
-              onTap: () {
-                Navigator.pop(context);
-                sendMessage(ChatMessage(
-                  user: currentUser,
-                  createdAt: DateTime.now(),
-                  text: "What types of rooms do you offer?",
-                ));
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.spa),
-              title: const Text("Hotel amenities"),
-              onTap: () {
-                Navigator.pop(context);
-                sendMessage(ChatMessage(
-                  user: currentUser,
-                  createdAt: DateTime.now(),
-                  text: "What amenities are available at the hotel?",
-                ));
-              },
-            ),
-          ],
         ),
       ),
     );
@@ -233,7 +122,7 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
         }
       });
     } catch (e) {
-      // Handle errors appropriately
+      // Handle errors
       setState(() {
         messages = [
           ChatMessage(
@@ -249,3 +138,112 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
     }
   }
 }
+
+// appBar: PreferredSize(
+//   preferredSize: const Size.fromHeight(kToolbarHeight),
+//   child: Container(
+//     decoration: const BoxDecoration(
+//       gradient: LinearGradient(
+//         colors: [
+//           Color(0xFF1B4F72),
+//           Color(0xFF2E86C1),
+//         ],
+//         begin: Alignment.topLeft,
+//         end: Alignment.bottomRight,
+//       ),
+//     ),
+//     child: AppBar(
+//       backgroundColor: Colors.transparent,
+//       centerTitle: true,
+//       title: const Row(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Icon(Icons.hotel, color: Colors.white),
+//           SizedBox(width: 8),
+//           Text(
+//             "Luxury Hotel Booking",
+//             style: TextStyle(
+//               fontSize: 24,
+//               color: Colors.white,
+//               fontWeight: FontWeight.bold,
+//             ),
+//           ),
+//         ],
+//       ),
+//       elevation: 0,
+//     ),
+//   ),
+// ),
+
+// void _showQuickResponses() {
+//   showModalBottomSheet(
+//     context: context,
+//     builder: (context) => Container(
+//       padding: const EdgeInsets.all(16),
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           ListTile(
+//             leading: const Icon(Icons.calendar_today),
+//             title: const Text("Check room availability"),
+//             onTap: () {
+//               Navigator.pop(context);
+//               sendMessage(
+//                 ChatMessage(
+//                   user: currentUser,
+//                   createdAt: DateTime.now(),
+//                   text:
+//                       "I'd like to check room availability for the next weekend",
+//                 ),
+//               );
+//             },
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.hotel),
+//             title: const Text("Room types"),
+//             onTap: () {
+//               Navigator.pop(context);
+//               sendMessage(ChatMessage(
+//                 user: currentUser,
+//                 createdAt: DateTime.now(),
+//                 text: "What types of rooms do you offer?",
+//               ));
+//             },
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.spa),
+//             title: const Text("Hotel amenities"),
+//             onTap: () {
+//               Navigator.pop(context);
+//               sendMessage(ChatMessage(
+//                 user: currentUser,
+//                 createdAt: DateTime.now(),
+//                 text: "What amenities are available at the hotel?",
+//               ));
+//             },
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }
+
+// void initState() {
+//   super.initState();
+//   Future.delayed(Duration.zero, () {
+//     final welcomeMessage = ChatMessage(
+//       user: hotelBot,
+//       createdAt: DateTime.now(),
+//       // text: "Welcome to Luxury Hotel! How may I assist you today?\n\n"
+//       //     "I can help you with:\n"
+//       //     "• Room bookings and availability\n"
+//       //     "• Room types and amenities\n"
+//       //     "• Check-in/check-out information\n"
+//       //     "• Hotel facilities\n"
+//       //     "• Special requests",
+//     );
+//     setState(() {
+//       messages = [welcomeMessage];
+//     });
+//   });
+// }

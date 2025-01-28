@@ -24,15 +24,15 @@ class FirebaseIssueDataSource {
       }
 
       String? downloadUrl;
-      if (imageFile != null && imageFile.path.isNotEmpty) {
-        final storageRef = storage.ref().child(
-            'reported_issues_images/${currentUser.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      // if (imageFile != null && imageFile.path.isNotEmpty) {
+      final storageRef = storage.ref().child(
+          'reported_images/${currentUser.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg');
 
-        final uploadTask = storageRef.putFile(imageFile);
-        final snapshot = await uploadTask;
-        downloadUrl = await snapshot.ref.getDownloadURL();
-        log(downloadUrl);
-      }
+      final uploadTask = storageRef.putFile(imageFile!);
+      final snapshot = await uploadTask;
+      downloadUrl = await snapshot.ref.getDownloadURL();
+      log(downloadUrl);
+      // }
 
       final String issueId = uuid.v4();
       final String userEmail = currentUser.email!;

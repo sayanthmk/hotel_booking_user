@@ -24,7 +24,7 @@ class AboutHotel extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
+              'A charming hotel in a convenient location, providing a peaceful environment and excellent service, perfect for those looking to relax and enjoy their stay in a comfortable setting. ',
               style: TextStyle(color: Colors.black54),
             ),
           ],

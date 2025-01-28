@@ -13,11 +13,14 @@ class LocationNamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(const Duration(seconds: 100), (_) {
-      if (context.mounted) {
-        context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
-      }
-    });
+    Timer.periodic(
+      const Duration(seconds: 100),
+      (_) {
+        if (context.mounted) {
+          context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(

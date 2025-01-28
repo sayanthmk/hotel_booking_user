@@ -9,6 +9,7 @@ import 'package:hotel_booking/features/profile/presentation/providers/bloc/userp
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_event.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_state.dart';
 import 'package:hotel_booking/features/settings/settings_page.dart';
+import 'package:hotel_booking/utils/alertbox.dart';
 import '../../../../auth/presentation/pages/routepage.dart';
 
 class ProfileUiNew extends StatelessWidget {
@@ -37,7 +38,7 @@ class ProfileUiNew extends StatelessWidget {
                         Container(
                           height: MediaQuery.of(context).size.height * 0.40,
                           width: double.infinity,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
                                 HotelBookingColors.buttoncolor,
@@ -66,7 +67,6 @@ class ProfileUiNew extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        // _buildStatCard(),
                         _buildInformationCard(context),
                       ],
                     ),
@@ -83,23 +83,6 @@ class ProfileUiNew extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildStatCard() {
-  //   return Card(
-  //     color: Colors.white,
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(16.0),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //         children: [
-  //           _buildStatColumn('Battles', 'text'),
-  //           _buildStatColumn('Birthday', 'April 7th'),
-  //           _buildStatColumn('Age', '19 yrs'),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildInformationCard(BuildContext context) {
     return Container(
@@ -125,22 +108,22 @@ class ProfileUiNew extends StatelessWidget {
                   SettingsInfoRow(
                     ontap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SettingsPage(),
+                        builder: (context) => const PrpageMyProfilePage(),
+                      ));
+                    },
+                    icon: Icons.person,
+                    label: "Profile",
+                    // value: "Eating cakes",
+                  ),
+                  SettingsInfoRow(
+                    ontap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
                       ));
                     },
                     icon: Icons.settings,
                     label: 'Settings',
                     // value: "FairyTail, Magnolia",
-                  ),
-                  SettingsInfoRow(
-                    ontap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => PrpageMyProfilePage(),
-                      ));
-                    },
-                    icon: Icons.favorite,
-                    label: "Profile",
-                    // value: "Eating cakes",
                   ),
                   SettingsInfoRow(
                     ontap: () {},
@@ -156,12 +139,33 @@ class ProfileUiNew extends StatelessWidget {
                   ),
                   SettingsInfoRow(
                     ontap: () {
-                      context.read<AuthBloc>().add(SignOutEvent());
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const AuthSelectionPage()),
-                        (Route<dynamic> route) => false,
+                      showDialog(
+                        context: context,
+                        builder: (context) => CustomAlertDialog(
+                          titleText: 'Logout',
+                          contentText: 'Are you sure you want to Logout?',
+                          buttonText1: 'No',
+                          buttonText2: 'Yes',
+                          onPressButton1: () {
+                            Navigator.of(context).pop();
+                          },
+                          onPressButton2: () async {
+                            context.read<AuthBloc>().add(SignOutEvent());
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const AuthSelectionPage()),
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                        ),
                       );
+                      // context.read<AuthBloc>().add(SignOutEvent());
+                      // Navigator.of(context).pushAndRemoveUntil(
+                      //   MaterialPageRoute(
+                      //       builder: (context) => const AuthSelectionPage()),
+                      //   (Route<dynamic> route) => false,
+                      // );
                     },
                     icon: Icons.logout_rounded,
                     label: "Logout",
@@ -173,16 +177,6 @@ class ProfileUiNew extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildStatColumn(String label, String value) {
-    return Column(
-      children: [
-        Text(label, style: TextStyle(color: Colors.grey[400], fontSize: 14.0)),
-        const SizedBox(height: 5.0),
-        Text(value, style: const TextStyle(fontSize: 15.0)),
-      ],
     );
   }
 }
@@ -206,7 +200,7 @@ class SettingsInfoRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Row(
           children: [
-            Icon(icon, size: 35, color: Colors.blueAccent[400]),
+            Icon(icon, size: 35, color: HotelBookingColors.basictextcolor),
             const SizedBox(width: 20.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
