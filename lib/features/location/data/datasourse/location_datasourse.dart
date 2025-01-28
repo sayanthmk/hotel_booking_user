@@ -41,7 +41,6 @@ class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled, handle accordingly
       throw Exception("Location services are disabled.");
     }
 
@@ -49,7 +48,6 @@ class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
     LocationPermission permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      // Handle permission denied case
       throw Exception("Location permission denied.");
     }
 

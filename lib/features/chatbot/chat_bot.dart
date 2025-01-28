@@ -23,7 +23,6 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
         "https://studiovisual.com.br/wp-content/uploads/2024/04/Gemini-1.jpg",
   );
 
-  // Welcome message shown when the chat starts
   @override
   void initState() {
     super.initState();
@@ -54,8 +53,8 @@ class _HotelBookingChatState extends State<HotelBookingChat> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF1B4F72), // Deep hotel blue
-                Color(0xFF2E86C1), // Light hotel blue
+                Color(0xFF1B4F72),
+                Color(0xFF2E86C1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

@@ -45,6 +45,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           'hotelId': hotelId,
           'bookingId': bookingId,
           'bookingDetails': userData.toMap(),
+          'userId': currentUser.uid,
         },
       );
 
@@ -59,6 +60,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           'hotelId': hotelId,
           'bookingId': bookingId,
           'bookingDetails': userData.toMap(),
+          'userId': currentUser.uid,
         },
       );
       log('hotel id $hotelId,booking id $bookingId,user id ${currentUser.uid}');

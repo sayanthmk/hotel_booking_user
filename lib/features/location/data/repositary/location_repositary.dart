@@ -37,6 +37,7 @@ class LiveLocationRepositoryImpl implements LocationRepository {
     }
   }
 
+  @override
   Future<String> getAddressFromLatLng(LatLng position) {
     try {
       return remoteDataSource.getAddressFromLatLng(position);

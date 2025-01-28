@@ -12,7 +12,6 @@ class MapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Start location updates when the widget is built
     Timer.periodic(const Duration(seconds: 100), (_) {
       if (context.mounted) {
         context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
@@ -143,66 +142,3 @@ class MapPage extends StatelessWidget {
     );
   }
 }
-
-  // Widget _buildAddressWidget(LatLng position) {
-  //   return FutureBuilder<String>(
-  //     future: _getAddressFromLatLng(position),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return const Positioned(
-  //           bottom: 16,
-  //           left: 16,
-  //           right: 16,
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-
-  //       if (snapshot.hasError || !snapshot.hasData) {
-  //         return const Positioned(
-  //           bottom: 16,
-  //           left: 16,
-  //           right: 16,
-  //           child: Text(
-  //             'Unable to fetch address',
-  //             style: TextStyle(color: Colors.red),
-  //           ),
-  //         );
-  //       }
-
-  //       return Positioned(
-  //         bottom: 16,
-  //         left: 16,
-  //         right: 16,
-  //         child: Material(
-  //           elevation: 4,
-  //           borderRadius: BorderRadius.circular(8),
-  //           color: Colors.white,
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(16),
-  //             child: Text(
-  //               snapshot.data!,
-  //               style: const TextStyle(fontSize: 16),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Future<String> _getAddressFromLatLng(LatLng position) async {
-  //   try {
-  //     List<Placemark> placemarks = await placemarkFromCoordinates(
-  //       position.latitude,
-  //       position.longitude,
-  //     );
-
-  //     if (placemarks.isNotEmpty) {
-  //       final Placemark place = placemarks.first;
-  //       return '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
-  //     }
-  //   } catch (e) {
-  //     return 'Failed to get address: $e';
-  //   }
-  //   return 'Unknown Location';
-  // }

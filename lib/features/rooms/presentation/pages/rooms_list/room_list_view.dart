@@ -30,10 +30,10 @@ class HotelRoomsListView extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: 250,
+                  height: 260,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(5),
                     itemCount: state.rooms.length,
                     itemBuilder: (context, index) {
                       final room = state.rooms[index];

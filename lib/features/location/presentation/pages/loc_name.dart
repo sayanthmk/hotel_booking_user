@@ -13,7 +13,6 @@ class LocationNamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Start location updates when the widget is built
     Timer.periodic(const Duration(seconds: 100), (_) {
       if (context.mounted) {
         context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
@@ -149,62 +148,3 @@ class LocationNamePage extends StatelessWidget {
     );
   }
 }
-  // Widget _buildMap(LocationState state) {
-  //   if (state is LocationLoaded) {
-  //     return GoogleMap(
-  //       initialCameraPosition: CameraPosition(
-  //         target: state.position,
-  //         zoom: 15,
-  //       ),
-  //       markers: {
-  //         Marker(
-  //           markerId: const MarkerId('currentLocation'),
-  //           position: state.position,
-  //           infoWindow: const InfoWindow(title: 'Current Location'),
-  //         ),
-  //       },
-  //       myLocationEnabled: true,
-  //       myLocationButtonEnabled: true,
-  //       zoomControlsEnabled: true,
-  //       mapType: MapType.normal,
-  //     );
-  //   }
-
-  //   // Default map centered at a default location
-  //   return const GoogleMap(
-  //     initialCameraPosition: CameraPosition(
-  //       target: LatLng(0, 0),
-  //       zoom: 2,
-  //     ),
-  //     myLocationEnabled: true,
-  //     myLocationButtonEnabled: false,
-  //     zoomControlsEnabled: true,
-  //     mapType: MapType.normal,
-  //   );
-  // }
-      // actions: [
-          // IconButton(
-          //   icon: const Icon(Icons.my_location),
-          //   onPressed: () {
-          //     context
-          //         .read<LocationBloc>()
-          //         .add(const FetchCurrentLocationEvent());
-          //   },
-          // ),
-          // IconButton(
-          //   icon: const Icon(Icons.map),
-          //   onPressed: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //       builder: (context) => const LocationNamePage(),
-          //     ));
-          //   },
-          // ),
-        // ],
-            // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     context.read<LocationBloc>().add(const FetchCurrentLocationEvent());
-      //   },
-      //   label: const Text('Update Location'),
-      //   icon: const Icon(Icons.location_on),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

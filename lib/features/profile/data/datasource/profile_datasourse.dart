@@ -26,7 +26,6 @@ class FirebaseUserProfileDataSource {
     }
   }
 
-  /// Update the current user's profile data in Firestore.
   Future<void> updateCurrentUser(Map<String, dynamic> updatedData) async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
@@ -39,7 +38,6 @@ class FirebaseUserProfileDataSource {
     }
   }
 
-  /// Upload a profile image to Firebase Storage and update Firestore.
   Future<String> uploadProfileImage(File imageFile) async {
     final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -48,11 +46,9 @@ class FirebaseUserProfileDataSource {
     }
 
     try {
-      // Define the storage path
       final storageRef = storage.ref().child(
           'profile_images/${currentUser.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg');
 
-      // Upload the file
       final uploadTask = storageRef.putFile(imageFile);
       final snapshot = await uploadTask;
 

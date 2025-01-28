@@ -60,13 +60,10 @@ class HotelBookingPage extends StatelessWidget {
                     return BlocConsumer<UserBloc, UserState>(
                       listener: (context, state) {
                         if (state is UserErrorState) {
-                          // showErrorSnackBar(context, state.message);
                           showCustomSnackBar(
                               context, state.message, Colors.red);
                         }
                         if (state is UserDataSavedState) {
-                          // showSuccessSnackBar(
-                          //     context, 'Booking Saved Successfully');
                           showCustomSnackBar(context,
                               'Booking Saved Successfully', Colors.green);
                           clearAllFields();

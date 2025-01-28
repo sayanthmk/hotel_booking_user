@@ -35,7 +35,6 @@ class FirebaseDataSource {
       String email, String password) async {
     final UserCredential userCredential = await firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password);
-    // log('signInWithEmailAndPassword ${userCredential.user.toString()}');
     return userCredential.user;
   }
 
@@ -51,15 +50,12 @@ class FirebaseDataSource {
       User? user = userCredential.user;
       log(userCredential.user.toString());
       if (user != null) {
-        // log('await firestore.collection("users").doc(user.uid).set({');
-        // Add user to Firestore collection
         await firestore.collection("users").doc(user.uid).set({
           "uid": user.uid,
           "email": user.email,
           "createdAt": FieldValue.serverTimestamp(),
         });
       }
-      // log(user!.email!);
       return userCredential.user;
     } catch (e) {
       if (kDebugMode) {

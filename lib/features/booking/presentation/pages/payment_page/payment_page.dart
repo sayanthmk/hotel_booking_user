@@ -31,10 +31,8 @@ class PaymentPage extends StatelessWidget {
           body: BlocConsumer<StripeBloc, StripePaymentState>(
             listener: (context, state) {
               if (state is StripePaymentSuccess) {
-                // final bookingData = UserDataModel(
-                //     paidAmount: double.parse(amountController.text));
                 final updatedBookingData = UserDataModel(
-                  name: bookingData.name, // existing data
+                  name: bookingData.name,
                   age: bookingData.age,
                   place: bookingData.place,
                   startdate: bookingData.startdate,
@@ -42,10 +40,8 @@ class PaymentPage extends StatelessWidget {
                   noc: bookingData.noc,
                   noa: bookingData.noa,
                   roomId: bookingData.roomId,
-
                   paidAmount: double.parse(amountController.text),
                   bookingDate: bookingData.bookingDate,
-                  // Add the entered amount
                 );
                 context
                     .read<UserBloc>()
@@ -53,9 +49,7 @@ class PaymentPage extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const BookingSuccessPage(),
                 ));
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   const SnackBar(content: Text('Payment Successful!')),
-                // );
+
                 showCustomSnackBar(
                     context, 'Payment Successful!', Colors.green);
               }
@@ -95,22 +89,7 @@ class PaymentPage extends StatelessWidget {
                                       false) {
                                     final amount =
                                         double.parse(amountController.text);
-                                    // Create a new instance of UserDataModel with the paidAmount added
 
-                                    // final bookingData = UserDataModel(
-                                    //                                               name: nameController.text,
-                                    //                                               age: int.parse(
-                                    //                                                   ageController.text),
-                                    //                                               place: placeController.text,
-                                    //                                               startdate: startdate,
-                                    //                                               enddate: enddate,
-                                    //                                               noc: int.parse(
-                                    //                                                   childcontroller.text),
-                                    //                                               noa: int.parse(
-                                    //                                                   adultcontroller.text),
-                                    //                                               roomId: selectedRoomId!,
-                                    //                                               // paidAmount: 0,
-                                    //                                             );
                                     context
                                         .read<StripeBloc>()
                                         .add(InitiatePayment(amount));

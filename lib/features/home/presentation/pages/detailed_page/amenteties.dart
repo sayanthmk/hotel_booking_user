@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/home/presentation/pages/detailed_page/about_the_hotel.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
-import 'package:hotel_booking/features/home/presentation/widgets/section_header.dart';
 import 'package:hotel_booking/features/report/presentation/pages/add_report_page.dart';
-import 'package:hotel_booking/features/report/presentation/pages/report_n.dart';
 
 class Amenities extends StatelessWidget {
   const Amenities({super.key});
@@ -32,30 +32,50 @@ class Amenities extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Text(
-                  'About the Hotel',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                const AboutHotel(),
+                const SizedBox(height: 20),
+
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 5.0,
+                    top: 10,
+                  ),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'What This Place Offers',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ReportIssuePage(),
+                          ));
+                        },
+                        child: const Text(
+                          '',
+                          style: TextStyle(
+                            color: HotelBookingColors.basictextcolor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
-                  style: TextStyle(color: Colors.black54),
-                ),
+                // SectionHeader(
+                //   title: 'What This Place Offers',
+                //   actionText: '',
+                //   ontap: () {
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //       builder: (context) => const ReportIssuePage(),
+                //     ));
+                //   },
+                // ),
                 const SizedBox(height: 20),
-                SectionHeader(
-                  title: 'What This Place Offers',
-                  actionText: 'More',
-                  ontap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ReportIssuePage(),
-                    ));
-                  },
-                ),
-                const SizedBox(height: 10),
                 SizedBox(
                   height: 130,
                   child: ListView.builder(
@@ -64,8 +84,9 @@ class Amenities extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final amenity = availableAmenities[index];
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 70,
@@ -73,18 +94,22 @@ class Amenities extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                border:
-                                    Border.all(width: 1, color: Colors.blue),
+                                border: Border.all(
+                                    width: 2,
+                                    color: HotelBookingColors.basictextcolor),
                               ),
                               child: Icon(
                                 amenity['icon'],
-                                color: Colors.blue,
+                                color: HotelBookingColors.basictextcolor,
                               ),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               amenity['name'],
-                              style: const TextStyle(fontSize: 16),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: HotelBookingColors.basictextcolor,
+                              ),
                             ),
                           ],
                         ),

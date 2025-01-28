@@ -4,12 +4,12 @@ import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/features/profile/domain/usecase/profile_usecase.dart';
-import 'package:hotel_booking/features/profile/presentation/pages/profile_page.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/pr.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_bloc.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_event.dart';
 import 'package:hotel_booking/features/profile/presentation/providers/bloc/userprofile_state.dart';
 import 'package:hotel_booking/features/settings/settings_page.dart';
-import '../../../auth/presentation/pages/routepage.dart';
+import '../../../../auth/presentation/pages/routepage.dart';
 
 class ProfileUiNew extends StatelessWidget {
   const ProfileUiNew({super.key});
@@ -34,15 +34,14 @@ class ProfileUiNew extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        // _buildHeaderSection(context),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.40,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                HotelBookingColors.lighttextcolor,
-                                HotelBookingColors.basictextcolor,
+                                HotelBookingColors.buttoncolor,
+                                HotelBookingColors.buttoncolor,
                               ],
                             ),
                           ),
@@ -136,7 +135,7 @@ class ProfileUiNew extends StatelessWidget {
                   SettingsInfoRow(
                     ontap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => UserProfileListPage(),
+                        builder: (context) => PrpageMyProfilePage(),
                       ));
                     },
                     icon: Icons.favorite,

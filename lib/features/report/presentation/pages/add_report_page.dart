@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/report/presentation/pages/repor.dart';
@@ -99,7 +100,18 @@ class ReportIssuePage extends StatelessWidget {
                                     .state as SelectedHotelLoaded)
                                 .hotel
                                 .hotelId;
-                            _submitIssue(context, customIssue, hotelId);
+
+                            // _submitIssue(context, customIssue, hotelId, );   // Access the last uploaded image state
+                            final imageState =
+                                context.read<ReportIssueBloc>().state;
+                            File? imageFile;
+                            if (imageState is ReportIssueImageUploadedState) {
+                              imageFile = File(imageState.imageUrl);
+                            }
+
+                            // Submit issue with imageFile
+                            _submitIssue(context, customIssue, hotelId,
+                                imageFile: imageFile);
                             customIssueController.clear();
                           }
                         },
@@ -201,13 +213,14 @@ class ReportIssuePage extends StatelessWidget {
       final File imageFile = File(pickedFile.path);
 
       // Get the current hotel ID
-      final hotelId =
-          (context.read<SelectedHotelBloc>().state as SelectedHotelLoaded)
-              .hotel
-              .hotelId;
+      // final hotelId =
+      //     (context.read<SelectedHotelBloc>().state as SelectedHotelLoaded)
+      //         .hotel
+      //         .hotelId;
 
       // Dispatch image upload event
-      context.read<ReportIssueBloc>().add(ReportIssueImageEvent(imageFile));
+      // context.read<ReportIssueBloc>().add(ReportIssueImageEvent(imageFile));
+      log('Screen${imageFile.toString()}');
     }
   }
 
@@ -245,3 +258,47 @@ class ReportIssuePage extends StatelessWidget {
     );
   }
 }
+
+
+
+  // void _showImageSourceDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Choose Image Source'),
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           ListTile(
+  //             leading: const Icon(Icons.camera_alt),
+  //             title: const Text('Camera'),
+  //             onTap: () async {
+  //               final pickedFile =
+  //                   await ImagePicker().pickImage(source: ImageSource.camera);
+  //               if (pickedFile != null) {
+  //                 context.read<ReportIssueBloc>().add(
+  //                       ReportIssueImageEvent(File(pickedFile.path)),
+  //                     );
+  //               }
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           ListTile(
+  //             leading: const Icon(Icons.photo_library),
+  //             title: const Text('Gallery'),
+  //             onTap: () async {
+  //               final pickedFile =
+  //                   await ImagePicker().pickImage(source: ImageSource.gallery);
+  //               if (pickedFile != null) {
+  //                 context.read<ReportIssueBloc>().add(
+  //                       ReportIssueImageEvent(File(pickedFile.path)),
+  //                     );
+  //               }
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }

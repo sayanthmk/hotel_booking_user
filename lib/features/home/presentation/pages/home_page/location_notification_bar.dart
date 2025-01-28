@@ -13,7 +13,8 @@ class LocationWithNotificationBar extends StatelessWidget {
     return Container(
       height: 70,
       width: double.infinity,
-      decoration: const BoxDecoration(color: Color(0xFFF5F9FF)),
+      decoration:
+          const BoxDecoration(color: HotelBookingColors.pagebackgroundcolor),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -70,7 +71,7 @@ class LocationWithNotificationBar extends StatelessWidget {
                 ),
                 child: const Icon(
                   FontAwesomeIcons.bell,
-                  color: Color(0xFF1E91B6),
+                  color: HotelBookingColors.basictextcolor,
                 ),
               ),
             ),

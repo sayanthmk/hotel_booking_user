@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/domain/entity/hotel_entity.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/detail_page.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/widgets/hote_shimmer.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';
@@ -20,7 +21,8 @@ class HotelsListView extends StatelessWidget {
         create: (context) => GetIt.I<HotelBloc>()..add(LoadHotelsEvent()),
         child: BlocBuilder<HotelBloc, HotelState>(builder: (context, state) {
           if (state is HotelLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            // return const Center(child: CircularProgressIndicator());
+            return const HotelCardShimmerSection();
           } else if (state is HotelLoadedState) {
             return SizedBox(
               height: 260,

@@ -13,7 +13,6 @@ class BookingDetailPageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: const BookingAppbar(heading: 'Booking Details'),
       appBar: AppBar(
         title: const Text(
           'Booking Details',
@@ -117,7 +116,8 @@ class BookingDetailPageSection extends StatelessWidget {
                                 SnackBar(
                                   content: const Text(
                                       "Booking ID is null, cannot delete."),
-                                  backgroundColor: Colors.red[400],
+                                  backgroundColor:
+                                      HotelBookingColors.buttoncolor,
                                   behavior: SnackBarBehavior.floating,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -126,10 +126,16 @@ class BookingDetailPageSection extends StatelessWidget {
                               );
                             }
                           },
-                          icon: const Icon(Icons.cancel_outlined),
-                          label: const Text('Cancel Booking'),
+                          icon: const Icon(
+                            Icons.cancel_outlined,
+                            color: Colors.black,
+                          ),
+                          label: const Text(
+                            'Cancel Booking',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red.shade400,
+                            backgroundColor: HotelBookingColors.buttoncolor,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
@@ -150,7 +156,9 @@ class BookingDetailPageSection extends StatelessWidget {
                             ));
                           },
                           icon: const Icon(Icons.hotel),
-                          label: const Text('Hotel Details'),
+                          label: const Text(
+                            'Hotel Details',
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: HotelBookingColors.basictextcolor,
                             foregroundColor: Colors.white,

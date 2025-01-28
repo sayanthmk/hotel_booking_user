@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:hotel_booking/core/constants/stripe_keys.dart';
+import 'package:hotel_booking/core/constants/stripe_api_key.dart';
 import 'package:hotel_booking/features/stripe/data/model/stripe_model.dart';
 
 abstract class StripeRemoteDataSource {

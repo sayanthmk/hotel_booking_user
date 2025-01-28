@@ -5,5 +5,4 @@ abstract class IssueRepository {
   Future<void> reportIssue(IssueModel issue, String hotelId, File imageFile);
   Future<List<IssueModel>> fetchReportedIssues(String hotelId);
   Future<void> deleteReportedIssue(String issueId, String hotelId);
-  // Future<String> uploadRepImage(File imageFile);
 }

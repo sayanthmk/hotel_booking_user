@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/report/data/model/report_model.dart';
@@ -34,16 +34,16 @@ class ReportIssueBloc extends Bloc<ReportIssueEvent, ReportIssueState> {
       }
 
       final issue = IssueModel(
-        hotelId: event.hotelId,
-        issueContent: event.issueContent,
-        userEmail: currentUser.email!,
-        issueDate: DateTime.now(),
-      );
+          hotelId: event.hotelId,
+          issueContent: event.issueContent,
+          userEmail: currentUser.email!,
+          issueDate: DateTime.now(),
+          reportImage: event.imageFile.toString());
 
       // Pass both issue and image file to repository
       await issueRepository.reportIssue(
           issue, event.hotelId, event.imageFile ?? File(''));
-
+      log('bloc${event.imageFile.toString()}');
       emit(const ReportIssueSuccessState(
           successMessage: 'Issue reported successfully!'));
     } catch (e) {
@@ -82,17 +82,4 @@ class ReportIssueBloc extends Bloc<ReportIssueEvent, ReportIssueState> {
       emit(GetReportedIssuesError(errorMessage: 'Failed to delete issue: $e'));
     }
   }
-
-  // Future<void> _onReportIssueImageEvent(
-  //   ReportIssueImageEvent event,
-  //   Emitter<ReportIssueState> emit,
-  // ) async {
-  //   try {
-  //     final imageUrl = await issueRepository.uploadRepImage(event.imageFile);
-  //     _uploadedImageUrl = imageUrl;
-  //     emit(ReportIssueImageUploadedState(imageUrl));
-  //   } catch (e) {
-  //     emit(ReportIssueFailureState(errorMessage: 'Failed to upload image: $e'));
-  //   }
-  // }
 }

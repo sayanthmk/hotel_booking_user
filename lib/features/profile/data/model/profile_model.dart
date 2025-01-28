@@ -25,7 +25,7 @@ class UserProfileModel {
       'name': name,
       'email': email,
       'createdAt': createdAt,
-      'profileImage': profileImage,
+      'reportImage': profileImage,
       'phone': phoneNumber,
       'location': location,
     };
@@ -37,7 +37,7 @@ class UserProfileModel {
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       createdAt: map['createdAt'] ?? Timestamp.now(),
-      profileImage: map['profileImage'] ?? '',
+      profileImage: map['reportImage'] ?? '',
       phoneNumber: map['phone'] ?? '',
       location: map['location'] ?? '',
     );
