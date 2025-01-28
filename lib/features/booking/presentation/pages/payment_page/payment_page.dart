@@ -10,7 +10,7 @@ import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripe
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_event.dart';
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_state.dart';
 import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
-import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 
 class PaymentPage extends StatelessWidget {
   final UserDataModel bookingData;

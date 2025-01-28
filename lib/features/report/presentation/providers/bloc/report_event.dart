@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 
 abstract class ReportIssueEvent extends Equatable {
@@ -12,14 +10,12 @@ abstract class ReportIssueEvent extends Equatable {
 class SubmitReportEvent extends ReportIssueEvent {
   final String issueContent;
   final String hotelId;
-  final File? imageFile;
+  // final File? imageFile;
 
-  const SubmitReportEvent(
-      {required this.issueContent, required this.hotelId, this.imageFile});
+  const SubmitReportEvent({required this.issueContent, required this.hotelId});
 
   @override
-  List<Object> get props =>
-      [issueContent, hotelId, if (imageFile != null) imageFile!];
+  List<Object> get props => [issueContent, hotelId];
 }
 
 class FetchReportedIssuesEvent extends ReportIssueEvent {

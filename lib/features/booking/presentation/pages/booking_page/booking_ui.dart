@@ -12,7 +12,7 @@ import 'package:hotel_booking/features/home/presentation/providers/selected_bloc
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_state.dart';
 import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
-import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 
 class HotelBookingPage extends StatelessWidget {
   HotelBookingPage({super.key});

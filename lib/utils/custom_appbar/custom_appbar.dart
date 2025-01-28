@@ -3,14 +3,18 @@ import 'package:hotel_booking/core/constants/colors.dart';
 
 class BookingAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String heading;
+
+  final List<Widget>? appbaractions;
   const BookingAppbar({
     required this.heading,
+    this.appbaractions,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      actions: appbaractions,
       title: Text(
         heading,
         style: const TextStyle(

@@ -30,7 +30,6 @@ class MapPage extends StatelessWidget {
         builder: (context, state) {
           return Stack(
             children: [
-              // Checking if the state is LocationLoaded and displaying the map
               if (state is LocationLoaded)
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
@@ -49,7 +48,6 @@ class MapPage extends StatelessWidget {
                   zoomControlsEnabled: true,
                   mapType: MapType.normal,
                 ),
-              // Default map centered at a default location if state is not LocationLoaded
               if (state is! LocationLoaded)
                 const GoogleMap(
                   initialCameraPosition: CameraPosition(
@@ -61,7 +59,6 @@ class MapPage extends StatelessWidget {
                   zoomControlsEnabled: true,
                   mapType: MapType.normal,
                 ),
-              // If the state is loading, show a loading indicator
               if (state is LocationLoading)
                 const Positioned.fill(
                   child: ColoredBox(
@@ -71,7 +68,6 @@ class MapPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              // If the state is an error, show the error widget
               if (state is LocationError)
                 Positioned(
                   top: 16,
@@ -89,8 +85,7 @@ class MapPage extends StatelessWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              state
-                                  .message, // Make sure to use state.message here
+                              state.message,
                               style: const TextStyle(color: Colors.red),
                             ),
                           ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/widgets/custom_circle.dart';
 import 'package:hotel_booking/features/wishlist/presentation/provider/bloc/favorites_bloc.dart';
-import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 
 class HotelImageBox extends StatelessWidget {
   const HotelImageBox({super.key});

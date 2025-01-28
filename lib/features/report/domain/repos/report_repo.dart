@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:hotel_booking/features/report/data/datasource/report_datasourse.dart';
 import 'package:hotel_booking/features/report/data/model/report_model.dart';
 import 'package:hotel_booking/features/report/data/repositary/report_repositary.dart';
@@ -10,9 +9,11 @@ class FirebaseIssueRepository implements IssueRepository {
   FirebaseIssueRepository(this.dataSource);
 
   @override
-  Future<void> reportIssue(
-      IssueModel issue, String hotelId, File imageFile) async {
-    await dataSource.reportIssue(issue, hotelId, imageFile);
+  Future<void> reportIssue(IssueModel issue, String hotelId) async {
+    await dataSource.reportIssue(
+      issue,
+      hotelId,
+    );
     log('Reported issue in repository');
   }
 

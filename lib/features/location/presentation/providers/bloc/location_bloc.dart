@@ -55,7 +55,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     try {
       await for (final location in repository.getCurrentLocation()) {
         emit(LocationLoaded(LatLng(location.latitude, location.longitude)));
-        break; // Only get the first location
+        break;
       }
     } catch (e) {
       emit(LocationError("Failed to fetch current location: $e"));
@@ -71,7 +71,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     try {
       final address = await repository.getAddressFromLatLng(event.position);
       emit(LocationLoaded(event.position));
-      log("Address: $address"); // Print the fetched address for verification
+      log("Address: $address");
     } catch (e) {
       emit(LocationError("Failed to fetch address from coordinates: $e"));
     }

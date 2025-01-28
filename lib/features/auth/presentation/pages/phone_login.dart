@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
-import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/email_signup.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/otp_verification.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';

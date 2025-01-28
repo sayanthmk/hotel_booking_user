@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/report/presentation/pages/add_report_page.dart';
+import 'package:hotel_booking/features/report/presentation/pages/add_report/add_report_page.dart';
 import 'package:hotel_booking/features/review/presentation/pages/rev_new.dart';
 
 class ReviewReportPage extends StatelessWidget {

@@ -8,15 +8,6 @@ abstract class ReportIssueState extends Equatable {
   List<Object> get props => [];
 }
 
-class ReportIssueImageUploadedState extends ReportIssueState {
-  final String imageUrl;
-
-  const ReportIssueImageUploadedState(this.imageUrl);
-
-  @override
-  List<Object> get props => [imageUrl];
-}
-
 class ReportIssueInitialState extends ReportIssueState {}
 
 class ReportIssueLoadingState extends ReportIssueState {}

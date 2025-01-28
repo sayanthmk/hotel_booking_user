@@ -4,7 +4,7 @@ import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/booking_det_card.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/booking_hotel_details.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
-import 'package:hotel_booking/utils/alertbox.dart';
+import 'package:hotel_booking/utils/alertbox/alertbox.dart';
 
 class BookingDetailPageSection extends StatelessWidget {
   const BookingDetailPageSection({super.key});

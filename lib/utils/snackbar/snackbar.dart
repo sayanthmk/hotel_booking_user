@@ -20,13 +20,6 @@ void showCustomSnackBar(BuildContext context, String message, Color color) {
       borderRadius: BorderRadius.circular(15),
     ),
     duration: const Duration(seconds: 3),
-    // action: SnackBarAction(
-    //   label: 'Undo',
-    //   textColor: Colors.yellowAccent,
-    //   onPressed: () {
-    //     // Undo logic here
-    //   },
-    // ),
   );
 
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

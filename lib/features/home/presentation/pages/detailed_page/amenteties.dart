@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/detailed_page/about_the_hotel.dart';
 import 'package:hotel_booking/features/home/presentation/providers/selected_bloc/bloc/selectedhotel_bloc.dart';
-import 'package:hotel_booking/features/report/presentation/pages/add_report_page.dart';
+import 'package:hotel_booking/features/report/presentation/pages/add_report/add_report_page.dart';
 
 class Amenities extends StatelessWidget {
   const Amenities({super.key});

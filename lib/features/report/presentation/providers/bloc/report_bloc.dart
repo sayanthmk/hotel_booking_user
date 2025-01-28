@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/features/report/data/model/report_model.dart';
@@ -34,16 +32,19 @@ class ReportIssueBloc extends Bloc<ReportIssueEvent, ReportIssueState> {
       }
 
       final issue = IssueModel(
-          hotelId: event.hotelId,
-          issueContent: event.issueContent,
-          userEmail: currentUser.email!,
-          issueDate: DateTime.now(),
-          reportImage: event.imageFile.toString());
+        hotelId: event.hotelId,
+        issueContent: event.issueContent,
+        userEmail: currentUser.email!,
+        issueDate: DateTime.now(),
+        // reportImage: event.imageFile.toString(),
+      );
 
       // Pass both issue and image file to repository
       await issueRepository.reportIssue(
-          issue, event.hotelId, event.imageFile ?? File(''));
-      log('bloc${event.imageFile.toString()}');
+        issue, event.hotelId,
+        // event.imageFile ?? File(''),
+      );
+      // log('bloc${event.imageFile.toString()}');
       emit(const ReportIssueSuccessState(
           successMessage: 'Issue reported successfully!'));
     } catch (e) {

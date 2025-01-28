@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/validator/validators.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
-import 'package:hotel_booking/utils/snackbar.dart';
+import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/email_signup.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/features/auth/presentation/widgets/bottom_text_row.dart';

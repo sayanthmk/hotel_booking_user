@@ -1,20 +1,22 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hotel_booking/features/report/data/model/report_model.dart';
 import 'package:uuid/uuid.dart';
 
 class FirebaseIssueDataSource {
   final FirebaseFirestore _firestore;
   final FirebaseAuth auth;
-  final FirebaseStorage storage;
 
-  FirebaseIssueDataSource(this._firestore, this.auth, this.storage);
+  FirebaseIssueDataSource(
+    this._firestore,
+    this.auth,
+  );
 
   Future<void> reportIssue(
-      IssueModel issue, String hotelId, File? imageFile) async {
+    IssueModel issue,
+    String hotelId,
+  ) async {
     const uuid = Uuid();
     try {
       final User? currentUser = auth.currentUser;
@@ -22,17 +24,6 @@ class FirebaseIssueDataSource {
       if (currentUser == null) {
         throw Exception('No authenticated user found');
       }
-
-      String? downloadUrl;
-      // if (imageFile != null && imageFile.path.isNotEmpty) {
-      final storageRef = storage.ref().child(
-          'reported_images/${currentUser.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg');
-
-      final uploadTask = storageRef.putFile(imageFile!);
-      final snapshot = await uploadTask;
-      downloadUrl = await snapshot.ref.getDownloadURL();
-      log(downloadUrl);
-      // }
 
       final String issueId = uuid.v4();
       final String userEmail = currentUser.email!;
@@ -47,21 +38,23 @@ class FirebaseIssueDataSource {
         'hotelId': hotelId,
         'issueId': issueId,
         'userEmail': userEmail,
-        'reportImage': downloadUrl,
-        'issueDetails': {...issue.toMap(), 'reportImage': downloadUrl},
+        'issueDetails': {
+          ...issue.toMap(),
+        },
       });
 
       await _firestore
           .collection('admin')
-          .doc(currentUser.uid)
+          .doc('WH18TZOM6URMXEHB3C2lae1mXir1')
           .collection('reported_issues')
           .doc(issueId)
           .set({
         'hotelId': hotelId,
         'issueId': issueId,
         'userEmail': userEmail,
-        'reportImage': downloadUrl,
-        'issueDetails': {...issue.toMap(), 'reportImage': downloadUrl},
+        'issueDetails': {
+          ...issue.toMap(),
+        },
       });
     } catch (e) {
       throw Exception('Failed to report issue: $e');
@@ -96,7 +89,7 @@ class FirebaseIssueDataSource {
           .delete();
 
       await _firestore
-          .collection('admin')
+          .collection('WH18TZOM6URMXEHB3C2lae1mXir1')
           .doc(currentUser.uid)
           .collection('reported_issues')
           .doc(issueId)
