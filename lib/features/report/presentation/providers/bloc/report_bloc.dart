@@ -7,13 +7,11 @@ import 'package:hotel_booking/features/report/presentation/providers/bloc/report
 
 class ReportIssueBloc extends Bloc<ReportIssueEvent, ReportIssueState> {
   final IssueRepository issueRepository;
-  // String? uploadedImageUrl;
 
   ReportIssueBloc(this.issueRepository) : super(ReportIssueInitialState()) {
     on<SubmitReportEvent>(_onSubmitReportEvent);
     on<FetchReportedIssuesEvent>(_onFetchReportedIssues);
     on<DeleteReportedIssueEvent>(_onDeleteReportedIssue);
-    // on<ReportIssueImageEvent>(_onReportIssueImageEvent);
   }
 
   Future<void> _onSubmitReportEvent(
@@ -36,15 +34,12 @@ class ReportIssueBloc extends Bloc<ReportIssueEvent, ReportIssueState> {
         issueContent: event.issueContent,
         userEmail: currentUser.email!,
         issueDate: DateTime.now(),
-        // reportImage: event.imageFile.toString(),
       );
 
-      // Pass both issue and image file to repository
       await issueRepository.reportIssue(
-        issue, event.hotelId,
-        // event.imageFile ?? File(''),
+        issue,
+        event.hotelId,
       );
-      // log('bloc${event.imageFile.toString()}');
       emit(const ReportIssueSuccessState(
           successMessage: 'Issue reported successfully!'));
     } catch (e) {

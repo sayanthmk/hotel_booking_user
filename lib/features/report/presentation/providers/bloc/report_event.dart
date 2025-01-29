@@ -10,7 +10,6 @@ abstract class ReportIssueEvent extends Equatable {
 class SubmitReportEvent extends ReportIssueEvent {
   final String issueContent;
   final String hotelId;
-  // final File? imageFile;
 
   const SubmitReportEvent({required this.issueContent, required this.hotelId});
 
@@ -35,13 +34,3 @@ class DeleteReportedIssueEvent extends ReportIssueEvent {
   @override
   List<Object> get props => [issueId, hotelId];
 }
-
-
-// class ReportIssueImageEvent extends ReportIssueEvent {
-//   final File imageFile;
-
-//   const ReportIssueImageEvent(this.imageFile);
-
-//   @override
-//   List<Object> get props => [imageFile];
-// }

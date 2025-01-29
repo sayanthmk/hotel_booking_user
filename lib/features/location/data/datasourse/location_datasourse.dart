@@ -38,13 +38,11 @@ class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
 
   @override
   Stream<LocationEntity> getCurrentLocation() async* {
-    // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception("Location services are disabled.");
     }
 
-    // Request permission for location
     LocationPermission permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -73,14 +71,12 @@ class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
         .doc(currentUser.uid)
         .collection('location');
 
-    // Add the location update to Firestore
     await userDocRef.add({
       'latitude': location.latitude,
       'longitude': location.longitude,
       'timestamp': Timestamp.fromDate(location.timestamp),
     });
 
-    // Stream the latest location
     final locationStream =
         userDocRef.orderBy('timestamp', descending: true).limit(1).snapshots();
 

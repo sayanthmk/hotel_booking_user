@@ -32,7 +32,6 @@ class LocationWithNotificationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Location Section
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +149,7 @@ class LocationWithNotificationBar extends StatelessWidget {
 
       if (placemarks.isNotEmpty) {
         final Placemark place = placemarks.first;
-        return '${place.street}';
+        return '${place.locality}';
         // return '${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
       }
     } catch (e) {

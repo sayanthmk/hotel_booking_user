@@ -129,7 +129,6 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .doc(hotelId)
           .collection('bookings')
           .get();
-      // log('users/bookings/get hotel');
       return querySnapshot.docs
           .map((doc) => UserDataModel.fromMap(doc.data(), id: doc.id))
           .toList();

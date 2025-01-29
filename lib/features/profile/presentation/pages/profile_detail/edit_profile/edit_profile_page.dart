@@ -1,9 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/core/validator/validators.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/edit_profile/widgets/tetxforemfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
@@ -41,7 +39,7 @@ class EditUserProfile extends StatelessWidget {
       }
     }
 
-    _showImagePickerModal(BuildContext context) {
+    showImagePickerModal(BuildContext context) {
       showBottomSheet(
         context: context,
         backgroundColor: ProfileSectionColors.surfaceColor,
@@ -190,7 +188,7 @@ class EditUserProfile extends StatelessWidget {
                                   bottom: 0,
                                   right: 0,
                                   child: GestureDetector(
-                                    onTap: () => _showImagePickerModal(context),
+                                    onTap: () => showImagePickerModal(context),
                                     child: Container(
                                       padding: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(

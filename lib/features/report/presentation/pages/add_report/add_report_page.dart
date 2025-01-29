@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_booking/features/report/presentation/pages/add_report/reports.dart';
-import 'package:hotel_booking/features/report/presentation/pages/reports/repor.dart';
 import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
 
 class ReportIssuePage extends StatelessWidget {
@@ -59,16 +58,6 @@ class ReportIssuePage extends StatelessWidget {
     return Scaffold(
       appBar: const BookingAppbar(
         heading: 'Report an Issue',
-        // appbaractions: [
-        //   // IconButton(
-        //   //   icon: const Icon(Icons.history),
-        //   //   onPressed: () {
-        //   //     Navigator.of(context).push(MaterialPageRoute(
-        //   //       builder: (context) => const ReportedIssuesPage(),
-        //   //     ));
-        //   //   },
-        //   // ),
-        // ],
       ),
       body: ReportListPage(predefinedIssues: predefinedIssues),
     );

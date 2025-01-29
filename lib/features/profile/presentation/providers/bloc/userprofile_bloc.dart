@@ -6,13 +6,11 @@ import 'package:hotel_booking/features/profile/presentation/providers/bloc/userp
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   final FetchUsers fetchUsers;
   final UpdateCurrentUser updateCurrentUser;
-  final UploadProfileImageUser
-      uploadProfileImage; // Added UploadProfileImage use case
+  final UploadProfileImageUser uploadProfileImage;
 
   UserProfileBloc(
       this.fetchUsers, this.updateCurrentUser, this.uploadProfileImage)
       : super(UserInitial()) {
-    // Load user profile
     on<LoadUsers>((event, emit) async {
       emit(UserLoading());
       try {
@@ -27,7 +25,6 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       }
     });
 
-    // Update user profile
     on<UpdateCurrentUserEvent>(
       (event, emit) async {
         emit(UserLoading());
@@ -45,18 +42,15 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       },
     );
 
-    // Upload profile image
     on<UploadProfileImageEvent>((event, emit) async {
       emit(UserLoading());
       try {
         final imageUrl = await uploadProfileImage(event.imageFile);
-        final updatedData = {
-          'profileImage': imageUrl
-        }; // Assuming this key is used in the database
+        final updatedData = {'profileImage': imageUrl};
         await updateCurrentUser(updatedData);
         final user = await fetchUsers();
         if (user != null) {
-          emit(UserLoaded(user)); // Emit the updated user profile
+          emit(UserLoaded(user));
         } else {
           emit(UserError('User not found'));
         }

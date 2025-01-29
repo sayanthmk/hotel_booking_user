@@ -52,10 +52,8 @@ class FirebaseUserProfileDataSource {
       final uploadTask = storageRef.putFile(imageFile);
       final snapshot = await uploadTask;
 
-      // Get the download URL
       final downloadUrl = await snapshot.ref.getDownloadURL();
 
-      // Update Firestore with the image URL
       await firestore.collection('users').doc(currentUser.uid).update({
         'profileImage': downloadUrl,
       });
