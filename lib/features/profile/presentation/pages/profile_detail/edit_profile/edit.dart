@@ -17,13 +17,32 @@
 //     final locationController = TextEditingController();
 //     final phoneController = TextEditingController();
 
+//     // void pickImage(ImageSource source) async {
+//     //   final picker = ImagePicker();
+//     //   final pickedFile = await picker.pickImage(source: source);
+//     //   if (pickedFile != null) {
+//     //     context
+//     //         .read<UserProfileBloc>()
+//     //         .add(UploadProfileImageEvent(File(pickedFile.path)));
+//     //   }
+//     // }
+
 //     void pickImage(ImageSource source) async {
 //       final picker = ImagePicker();
 //       final pickedFile = await picker.pickImage(source: source);
+
 //       if (pickedFile != null) {
-//         context
-//             .read<UserProfileBloc>()
-//             .add(UploadProfileImageEvent(File(pickedFile.path)));
+//         File imageFile = File(pickedFile.path);
+//         if (await imageFile.exists()) {
+//           // ignore: use_build_context_synchronously
+//           context
+//               .read<UserProfileBloc>()
+//               .add(UploadProfileImageEvent(imageFile));
+//         } else {
+//           debugPrint("Error: Picked file does not exist.");
+//         }
+//       } else {
+//         debugPrint("Error: No image selected.");
 //       }
 //     }
 

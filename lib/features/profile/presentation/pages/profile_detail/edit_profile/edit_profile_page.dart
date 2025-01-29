@@ -1,7 +1,10 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/validator/validators.dart';
+import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/edit_profile/widgets/tetxforemfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
@@ -22,16 +25,24 @@ class EditUserProfile extends StatelessWidget {
     void pickImage(ImageSource source) async {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: source);
+
       if (pickedFile != null) {
-        // ignore: use_build_context_synchronously
-        context
-            .read<UserProfileBloc>()
-            .add(UploadProfileImageEvent(File(pickedFile.path)));
+        File imageFile = File(pickedFile.path);
+        if (await imageFile.exists()) {
+          // ignore: use_build_context_synchronously
+          context
+              .read<UserProfileBloc>()
+              .add(UploadProfileImageEvent(imageFile));
+        } else {
+          debugPrint("Error: Picked file does not exist.");
+        }
+      } else {
+        debugPrint("Error: No image selected.");
       }
     }
 
-    void showImagePickerModal(BuildContext context) {
-      showModalBottomSheet(
+    _showImagePickerModal(BuildContext context) {
+      showBottomSheet(
         context: context,
         backgroundColor: ProfileSectionColors.surfaceColor,
         shape: const RoundedRectangleBorder(
@@ -112,6 +123,8 @@ class EditUserProfile extends StatelessWidget {
         ),
         body: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
+            String? imageUrl;
+            File? selectedImage;
             if (state is UserLoading) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -120,7 +133,7 @@ class EditUserProfile extends StatelessWidget {
               );
             } else if (state is UserLoaded) {
               final user = state.user;
-
+              imageUrl = state.user.profileImage;
               nameController.text = user.name;
               locationController.text = user.location;
               phoneController.text = user.phoneNumber;
@@ -162,14 +175,22 @@ class EditUserProfile extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 70,
-                                  // backgroundImage:
-                                  //     NetworkImage(user.profileImage),
+                                  backgroundImage: selectedImage != null
+                                      ? FileImage(selectedImage)
+                                      : (imageUrl != null
+                                          ? NetworkImage(imageUrl)
+                                          : null) as ImageProvider?,
+                                  child:
+                                      selectedImage == null && imageUrl == null
+                                          ? const Icon(Icons.person,
+                                              size: 70, color: Colors.grey)
+                                          : null,
                                 ),
                                 Positioned(
                                   bottom: 0,
                                   right: 0,
                                   child: GestureDetector(
-                                    onTap: () => showImagePickerModal(context),
+                                    onTap: () => _showImagePickerModal(context),
                                     child: Container(
                                       padding: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(
@@ -206,24 +227,34 @@ class EditUserProfile extends StatelessWidget {
                           padding: const EdgeInsets.all(20),
                           child: Column(
                             children: [
-                              buildTextField(
+                              CustomTextField(
                                 controller: nameController,
                                 label: 'Full Name',
                                 icon: Icons.person,
                               ),
                               const SizedBox(height: 20),
-                              buildTextField(
+                              CustomTextField(
                                 controller: locationController,
                                 label: 'Location',
                                 icon: Icons.location_on,
                               ),
                               const SizedBox(height: 20),
-                              buildTextField(
+                              CustomTextField(
                                 controller: phoneController,
                                 label: 'Phone Number',
                                 icon: Icons.phone,
                               ),
                               const SizedBox(height: 30),
+                              // TextButton.icon(
+                              //   onPressed: () => pickImage(ImageSource.gallery),
+                              //   icon: const Icon(Icons.photo),
+                              //   label: const Text('Upload from Gallery'),
+                              // ),
+                              // TextButton.icon(
+                              //   onPressed: () => pickImage(ImageSource.camera),
+                              //   icon: const Icon(Icons.camera_alt),
+                              //   label: const Text('Upload from Camera'),
+                              // ),
                               SizedBox(
                                 width: double.infinity,
                                 height: 50,
@@ -274,43 +305,6 @@ class EditUserProfile extends StatelessWidget {
             return const Center(child: Text('Something went wrong.'));
           },
         ),
-      ),
-    );
-  }
-
-  Widget buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-  }) {
-    return TextFormField(
-      controller: controller,
-      validator: CustomValidator.validateRequired,
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle:
-            TextStyle(color: ProfileSectionColors.primaryDark.withOpacity(0.6)),
-        prefixIcon: Container(
-          padding: const EdgeInsets.all(12),
-          child: Icon(
-            icon,
-            color: ProfileSectionColors.primary,
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: ProfileSectionColors.primaryDark.withOpacity(0.2),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: ProfileSectionColors.primary,
-          ),
-        ),
-        filled: true,
-        fillColor: Colors.white,
       ),
     );
   }

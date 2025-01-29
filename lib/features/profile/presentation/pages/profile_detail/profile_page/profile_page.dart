@@ -1,3 +1,6 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
@@ -33,6 +36,8 @@ class PrpageMyProfilePage extends StatelessWidget {
         )..add(LoadUsers()),
         child: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
+            String? imageUrl;
+            File? selectedImage;
             if (state is UserLoading) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -41,7 +46,7 @@ class PrpageMyProfilePage extends StatelessWidget {
               );
             } else if (state is UserLoaded) {
               final user = state.user;
-
+              imageUrl = state.user.profileImage;
               return SingleChildScrollView(
                 child: Column(
                   children: [
@@ -96,18 +101,18 @@ class PrpageMyProfilePage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                child: ClipOval(
-                                  child: Image.network(
-                                    user.profileImage,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Icon(
-                                        Icons.person,
-                                        size: 50,
-                                        color: Colors.white,
-                                      );
-                                    },
-                                  ),
+                                child: CircleAvatar(
+                                  radius: 70,
+                                  backgroundImage: selectedImage != null
+                                      ? FileImage(selectedImage)
+                                      : (imageUrl != null
+                                          ? NetworkImage(imageUrl)
+                                          : null) as ImageProvider?,
+                                  child:
+                                      selectedImage == null && imageUrl == null
+                                          ? const Icon(Icons.person,
+                                              size: 70, color: Colors.grey)
+                                          : null,
                                 ),
                               ),
                             ],

@@ -17,28 +17,19 @@ class HotelBookingColors {
     end: Alignment.bottomRight,
   );
 
+  static const Color basictextcolor = Color(0xFF7D5A50);
+  static const Color pagebackgroundcolor = Color(0xFFFDF6F0);
+  static const Color lighttextcolor = Color(0xFF000000);
+  static const Color buttoncolor = Color.fromARGB(255, 242, 187, 142);
   //=================================
 
   // static const Color pagebackgroundcolor = Color(0xFFF5F9FF);
   // static const Color basictextcolor = Color(0xFF1E91B6);
   // static Color lighttextcolor = const Color(0xFF1E91B6).withOpacity(0.8);
   // static Color buttoncolor = Color(0xFF1E91B6).withOpacity(0.8);
-  static const Color basictextcolor = Color(0xFF7D5A50);
-  static const Color pagebackgroundcolor = Color(0xFFFDF6F0);
-  static const Color lighttextcolor = Color(0xFF000000);
-  static const Color buttoncolor = Color.fromARGB(255, 242, 187, 142);
 }
 
-// class ProfileCustomColors {
-//   static const Color pagebackgroundcolor = Color(0xFF7D5A50);
-//   static const Color basictextcolor = Color(0xFFFDF6F0);
-//   static const Color lighttextcolor = Color(0xFF000000);
-// }
-
 class ProfileSectionColors {
-  //  static const Color primaryColor = Color(0xFF7D5A50);  // Main brown
-  // static const Color primaryLight = Color(0xFF9C7B73);  // Lighter brown
-  // static const Color primaryDark = Color(0xFF5E4238);   // Darker brown
   static const Color profileprimaryColor = Color(0xFF1E91B6);
   static const Color profilesecondaryColor = Color(0xFFF5F9FF);
   static const Color profileprimaryText = Color(0xFF000000);
@@ -53,10 +44,3 @@ class ProfileSectionColors {
   static const Color warning = Color(0xFFD4A373);
   static const Color surfaceColor = Color(0xFFFFFBF8);
 }
-
-
-// class ProfileCustomColors {
-//   static const Color primaryColor = Color(0xFF7D5A50);
-//   static const Color secondaryColor = Color(0xFFFDF6F0);
-//   static const Color primaryText = Color(0xFF000000);
-// }

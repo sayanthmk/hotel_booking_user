@@ -4,7 +4,8 @@ import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/main_profile/menu_item.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/profile_page/profile_page.dart';
-import 'package:hotel_booking/features/settings/settings_page.dart';
+import 'package:hotel_booking/features/settings/contact_us.dart';
+import 'package:hotel_booking/features/settings/settings_page/settings_page.dart';
 import 'package:hotel_booking/utils/alertbox/alertbox.dart';
 import '../../../../auth/presentation/pages/routepage.dart';
 
@@ -107,7 +108,11 @@ class ProfileUiNew extends StatelessWidget {
                       icon: Icons.contact_support_sharp,
                       title: "Contact Us",
                       subtitle: "Get help and support",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ContactUsPage(),
+                        ));
+                      },
                     ),
                     MenuItemWidget(
                       icon: Icons.question_answer,
