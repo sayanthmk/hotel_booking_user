@@ -26,6 +26,7 @@ class HotelModel extends HotelEntity {
     required super.registration,
     required super.documentImage,
     required super.images,
+    // required super.location,
   });
 
   factory HotelModel.fromJson(Map<String, dynamic> json) {
@@ -53,6 +54,7 @@ class HotelModel extends HotelEntity {
       leased: json['leased'] ?? false,
       registration: json['registration'] ?? false,
       documentImage: json['document_image'] ?? false,
+      // location: json['location'] ?? '',
       images: List<String>.from(json['images'] ?? []),
     );
   }
@@ -82,6 +84,7 @@ class HotelModel extends HotelEntity {
       "leased": leased,
       "registration": registration,
       "document_image": documentImage,
+      // "location":location,
       "images": images,
     };
   }

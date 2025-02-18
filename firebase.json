@@ -1,1 +1,36 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"roombookingapp-da5df","appId":"1:413226749154:android:150a48cfb433f440d162bb","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"roombookingapp-da5df","configurations":{"android":"1:413226749154:android:150a48cfb433f440d162bb","ios":"1:413226749154:ios:039ee1972dc04181d162bb"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "roombookingapp-da5df",
+          "appId": "1:413226749154:android:150a48cfb433f440d162bb",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "roombookingapp-da5df",
+          "configurations": {
+            "android": "1:413226749154:android:150a48cfb433f440d162bb",
+            "ios": "1:413226749154:ios:039ee1972dc04181d162bb"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

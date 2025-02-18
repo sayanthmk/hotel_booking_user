@@ -70,7 +70,7 @@ class ContactUsPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: InkWell(
-                    onTap: () => _launchPhoneNumber('+1234567890'),
+                    onTap: () => _launchPhoneNumber('+91-9898757289'),
                     borderRadius: BorderRadius.circular(15),
                     child: Padding(
                       padding: const EdgeInsets.all(20),
@@ -110,7 +110,7 @@ class ContactUsPage extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 const Text(
-                                  '+1 (234) 567-890',
+                                  '+91-9898757289',
                                   style: TextStyle(
                                     color: Colors.blue,
                                     fontWeight: FontWeight.w500,

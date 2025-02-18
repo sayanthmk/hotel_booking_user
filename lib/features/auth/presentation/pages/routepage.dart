@@ -44,7 +44,7 @@ class AuthSelectionPage extends StatelessWidget {
               textColor: Colors.white,
               borderRadius: 10.0,
               padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                  const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
               height: 50,
@@ -66,7 +66,7 @@ class AuthSelectionPage extends StatelessWidget {
               textColor: Colors.white,
               borderRadius: 10.0,
               padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0),
+                  const EdgeInsets.symmetric(vertical: 13.0, horizontal: 30.0),
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
               height: 50,

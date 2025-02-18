@@ -44,3 +44,6 @@ app.*.map.json
 
 #private api keys
 lib/core/constants
+#release keys
+key.properties
+app/upload-keystore.jks

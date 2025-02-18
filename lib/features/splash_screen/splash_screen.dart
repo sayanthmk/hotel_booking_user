@@ -16,7 +16,6 @@ class LoginStatusPage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             body: Center(
-              // child: CircularProgressIndicator(),
               child: AnimatedSplashScreen(
                 splash: Column(
                   children: [
@@ -35,7 +34,6 @@ class LoginStatusPage extends StatelessWidget {
             ),
           );
         } else if (snapshot.data == true) {
-          // return const RoomBookingHome();
           return const BtBar();
         } else {
           return const Onbording();

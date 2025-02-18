@@ -22,6 +22,7 @@ class HotelEntity {
   final bool leased;
   final bool registration;
   final bool documentImage;
+  // final GeoPoint location;
   final List<String> images;
 
   HotelEntity({
@@ -48,6 +49,7 @@ class HotelEntity {
     required this.leased,
     required this.registration,
     required this.documentImage,
+    // required this.location,
     required this.images,
   });
 }

@@ -37,13 +37,15 @@ class BtBarState extends State<BtBar> {
             icon: const Icon(Icons.home),
             title: const Text("Home"),
             selectedColor: HotelBookingColors.basictextcolor,
+            unselectedColor: Colors.grey,
           ),
 
           /// Likes
           SalomonBottomBarItem(
-            icon: const Icon(Icons.book_online),
+            icon: const Icon(Icons.book),
             title: const Text("Bookings"),
             selectedColor: HotelBookingColors.basictextcolor,
+            unselectedColor: Colors.grey,
           ),
 
           /// Search
@@ -51,6 +53,7 @@ class BtBarState extends State<BtBar> {
             icon: const Icon(Icons.favorite),
             title: const Text("Favorites"),
             selectedColor: HotelBookingColors.basictextcolor,
+            unselectedColor: Colors.grey,
           ),
 
           /// Profile
@@ -58,6 +61,7 @@ class BtBarState extends State<BtBar> {
             icon: const Icon(Icons.person),
             title: const Text("Profile"),
             selectedColor: HotelBookingColors.basictextcolor,
+            unselectedColor: Colors.grey,
           ),
         ],
       ),

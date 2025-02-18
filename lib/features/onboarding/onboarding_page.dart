@@ -38,9 +38,11 @@ class OnbordingState extends State<Onbording> {
               controller: _controller,
               itemCount: contents.length,
               onPageChanged: (int index) {
-                setState(() {
-                  currentIndex = index;
-                });
+                setState(
+                  () {
+                    currentIndex = index;
+                  },
+                );
               },
               itemBuilder: (_, i) {
                 return Padding(

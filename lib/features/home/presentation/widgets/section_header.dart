@@ -33,7 +33,7 @@ class SectionHeader extends StatelessWidget {
               actionText,
               style: const TextStyle(
                 color: HotelBookingColors.basictextcolor,
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
             ),

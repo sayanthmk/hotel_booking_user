@@ -121,7 +121,6 @@ class HotelBookingChatState extends State<HotelBookingChat> {
         }
       });
     } catch (e) {
-      // Handle errors
       setState(() {
         messages = [
           ChatMessage(

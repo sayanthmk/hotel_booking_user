@@ -27,7 +27,6 @@ class EditUserProfile extends StatelessWidget {
       if (pickedFile != null) {
         File imageFile = File(pickedFile.path);
         if (await imageFile.exists()) {
-          // ignore: use_build_context_synchronously
           context
               .read<UserProfileBloc>()
               .add(UploadProfileImageEvent(imageFile));

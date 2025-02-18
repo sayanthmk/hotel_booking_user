@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/validator/validators.dart';
-import 'package:hotel_booking/features/home/presentation/pages/home_page/booking_home.dart';
+import 'package:hotel_booking/utils/bottom_navbar/bottom_navbar.dart';
 import 'package:hotel_booking/utils/snackbar/snackbar.dart';
 import 'package:hotel_booking/features/auth/presentation/pages/email_signup.dart';
 import 'package:hotel_booking/features/auth/presentation/providers/googleauth/bloc/google_auth_bloc.dart';
@@ -33,7 +33,7 @@ class EmailPasswordLoginPage extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RoomBookingHome(),
+                  builder: (context) => const BtBar(),
                 ),
               );
             } else if (state is AuthError) {
@@ -107,7 +107,7 @@ class EmailPasswordLoginPage extends StatelessWidget {
                         textColor: Colors.white,
                         borderRadius: 10.0,
                         padding: const EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 30.0),
+                            vertical: 13.0, horizontal: 30.0),
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                         height: 50,
