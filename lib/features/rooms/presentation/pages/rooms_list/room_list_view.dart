@@ -25,7 +25,7 @@ class HotelRoomsListView extends StatelessWidget {
               children: [
                 SectionHeader(
                   title: 'Available Rooms',
-                  actionText: 'Show All',
+                  actionText: '',
                   ontap: () {},
                 ),
                 const SizedBox(height: 10),

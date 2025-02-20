@@ -26,6 +26,7 @@ class EditUserProfile extends StatelessWidget {
 
       if (pickedFile != null) {
         File imageFile = File(pickedFile.path);
+
         if (await imageFile.exists()) {
           context
               .read<UserProfileBloc>()
@@ -38,8 +39,8 @@ class EditUserProfile extends StatelessWidget {
       }
     }
 
-    showImagePickerModal(BuildContext context) {
-      showBottomSheet(
+    void showImagePickerModal() {
+      showModalBottomSheet(
         context: context,
         backgroundColor: ProfileSectionColors.surfaceColor,
         shape: const RoundedRectangleBorder(
@@ -120,8 +121,8 @@ class EditUserProfile extends StatelessWidget {
         ),
         body: BlocBuilder<UserProfileBloc, UserProfileState>(
           builder: (context, state) {
-            String? imageUrl;
-            File? selectedImage;
+            // String? imageUrl;
+            // File? selectedImage;
             if (state is UserLoading) {
               return const Center(
                 child: CircularProgressIndicator(
@@ -130,7 +131,7 @@ class EditUserProfile extends StatelessWidget {
               );
             } else if (state is UserLoaded) {
               final user = state.user;
-              imageUrl = state.user.profileImage;
+              // imageUrl = state.user.profileImage;
               nameController.text = user.name;
               locationController.text = user.location;
               phoneController.text = user.phoneNumber;
@@ -170,24 +171,50 @@ class EditUserProfile extends StatelessWidget {
                             ),
                             child: Stack(
                               children: [
+                                // CircleAvatar(
+                                //   radius: 70,
+                                //   backgroundImage: selectedImage != null
+                                //       ? FileImage(selectedImage)
+                                //       : (imageUrl != null
+                                //           ? NetworkImage(imageUrl)
+                                //           : null) as ImageProvider?,
+                                //   child:
+                                //       selectedImage == null && imageUrl == null
+                                //           ? const Icon(Icons.person,
+                                //               size: 70, color: Colors.grey)
+                                //           : null,
+                                // ),
                                 CircleAvatar(
                                   radius: 70,
-                                  backgroundImage: selectedImage != null
-                                      ? FileImage(selectedImage)
-                                      : (imageUrl != null
-                                          ? NetworkImage(imageUrl)
-                                          : null) as ImageProvider?,
-                                  child:
-                                      selectedImage == null && imageUrl == null
-                                          ? const Icon(Icons.person,
-                                              size: 70, color: Colors.grey)
-                                          : null,
+                                  backgroundImage: user.profileImage != null
+                                      ? NetworkImage(user.profileImage)
+                                      : null,
+                                  child: user.profileImage == null
+                                      ? const Icon(Icons.person,
+                                          size: 70, color: Colors.grey)
+                                      : null,
                                 ),
                                 Positioned(
                                   bottom: 0,
                                   right: 0,
                                   child: GestureDetector(
-                                    onTap: () => showImagePickerModal(context),
+                                    onTap: showImagePickerModal,
+                                    // onTap: () {
+                                    //   showDialog(
+                                    //     context: context,
+                                    //     builder: (context) => CustomAlertDialog(
+                                    //       titleText: 'Logout',
+                                    //       contentText:
+                                    //           'Are you sure you want to Logout?',
+                                    //       buttonText1: 'Cancel',
+                                    //       buttonText2: 'Logout',
+                                    //       onPressButton1: () {
+                                    //         Navigator.of(context).pop();
+                                    //       },
+                                    //       onPressButton2: () async {},
+                                    //     ),
+                                    //   );
+                                    // },
                                     child: Container(
                                       padding: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(

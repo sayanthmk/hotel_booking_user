@@ -49,7 +49,6 @@ class AuthSelectionPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
               height: 50,
               width: 300,
-              // gradient: HotelBookingColors.primarybuttongradient,
             ),
             const SizedBox(
               height: 30,

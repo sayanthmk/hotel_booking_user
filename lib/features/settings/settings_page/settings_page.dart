@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/features/settings/about_us.dart';
+import 'package:hotel_booking/features/settings/about_us/about_us.dart';
 import 'package:hotel_booking/features/settings/privacy_policy.dart';
 import 'package:hotel_booking/features/settings/settings_page/settings_item.dart';
 import 'package:hotel_booking/features/settings/terms_conditions.dart';

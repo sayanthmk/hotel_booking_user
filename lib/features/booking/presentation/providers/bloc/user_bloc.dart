@@ -14,6 +14,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<GetHotelBookingsEvent>(_onGetHotelBookings);
     on<DeleteUserBookingEvent>(_onDeleteUserBooking);
     on<GetSingleUserBookingEvent>(_onGetSingleUserBooking);
+    
   }
 
   void _onSaveUserData(SaveUserDataEvent event, Emitter<UserState> emit) async {
@@ -70,4 +71,5 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(UserErrorState('Failed to load single user booking: $e'));
     }
   }
+  
 }

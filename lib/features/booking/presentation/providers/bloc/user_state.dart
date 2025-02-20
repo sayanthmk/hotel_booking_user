@@ -26,3 +26,4 @@ class SingleUserBookingLoadedState extends UserState {
   final UserDataModel booking;
   SingleUserBookingLoadedState(this.booking);
 }
+

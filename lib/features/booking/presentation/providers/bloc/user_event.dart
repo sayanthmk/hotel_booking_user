@@ -28,3 +28,4 @@ class GetSingleUserBookingEvent extends UserEvent {
   final String bookingId;
   GetSingleUserBookingEvent(this.bookingId);
 }
+

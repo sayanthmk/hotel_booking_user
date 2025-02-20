@@ -39,7 +39,7 @@ class CustomSearchBar extends StatelessWidget {
       ),
       child: Padding(
         // padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        padding: const EdgeInsets.all(5),
+        padding: const EdgeInsets.all(0),
         child: TextField(
           controller: controller,
           onChanged: (value) {

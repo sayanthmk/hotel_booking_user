@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -63,8 +54,40 @@ class DefaultFirebaseOptions {
     messagingSenderId: '413226749154',
     projectId: 'roombookingapp-da5df',
     storageBucket: 'roombookingapp-da5df.appspot.com',
-    androidClientId: '413226749154-4o2qu3d4ommam6l6ccil6j3sb4bqrolk.apps.googleusercontent.com',
+    androidClientId: '413226749154-49fclsip7eo39t5m59nphc7jd5tqk7v7.apps.googleusercontent.com',
     iosClientId: '413226749154-6k9niq7i0la0n3545rsjvcmtetmjg3hr.apps.googleusercontent.com',
     iosBundleId: 'com.example.hotelBooking',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAg_AKhzEDUBsrBd5p6A-kRzdwBSivakcY',
+    appId: '1:413226749154:web:28645def39fd1130d162bb',
+    messagingSenderId: '413226749154',
+    projectId: 'roombookingapp-da5df',
+    authDomain: 'roombookingapp-da5df.firebaseapp.com',
+    storageBucket: 'roombookingapp-da5df.appspot.com',
+    measurementId: 'G-KVKL25N0EB',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBg71rA6v8ZlZJqxZOeVK2negbqrQfrrNw',
+    appId: '1:413226749154:ios:039ee1972dc04181d162bb',
+    messagingSenderId: '413226749154',
+    projectId: 'roombookingapp-da5df',
+    storageBucket: 'roombookingapp-da5df.appspot.com',
+    androidClientId: '413226749154-49fclsip7eo39t5m59nphc7jd5tqk7v7.apps.googleusercontent.com',
+    iosClientId: '413226749154-6k9niq7i0la0n3545rsjvcmtetmjg3hr.apps.googleusercontent.com',
+    iosBundleId: 'com.example.hotelBooking',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyBxxs7CDKok9A8UiqQOPVgIusytTVU-Emw',
+    appId: '1:413226749154:web:29732f3acceb949ad162bb',
+    messagingSenderId: '413226749154',
+    projectId: 'roombookingapp-da5df',
+    authDomain: 'roombookingapp-da5df.firebaseapp.com',
+    storageBucket: 'roombookingapp-da5df.appspot.com',
+    measurementId: 'G-87F1W28WG5',
+  );
+
 }

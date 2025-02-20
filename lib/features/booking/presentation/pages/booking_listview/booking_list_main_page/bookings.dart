@@ -14,6 +14,7 @@ class UserBookingsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'My Bookings',
           style: TextStyle(
