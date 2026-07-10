@@ -100,7 +100,9 @@ class HotelBookingChatState extends State<HotelBookingChat> {
         if (lastMessage != null && lastMessage.user == hotelBot) {
           lastMessage = messages.removeAt(0);
           String response = event.content?.parts?.fold(
-                  "", (previous, current) => "$previous ${current.text}") ??
+                  "",
+                  (previous, current) => "$previous "
+                      "${current is TextPart ? current.text : ""}") ??
               "";
           lastMessage.text += response;
           setState(() {
@@ -108,7 +110,9 @@ class HotelBookingChatState extends State<HotelBookingChat> {
           });
         } else {
           String response = event.content?.parts?.fold(
-                  "", (previous, current) => "$previous ${current.text}") ??
+                  "",
+                  (previous, current) => "$previous "
+                      "${current is TextPart ? current.text : ""}") ??
               "";
           ChatMessage message = ChatMessage(
             user: hotelBot,

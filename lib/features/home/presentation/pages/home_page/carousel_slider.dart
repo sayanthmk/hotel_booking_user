@@ -15,11 +15,11 @@ class CarouselWidget extends StatelessWidget {
     return Center(
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 150.0,
+          height: 170.0,
           autoPlay: true,
           enlargeCenterPage: true,
-          aspectRatio: 16 / 9,
-          viewportFraction: 0.9,
+          aspectRatio: 17 / 9,
+          viewportFraction: 1,
         ),
         items: imageUrls.map((imageUrl) {
           return ClipRRect(

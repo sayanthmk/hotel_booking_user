@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/carousel_slider.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotel_vertical_view.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/sort_hotels_by_location.dart';
 import 'package:hotel_booking/features/home/presentation/pages/serachpage/hotel_serach_page.dart';
 import 'package:hotel_booking/features/home/presentation/pages/home_page/hotellistview/hotels_list_view.dart';
@@ -16,7 +17,7 @@ class RoomBookingHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: HotelBookingColors.pagebackgroundcolor,
+      backgroundColor: HotelBookingColors.white,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -29,10 +30,7 @@ class RoomBookingHome extends StatelessWidget {
                 children: [
                   const LocationWithNotificationBar(),
                   const SizedBox(height: 10),
-                  // const HomeSearchBar(),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
+
                   CarouselWidget(),
                   const SizedBox(height: 10),
                   SectionHeader(
@@ -73,7 +71,8 @@ class RoomBookingHome extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  const HotelsListView(),
+                  // const HotelsListView(),
+                  HotelsVerticalListView()
                 ],
               ),
             ),

@@ -55,7 +55,7 @@ class ProfileCard extends StatelessWidget {
                   ),
                   child: isFontAwesome
                       ? FaIcon(
-                          icon,
+                          icon as FaIconData,
                           color: iconColor ??
                               ProfileSectionColors.profileprimaryColor,
                           size: 24,

@@ -181,7 +181,7 @@ class SignUpPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         height: 60,
                         width: 350,
-                        icon: FontAwesomeIcons.google,
+                        icon: Icons.g_mobiledata,
                       ),
                       const SizedBox(
                         height: 40,

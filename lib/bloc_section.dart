@@ -14,6 +14,7 @@ import 'package:hotel_booking/features/rooms/presentation/providers/roomcard_blo
 import 'package:hotel_booking/features/rooms/presentation/providers/selected_rooms/bloc/selectedrooms_bloc.dart';
 import 'package:hotel_booking/features/splash_screen/splash_screen.dart';
 import 'package:hotel_booking/features/stripe/presentation/providers/bloc/stripepayment_bloc.dart';
+import 'package:hotel_booking/features/update_ui.dart';
 import 'package:hotel_booking/features/wishlist/presentation/provider/bloc/favorites_bloc.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart'
     as di;
