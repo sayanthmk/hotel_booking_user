@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 import 'package:hotel_booking/features/settings/about_us/about_us_feature_card.dart';
-import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({super.key});
@@ -8,80 +8,75 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BookingAppbar(heading: 'About Us'),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
           children: [
+            _buildHeader(context),
+            const SizedBox(height: 12),
             Center(
               child: Container(
-                height: 120,
-                width: 120,
+                height: 110,
+                width: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.blue.shade50,
-                ),
-                // child: Icon(
-                //   Icons.hotel_rounded,
-                //   size: 60,
-                //   color: Colors.blue.shade700,
-                // ),
-                child: Image.asset('assets/icons/play_store_512.png'),
-              ),
-            ),
-            const SizedBox(height: 24),
-            const Center(
-              child: Text(
-                'Staywise',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              elevation: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    // Mission Statement
-                    const Text(
-                      'Our Mission',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      '''At Staywise, we believe booking your perfect hotel should be effortless and enjoyable. Our innovative mobile booking application allows users to easily search for and book hotels that suit their needs.''',
-                      style: TextStyle(
-                        fontSize: 16,
-                        height: 1.6,
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
+                  gradient: const LinearGradient(
+                    colors: [AppColors.primary, AppColors.primaryDark],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.cardShadow,
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
                     ),
                   ],
                 ),
+                padding: const EdgeInsets.all(16),
+                child: ClipOval(
+                  child: Image.asset('assets/icons/play_store_512.png'),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Center(
+              child: Text('Staywise', style: AppTextStyles.username),
+            ),
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.cardShadow,
+                    blurRadius: 16,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  const Text('Our Mission', style: AppTextStyles.sectionTitle),
+                  const SizedBox(height: 12),
+                  Text(
+                    '''At Staywise, we believe booking your perfect hotel should be effortless and enjoyable. Our innovative mobile booking application allows users to easily search for and book hotels that suit their needs.''',
+                    style: AppTextStyles.hotelLocation.copyWith(
+                      fontSize: 14,
+                      height: 1.6,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Why Choose Us',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+            const Padding(
+              padding: EdgeInsets.only(left: 4),
+              child: Text('Why Choose Us', style: AppTextStyles.sectionTitle),
             ),
             const SizedBox(height: 16),
             GridView.count(
@@ -91,7 +86,7 @@ class AboutUs extends StatelessWidget {
               crossAxisSpacing: 16,
               mainAxisSpacing: 16,
               childAspectRatio: 1.1,
-              children: [
+              children: const [
                 AboutFeatureCard(
                   icon: Icons.favorite_outline,
                   title: 'Wishlist',
@@ -116,25 +111,61 @@ class AboutUs extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.blue.shade50, Colors.blue.shade100],
+                  colors: [
+                    AppColors.primary.withOpacity(0.1),
+                    AppColors.primary.withOpacity(0.05),
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text(
+              child: Text(
                 'Experience the best in convenience and comfort with Staywise!',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                style: AppTextStyles.sectionTitle.copyWith(
+                  color: AppColors.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.cardShadow,
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 18,
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          const Text('About Us', style: AppTextStyles.username),
+        ],
       ),
     );
   }

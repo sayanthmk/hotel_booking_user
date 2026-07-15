@@ -14,6 +14,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     on<UpdateUserLocationEvent>(_onUpdateUserLocation);
     on<FetchCurrentLocationEvent>(_onGetCurrentLocation);
     on<FetchAddressFromLatLngEvent>(_onGetAddressFromLatLng);
+    on<FetchLatLngFromAddressEvent>(_onGetLatLngFromAddress);
   }
 
   Future<void> _onFetchUserLocation(
@@ -74,6 +75,20 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       log("Address: $address");
     } catch (e) {
       emit(LocationError("Failed to fetch address from coordinates: $e"));
+    }
+  }
+
+  Future<void> _onGetLatLngFromAddress(
+    FetchLatLngFromAddressEvent event,
+    Emitter<LocationState> emit,
+  ) async {
+    emit(const LocationLoading());
+
+    try {
+      final position = await repository.getLatLngFromAddress(event.address);
+      emit(LocationLoaded(position, address: event.address));
+    } catch (e) {
+      emit(LocationError("Failed to fetch coordinates from address: $e"));
     }
   }
 }

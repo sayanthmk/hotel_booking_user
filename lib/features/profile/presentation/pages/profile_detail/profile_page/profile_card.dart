@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hotel_booking/core/constants/colors.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 
 class CustDivider extends StatelessWidget {
   const CustDivider({
@@ -8,11 +8,11 @@ class CustDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(
-      color: ProfileSectionColors.primaryDark.withOpacity(0.1),
+    return const Divider(
+      color: AppColors.background,
       height: 1,
-      thickness: 1,
-      indent: 16,
+      thickness: 1.5,
+      indent: 62,
       endIndent: 16,
     );
   }
@@ -32,8 +32,8 @@ class ProfileCardWidget extends StatelessWidget {
     required this.label,
     required this.value,
     required this.iconColor,
-    this.labelColor = const Color(0xFF757575),
-    this.valueColor = const Color(0xFF212121),
+    this.labelColor = AppColors.textGrey,
+    this.valueColor = AppColors.textDark,
   });
 
   @override
@@ -45,34 +45,31 @@ class ProfileCardWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
+              color: iconColor.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
               color: iconColor,
-              size: 24,
+              size: 22,
             ),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   label,
-                  style: TextStyle(
-                    color: labelColor.withOpacity(0.6),
-                    fontSize: 14,
+                  style: AppTextStyles.hotelLocation.copyWith(
+                    color: labelColor,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: TextStyle(
+                  style: AppTextStyles.hotelName.copyWith(
                     color: valueColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],

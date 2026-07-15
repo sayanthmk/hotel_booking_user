@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 
 class MenuItemWidget extends StatelessWidget {
   final IconData icon;
@@ -16,8 +17,8 @@ class MenuItemWidget extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
     this.isLastItem = false,
-    this.iconBackgroundColor = const Color(0xFFE0E0E0),
-    this.iconColor = const Color(0xFF000000),
+    this.iconBackgroundColor = AppColors.primary,
+    this.iconColor = AppColors.primary,
   });
 
   @override
@@ -39,43 +40,34 @@ class MenuItemWidget extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: iconColor,
-                    size: 24,
+                    size: 22,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
+                      Text(title, style: AppTextStyles.hotelName),
+                      const SizedBox(height: 3),
                       Text(
                         subtitle,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[600],
-                          height: 1.2,
-                        ),
+                        style: AppTextStyles.hotelLocation,
                       ),
                     ],
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: Colors.grey[400],
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 14,
+                  color: AppColors.textGrey,
                 ),
               ],
             ),
           ),
         ),
-        if (!isLastItem) Divider(height: 1, color: Colors.grey[200]),
+        if (!isLastItem)
+          const Divider(height: 1, color: AppColors.background),
       ],
     );
   }

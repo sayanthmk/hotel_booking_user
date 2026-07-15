@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 import 'package:hotel_booking/features/settings/about_us/about_us.dart';
 import 'package:hotel_booking/features/settings/privacy_policy.dart';
 import 'package:hotel_booking/features/settings/settings_page/settings_item.dart';
 import 'package:hotel_booking/features/settings/terms_conditions.dart';
-import 'package:hotel_booking/utils/custom_appbar/custom_appbar.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -11,73 +11,108 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BookingAppbar(heading: 'Settings'),
-      backgroundColor: Colors.grey[50],
-      body: ListView(
-        padding: const EdgeInsets.all(20),
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 12),
+            _buildSettingsSection(
+              title: 'App Preferences',
+              children: [
+                SettingsItem(
+                  icon: Icons.language_rounded,
+                  title: 'Language',
+                  subtitle: 'Choose your preferred language',
+                  onTap: () {},
+                ),
+                SettingsItem(
+                  icon: Icons.share_rounded,
+                  title: 'Share',
+                  subtitle: 'Share the app with friends',
+                  onTap: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            _buildSettingsSection(
+              title: 'Legal & About',
+              children: [
+                SettingsItem(
+                  icon: Icons.privacy_tip_outlined,
+                  title: 'Privacy Policy',
+                  subtitle: 'Read our privacy policy',
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicy(),
+                    ));
+                  },
+                ),
+                SettingsItem(
+                  icon: Icons.description_outlined,
+                  title: 'Terms and Conditions',
+                  subtitle: 'View terms of service',
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const TermsConditions(),
+                    ));
+                  },
+                ),
+                SettingsItem(
+                  icon: Icons.info_outline,
+                  title: 'About Us',
+                  subtitle: 'Learn more about our company',
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AboutUs(),
+                    ));
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 4, 0, 8),
+      child: Row(
         children: [
-          _buildSettingsSection(
-            context,
-            title: 'App Preferences',
-            children: [
-              SettingsItem(
-                icon: Icons.language,
-                title: 'Language',
-                subtitle: 'Choose your preferred language',
-                onTap: () {},
+          GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.cardShadow,
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
               ),
-              SettingsItem(
-                icon: Icons.share,
-                title: 'Share',
-                subtitle: 'Share the app with friends',
-                onTap: () {},
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 18,
+                color: AppColors.primary,
               ),
-            ],
+            ),
           ),
-          const SizedBox(height: 20),
-          _buildSettingsSection(
-            context,
-            title: 'Legal & About',
-            children: [
-              SettingsItem(
-                icon: Icons.privacy_tip_outlined,
-                title: 'Privacy Policy',
-                subtitle: 'Read our privacy policy',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const PrivacyPolicy(),
-                  ));
-                },
-              ),
-              SettingsItem(
-                icon: Icons.description_outlined,
-                title: 'Terms and Conditions',
-                subtitle: 'View terms of service',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const TermsConditions(),
-                  ));
-                },
-              ),
-              SettingsItem(
-                icon: Icons.info_outline,
-                title: 'About Us',
-                subtitle: 'Learn more about our company',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AboutUs(),
-                  ));
-                },
-              ),
-            ],
-          ),
+          const SizedBox(width: 16),
+          const Text('Settings', style: AppTextStyles.username),
         ],
       ),
     );
   }
 
-  Widget _buildSettingsSection(
-    BuildContext context, {
+  Widget _buildSettingsSection({
     required String title,
     required List<Widget> children,
   }) {
@@ -85,26 +120,18 @@ class SettingsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 8),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
-              letterSpacing: 0.5,
-            ),
-          ),
+          padding: const EdgeInsets.only(left: 4, bottom: 10),
+          child: Text(title, style: AppTextStyles.sectionTitle),
         ),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 2),
+                color: AppColors.cardShadow,
+                blurRadius: 16,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
@@ -120,7 +147,7 @@ class SettingsPage extends StatelessWidget {
                       height: 1,
                       indent: 56,
                       endIndent: 16,
-                      color: Colors.grey[200],
+                      color: AppColors.background,
                     ),
                 ],
               );

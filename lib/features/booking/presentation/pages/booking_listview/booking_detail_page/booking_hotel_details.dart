@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/booking/presentation/pages/booking_listview/booking_detail_page/widgets/hoteldetail_info.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_bloc.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_event.dart';
 import 'package:hotel_booking/features/home/presentation/providers/hotel_bloc/hotel_state.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 
 class HotelBookingDetailPage extends StatelessWidget {
   final String hotelId;
@@ -16,33 +16,19 @@ class HotelBookingDetailPage extends StatelessWidget {
     context.read<HotelBloc>().add(LoadHotelByIdEvent(hotelId));
 
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Contact Hotel',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 20,
-          ),
-        ),
+        backgroundColor: AppColors.background,
+        elevation: 0,
         centerTitle: true,
-        backgroundColor: HotelBookingColors.basictextcolor,
-        elevation: 2,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(15),
-          ),
-        ),
+        iconTheme: const IconThemeData(color: AppColors.textDark),
+        title: const Text('Contact Hotel', style: AppTextStyles.sectionTitle),
       ),
-      backgroundColor: Colors.grey[50],
       body: BlocBuilder<HotelBloc, HotelState>(
         builder: (context, state) {
           if (state is HotelLoadingState) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: HotelBookingColors.basictextcolor,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
 
@@ -51,20 +37,17 @@ class HotelBookingDetailPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
+                  Icon(Icons.error_outline_rounded,
+                      size: 64, color: Colors.red[300]),
                   const SizedBox(height: 16),
-                  Text(
+                  const Text(
                     'Error Loading Hotel Details',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[800],
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.sectionTitle,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     state.message,
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: AppTextStyles.hotelLocation,
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -75,164 +58,139 @@ class HotelBookingDetailPage extends StatelessWidget {
           if (state is HotelDetailLoadedState) {
             final hotel = state.hotel;
             return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 250,
-                    margin: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 220,
                       child: hotel.images.isNotEmpty
                           ? Image.network(
                               hotel.images[0],
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[200],
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.error_outline,
-                                      color: Colors.red[300],
-                                      size: 48,
-                                    ),
-                                  ),
-                                );
+                                return _imagePlaceholder();
                               },
                               loadingBuilder:
                                   (context, child, loadingProgress) {
                                 if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes!
-                                        : null,
-                                    color: HotelBookingColors.basictextcolor,
+                                return Container(
+                                  color: AppColors.primary.withOpacity(0.08),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primary,
+                                    ),
                                   ),
                                 );
                               },
                             )
-                          : Container(
-                              color: Colors.grey[200],
-                              child: Center(
-                                child: Icon(
-                                  Icons.image_not_supported,
-                                  color: Colors.grey[400],
-                                  size: 48,
-                                ),
-                              ),
-                            ),
+                          : _imagePlaceholder(),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.all(16),
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 10,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Contact Information',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        HotelContactInfoRow(
-                            icon: Icons.phone,
-                            label: 'Contact Number',
-                            value: hotel.contactNumber),
-                        const SizedBox(height: 12),
-                        HotelContactInfoRow(
-                            icon: Icons.email,
-                            label: 'Email Address',
-                            value: hotel.emailAddress),
-                      ],
-                    ),
+                  const SizedBox(height: 20),
+                  _buildSectionCard(
+                    title: 'Contact Information',
+                    children: [
+                      HotelContactInfoRow(
+                        icon: Icons.phone_rounded,
+                        label: 'Contact Number',
+                        value: hotel.contactNumber,
+                      ),
+                      const SizedBox(height: 16),
+                      HotelContactInfoRow(
+                        icon: Icons.email_rounded,
+                        label: 'Email Address',
+                        value: hotel.emailAddress,
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 10,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Location Details',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        HotelContactInfoRow(
-                            icon: Icons.location_city,
-                            label: 'City',
-                            value: hotel.city),
-                        const SizedBox(height: 12),
-                        HotelContactInfoRow(
-                            icon: Icons.map,
-                            label: 'State',
-                            value: hotel.state),
-                        const SizedBox(height: 12),
-                        HotelContactInfoRow(
-                            icon: Icons.public,
-                            label: 'Country',
-                            value: hotel.country),
-                        const SizedBox(height: 12),
-                        HotelContactInfoRow(
-                            icon: Icons.pin_drop,
-                            label: 'Pincode',
-                            value: hotel.pincode.toString()),
-                      ],
-                    ),
+                  const SizedBox(height: 16),
+                  _buildSectionCard(
+                    title: 'Location Details',
+                    children: [
+                      HotelContactInfoRow(
+                        icon: Icons.location_city_rounded,
+                        label: 'City',
+                        value: hotel.city,
+                      ),
+                      const SizedBox(height: 16),
+                      HotelContactInfoRow(
+                        icon: Icons.map_rounded,
+                        label: 'State',
+                        value: hotel.state,
+                      ),
+                      const SizedBox(height: 16),
+                      HotelContactInfoRow(
+                        icon: Icons.public_rounded,
+                        label: 'Country',
+                        value: hotel.country,
+                      ),
+                      const SizedBox(height: 16),
+                      HotelContactInfoRow(
+                        icon: Icons.pin_drop_rounded,
+                        label: 'Pincode',
+                        value: hotel.pincode.toString(),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 24),
                 ],
               ),
             );
           }
 
           return const Center(
-            child: Text('No hotel details available'),
+            child: Text('No hotel details available',
+                style: AppTextStyles.hotelLocation),
           );
         },
+      ),
+    );
+  }
+
+  Widget _imagePlaceholder() {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primary, AppColors.primaryDark],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: const Center(
+        child: Icon(Icons.hotel_rounded, size: 48, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({
+    required String title,
+    required List<Widget> children,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.cardShadow,
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: AppTextStyles.sectionTitle),
+          const SizedBox(height: 18),
+          ...children,
+        ],
       ),
     );
   }

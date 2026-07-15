@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/core/dependency_injection/injection_container.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 import 'package:hotel_booking/features/profile/domain/usecase/profile_usecase.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/edit_profile/edit_profile_page.dart';
 import 'package:hotel_booking/features/profile/presentation/pages/profile_detail/profile_page/profile_card.dart';
@@ -19,12 +19,12 @@ class PrpageMyProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ProfileSectionColors.secondary,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -41,9 +41,7 @@ class PrpageMyProfilePage extends StatelessWidget {
             File? selectedImage;
             if (state is UserLoading) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: ProfileSectionColors.primary,
-                ),
+                child: CircularProgressIndicator(color: AppColors.primary),
               );
             } else if (state is UserLoaded) {
               final user = state.user;
@@ -57,23 +55,17 @@ class PrpageMyProfilePage extends StatelessWidget {
                         gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [
-                            ProfileSectionColors.primary,
-                            ProfileSectionColors.primaryLight,
-                            ProfileSectionColors.accent,
-                          ],
-                          stops: [0.2, 0.5, 1.0],
+                          colors: [AppColors.primary, AppColors.primaryDark],
                         ),
                         borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30),
+                          bottomLeft: Radius.circular(32),
+                          bottomRight: Radius.circular(32),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: ProfileSectionColors.primaryDark
-                                .withOpacity(0.3),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
+                            color: AppColors.cardShadow,
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
                           ),
                         ],
                       ),
@@ -81,29 +73,28 @@ class PrpageMyProfilePage extends StatelessWidget {
                         children: [
                           const SizedBox(height: 60),
                           Stack(
-                            alignment: Alignment.center,
+                            alignment: Alignment.bottomRight,
                             children: [
                               Container(
-                                width: 140,
-                                height: 140,
+                                width: 130,
+                                height: 130,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Colors.white,
-                                    width: 5,
+                                    width: 4,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: ProfileSectionColors.primaryDark
-                                          .withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 5),
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 6),
                                     ),
                                   ],
                                 ),
                                 child: CircleAvatar(
-                                  radius: 70,
+                                  radius: 65,
+                                  backgroundColor: Colors.white,
                                   backgroundImage: selectedImage != null
                                       ? FileImage(selectedImage)
                                       : (imageUrl != null
@@ -111,74 +102,116 @@ class PrpageMyProfilePage extends StatelessWidget {
                                           : null) as ImageProvider?,
                                   child:
                                       selectedImage == null && imageUrl == null
-                                          ? const Icon(Icons.person,
-                                              size: 70, color: Colors.grey)
+                                          ? const Icon(Icons.person_rounded,
+                                              size: 64,
+                                              color: AppColors.textGrey)
                                           : null,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EditUserProfile(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.accent,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.white, width: 2),
+                                  ),
+                                  child: const Icon(
+                                    Icons.edit_rounded,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 18),
                           Text(
                             user.name,
-                            style: const TextStyle(
+                            style: AppTextStyles.username.copyWith(
                               color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
                             ),
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 4),
+                          Text(
+                            user.email,
+                            style: AppTextStyles.greeting.copyWith(
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                          ),
+                          const SizedBox(height: 28),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Account Details',
+                              style: AppTextStyles.sectionTitle),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(22),
                         boxShadow: [
                           BoxShadow(
-                            color: ProfileSectionColors.primaryDark
-                                .withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
+                            color: AppColors.cardShadow,
+                            blurRadius: 16,
+                            offset: const Offset(0, 8),
                           ),
                         ],
                       ),
                       child: Column(
                         children: [
                           ProfileCardWidget(
-                            icon: Icons.person,
+                            icon: Icons.person_rounded,
                             label: 'Name',
                             value: user.name,
-                            iconColor: ProfileSectionColors.primary,
+                            iconColor: AppColors.primary,
                           ),
                           const CustDivider(),
                           ProfileCardWidget(
                             icon: Icons.mail_rounded,
                             label: 'Email',
                             value: user.email,
-                            iconColor: ProfileSectionColors.accent,
+                            iconColor: AppColors.accent,
                           ),
                           const CustDivider(),
                           ProfileCardWidget(
                             icon: Icons.location_pin,
                             label: 'Location',
                             value: user.location,
-                            iconColor: ProfileSectionColors.warning,
+                            iconColor: AppColors.primaryDark,
                           ),
                           const CustDivider(),
                           ProfileCardWidget(
-                            icon: Icons.phone,
+                            icon: Icons.phone_rounded,
                             label: 'Phone Number',
                             value: user.phoneNumber,
-                            iconColor: ProfileSectionColors.primaryLight,
+                            iconColor: AppColors.primary,
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                   ],
                 ),
               );
@@ -186,25 +219,12 @@ class PrpageMyProfilePage extends StatelessWidget {
               return const Center(
                 child: Text(
                   'Failed to load profile.',
-                  style: TextStyle(
-                    color: ProfileSectionColors.primaryDark,
-                    fontSize: 16,
-                  ),
+                  style: AppTextStyles.hotelLocation,
                 ),
               );
             }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const EditUserProfile(),
-          ));
-        },
-        backgroundColor: ProfileSectionColors.accent,
-        elevation: 4,
-        child: const Icon(Icons.edit),
       ),
     );
   }

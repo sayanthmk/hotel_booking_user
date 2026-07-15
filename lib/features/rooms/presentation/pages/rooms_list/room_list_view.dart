@@ -23,11 +23,11 @@ class HotelRoomsListView extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                SectionHeader(
-                  title: 'Available Rooms',
-                  actionText: '',
-                  ontap: () {},
-                ),
+                // SectionHeader(
+                //   title: 'Available Rooms',
+                //   actionText: '',
+                //   ontap: () {},
+                // ),
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 260,

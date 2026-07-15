@@ -38,3 +38,12 @@ class FetchAddressFromLatLngEvent extends LocationEvent {
   @override
   List<Object?> get props => [position];
 }
+
+class FetchLatLngFromAddressEvent extends LocationEvent {
+  final String address;
+
+  const FetchLatLngFromAddressEvent(this.address);
+
+  @override
+  List<Object?> get props => [address];
+}

@@ -6,4 +6,5 @@ abstract class LocationRepository {
   Stream<LocationEntity> getUserLocation();
   Stream<LocationEntity> getCurrentLocation();
   Future<String> getAddressFromLatLng(LatLng position);
+  Future<LatLng> getLatLngFromAddress(String address);
 }

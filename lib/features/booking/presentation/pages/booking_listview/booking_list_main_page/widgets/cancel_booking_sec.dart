@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hotel_booking/core/constants/colors.dart';
 import 'package:hotel_booking/features/booking/data/model/booking_model.dart';
 import 'package:hotel_booking/features/booking/presentation/providers/bloc/user_bloc.dart';
+import 'package:hotel_booking/features/home/presentation/pages/home_section/home_page_section.dart';
 
 class CancelBookingSection extends StatelessWidget {
   const CancelBookingSection({
@@ -95,13 +95,13 @@ class CancelBookingSection extends StatelessWidget {
           ),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: HotelBookingColors.basictextcolor,
+          backgroundColor: AppColors.primary,
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 12,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(14),
           ),
         ),
       ),

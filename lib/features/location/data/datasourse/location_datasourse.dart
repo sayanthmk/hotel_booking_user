@@ -13,6 +13,7 @@ abstract class LocationRemoteDataSource {
   Stream<void> updateUserLocation(LocationEntity location);
   Stream<LocationEntity> getUserLocation();
   Future<String> getAddressFromLatLng(LatLng position);
+  Future<LatLng> getLatLngFromAddress(String address);
 }
 
 class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
@@ -34,6 +35,16 @@ class LiveLocationRemoteDataSource implements LocationRemoteDataSource {
     } catch (e) {
       return "Error retrieving address";
     }
+  }
+
+  @override
+  Future<LatLng> getLatLngFromAddress(String address) async {
+    final locations = await locationFromAddress(address);
+    if (locations.isEmpty) {
+      throw Exception("No coordinates found for address.");
+    }
+    final location = locations.first;
+    return LatLng(location.latitude, location.longitude);
   }
 
   @override

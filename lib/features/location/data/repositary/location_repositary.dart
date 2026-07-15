@@ -45,4 +45,13 @@ class LiveLocationRepositoryImpl implements LocationRepository {
       throw Exception("Failed to get current location: $error");
     }
   }
+
+  @override
+  Future<LatLng> getLatLngFromAddress(String address) {
+    try {
+      return remoteDataSource.getLatLngFromAddress(address);
+    } catch (error) {
+      throw Exception("Failed to get coordinates from address: $error");
+    }
+  }
 }
